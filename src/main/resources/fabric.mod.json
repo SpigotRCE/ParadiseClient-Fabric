@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "paradiseclient-fabric",
+  "version": "${version}",
+  "name": "ParadiseClient-Fabric",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/Milkthedev/ParadiseClient-Fabric"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/paradiseclient-fabric/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "tk.milkthedev.paradiseclientfabric.client.ParadiseClient_FabricClient"
+    ],
+    "main": [
+      "tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric"
+    ]
+  },
+  "mixins": [
+    "paradiseclient-fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

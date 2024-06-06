@@ -4,13 +4,14 @@
   "package": "tk.milkthedev.paradiseclientfabric.mixin.inject",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ClientConnectionMixin",
     "HandshakeC2SMixin",
     "MinecraftClientMixin",
     "MultiplayerScreenMixin",
     "SessionMixin"
   ],
   "client": [
-    "InGameHubMixin"
+    "InGameHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1

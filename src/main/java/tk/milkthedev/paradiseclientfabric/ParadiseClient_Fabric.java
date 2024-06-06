@@ -5,10 +5,16 @@ import net.minecraft.client.MinecraftClient;
 
 public class ParadiseClient_Fabric implements ModInitializer
 {
-    public static BungeeSpoofMod bungeeSpoofMod;
+    private static BungeeSpoofMod bungeeSpoofMod;
+    private static MiscMod miscMod;
 
     public static BungeeSpoofMod getBungeeSpoofMod() {return bungeeSpoofMod;}
+    public static MiscMod getMiscMod() {return miscMod;}
 
     @Override
-    public void onInitialize() {bungeeSpoofMod = new BungeeSpoofMod();}
+    public void onInitialize()
+    {
+        bungeeSpoofMod = new BungeeSpoofMod();
+        miscMod = new MiscMod();
+    }
 }

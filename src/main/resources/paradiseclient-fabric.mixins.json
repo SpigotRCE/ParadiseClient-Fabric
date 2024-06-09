@@ -11,6 +11,8 @@
     "SessionMixin"
   ],
   "client": [
+    "ChatInputSuggestorMixin",
+    "ChatScreenMixin",
     "InGameHudMixin"
   ],
   "injectors": {

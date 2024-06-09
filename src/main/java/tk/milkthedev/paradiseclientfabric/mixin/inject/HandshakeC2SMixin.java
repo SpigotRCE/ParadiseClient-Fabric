@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import tk.milkthedev.paradiseclientfabric.BungeeSpoofMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
+import static tk.milkthedev.paradiseclientfabric.Constants.LOGGER;
 
 @Mixin(HandshakeC2SPacket.class)
 public class HandshakeC2SMixin

@@ -1,5 +1,8 @@
 package tk.milkthedev.paradiseclientfabric;
 
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
+
 import java.awt.*;
 
 public class Helper
@@ -11,4 +14,9 @@ public class Helper
         return Color.getHSBColor((float) (chroma / 360), saturation, brightness);
     }
 
+    public static void printChatMessage(String message)
+    {
+        assert MinecraftClient.getInstance().player != null;
+        MinecraftClient.getInstance().player.sendMessage(Text.of(message));
+    }
 }

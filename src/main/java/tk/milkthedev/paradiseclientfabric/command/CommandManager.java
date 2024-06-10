@@ -57,7 +57,7 @@ public class CommandManager {
         node = node.getChild(alias);
         for (String arg : args)
         {
-            node = node.getChild(arg);
+            if (node.getChild(arg) != null) {node = node.getChild(arg);}
         }
         node.getChildren().removeAll(node.getChildren());
         for (String suggestion : suggestions)

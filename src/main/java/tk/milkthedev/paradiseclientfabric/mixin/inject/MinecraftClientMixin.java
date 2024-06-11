@@ -5,8 +5,10 @@ import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import tk.milkthedev.paradiseclientfabric.Constants;
+import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin
@@ -24,5 +26,11 @@ public class MinecraftClientMixin
         titleBuilder.append(" | ");
         titleBuilder.append(SharedConstants.getGameVersion().getName());
         callback.setReturnValue(titleBuilder.toString());
+    }
+
+    @Inject(method = "close", at = @At(value = "HEAD"))
+    private void closeHead(CallbackInfo ci)
+    {
+        ParadiseClient_Fabric.getChatRoomMod().client.shutdown();
     }
 }

@@ -1,27 +1,23 @@
 package tk.milkthedev.paradiseclientfabric.command.impl;
 
-import net.minecraft.client.MinecraftClient;
+import tk.milkthedev.paradiseclientfabric.Helper;
+import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import tk.milkthedev.paradiseclientfabric.command.Command;
 import tk.milkthedev.paradiseclientfabric.command.exception.CommandException;
 import tk.milkthedev.paradiseclientfabric.command.CommandInfo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 @CommandInfo(
-        alias = "say",
-        description = "Sends a message to the chat",
-        usage = "say <message>"
+        alias = "screenshare",
+        description = "Disables/Enables server IP in HUD",
+        usage = "screenshare []"
 )
-public class SayCommand extends Command
+public class ScreenShareCommand extends Command
 {
     @Override
     public boolean execute(String commandAlias, String... args) throws CommandException
     {
-        StringBuilder s = new StringBuilder();
-        for (String arg : args) {s.append(arg).append(" ");}
-        assert MinecraftClient.getInstance().player != null;
-        MinecraftClient.getInstance().player.networkHandler.sendChatMessage(s.toString());
+        ParadiseClient_Fabric.getHudMod().showServerIP = !ParadiseClient_Fabric.getHudMod().showServerIP;
+        Helper.printChatMessage(ParadiseClient_Fabric.getHudMod().showServerIP ? "Server IP shown" : "Server IP hidden");
         return true;
     }
 

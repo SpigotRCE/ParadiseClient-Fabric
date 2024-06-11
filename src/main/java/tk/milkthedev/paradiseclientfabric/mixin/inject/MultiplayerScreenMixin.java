@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import tk.milkthedev.paradiseclientfabric.BungeeSpoofMod;
+import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import tk.milkthedev.paradiseclientfabric.screen.UUIDSpoofScreen;
 @Mixin(MultiplayerScreen.class)

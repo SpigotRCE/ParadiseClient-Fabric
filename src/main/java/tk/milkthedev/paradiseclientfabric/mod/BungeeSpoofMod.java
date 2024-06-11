@@ -1,4 +1,4 @@
-package tk.milkthedev.paradiseclientfabric;
+package tk.milkthedev.paradiseclientfabric.mod;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.session.Session;

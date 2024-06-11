@@ -7,6 +7,7 @@ import com.mojang.brigadier.tree.CommandNode;
 
 import net.minecraft.command.CommandSource;
 import tk.milkthedev.paradiseclientfabric.Helper;
+import tk.milkthedev.paradiseclientfabric.command.exception.CommandException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +28,8 @@ public class CommandManager {
         {
             Command command = getCommand(alias);
             if (command == null) {throw new CommandException("Unknown command! Use " + getPrefix() + "help to see the list of commands available.");}
-            command.execute(alias, Arrays.copyOfRange(args, 1, args.length));
+
+            if (!command.execute(alias, Arrays.copyOfRange(args, 1, args.length))) { Helper.printChatMessage("Usage: " + command.getUsage());}
         } catch (CommandException e)
         {
             Helper.printChatMessage(e.getMessage());
@@ -62,7 +64,6 @@ public class CommandManager {
         node.getChildren().removeAll(node.getChildren());
         for (String suggestion : suggestions)
         {
-            System.out.println(suggestion);
             node.addChild(literal(suggestion).build());
         }
 

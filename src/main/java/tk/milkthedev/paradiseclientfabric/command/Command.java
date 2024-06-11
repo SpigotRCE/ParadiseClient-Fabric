@@ -1,6 +1,7 @@
 package tk.milkthedev.paradiseclientfabric.command;
 
 import org.apache.commons.lang3.Validate;
+import tk.milkthedev.paradiseclientfabric.command.exception.CommandException;
 
 
 public abstract class Command
@@ -19,7 +20,7 @@ public abstract class Command
         this.usage = commandInfo.usage();
     }
 
-    public abstract void execute(String commandAlias, String... args) throws CommandException;
+    public abstract boolean execute(String commandAlias, String... args) throws CommandException;
     public abstract String[] onTabComplete(String commandAlias, String... args);
 
     public String getAlias()

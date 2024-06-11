@@ -1,7 +1,7 @@
 package tk.milkthedev.paradiseclientfabric.event;
 
 import net.minecraft.network.packet.Packet;
-import tk.milkthedev.paradiseclientfabric.MiscMod;
+import tk.milkthedev.paradiseclientfabric.mod.MiscMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 
 public class PacketEvent

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import tk.milkthedev.paradiseclientfabric.MiscMod;
+import tk.milkthedev.paradiseclientfabric.mod.MiscMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 
 import java.lang.Math;
@@ -53,7 +53,7 @@ public abstract class InGameHudMixin
         ArrayList<String> text = new ArrayList<>();
 
         text.add("ParadiseClient by SpigotRCE#0");
-        text.add("Server " + (Objects.isNull(this.client.getCurrentServerEntry()) ? "" : this.client.getCurrentServerEntry().address));
+        text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.getHudMod().showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
         text.add("Engine " + (Objects.isNull(this.client.getNetworkHandler()) ? "" : this.client.getNetworkHandler().getBrand()));
         text.add("Last Incoming Packet " + (System.currentTimeMillis() - miscMod.lastIncomingPacketTime) + "ms Average " + miscMod.averageIncomingPacketDelay + " ms");
         text.add("Packet " + miscMod.lastIncomingPacket.getPacketId().id());

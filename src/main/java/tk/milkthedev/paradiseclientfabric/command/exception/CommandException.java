@@ -1,4 +1,4 @@
-package tk.milkthedev.paradiseclientfabric.command;
+package tk.milkthedev.paradiseclientfabric.command.exception;
 
 public class CommandException extends RuntimeException {
 

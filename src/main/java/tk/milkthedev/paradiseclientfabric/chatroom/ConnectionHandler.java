@@ -1,5 +1,6 @@
 package tk.milkthedev.paradiseclientfabric.chatroom;
 
+import net.minecraft.client.MinecraftClient;
 import tk.milkthedev.paradiseclientfabric.Helper;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 
@@ -26,7 +27,7 @@ public class ConnectionHandler implements Runnable
     {
         try
         {
-            out.println("TestUser69");
+            out.println(MinecraftClient.getInstance().player.getName().getLiteralString());
             String message;
             while ((message = in.readLine())!= null)
             {

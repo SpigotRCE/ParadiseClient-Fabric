@@ -27,6 +27,7 @@ public class ConnectionHandler implements Runnable
     {
         try
         {
+            assert MinecraftClient.getInstance().player != null;
             out.println(MinecraftClient.getInstance().player.getName().getLiteralString());
             String message;
             while ((message = in.readLine())!= null)

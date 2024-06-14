@@ -1,6 +1,7 @@
 package tk.milkthedev.paradiseclientfabric.chatroom;
 
 import net.minecraft.client.MinecraftClient;
+import tk.milkthedev.paradiseclientfabric.Constants;
 import tk.milkthedev.paradiseclientfabric.Helper;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 
@@ -44,7 +45,8 @@ public class ConnectionHandler implements Runnable
                 this.out.close();
             } catch (IOException ex)
             {
-                Helper.printChatMessage("[ChatRoom] An error occurred while closing the connection to the chat server. See logs");
+                Constants.LOGGER.error("An exception raised while shutting closing reader and writer", e);
+                Helper.printChatMessage("[ChatRoom] An exception raised while shutting closing reader and writer, see logs");
                 ParadiseClient_Fabric.getChatRoomMod().isConnected = false;
             }
         }

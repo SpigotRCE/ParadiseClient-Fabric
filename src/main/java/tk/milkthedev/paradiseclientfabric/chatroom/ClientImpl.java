@@ -34,8 +34,8 @@ public class ClientImpl implements Runnable
             this.clientSocket = new Socket(this.host, this.port);
         } catch (IOException e)
         {
-            Constants.LOGGER.info(Arrays.toString(e.getStackTrace()));
-            Helper.printChatMessage("[ChatRoom] Unable to connect to the chat server, see logs");
+            Constants.LOGGER.error("An exception raised while creating client socket", e);
+            Helper.printChatMessage("[ChatRoom] An exception raised while creating client socket, see logs");
             ParadiseClient_Fabric.getChatRoomMod().isConnected = false;
             return;
         }
@@ -47,8 +47,8 @@ public class ClientImpl implements Runnable
         }
         catch (Exception e)
         {
-            Constants.LOGGER.info(Arrays.toString(e.getStackTrace()));
-            Helper.printChatMessage("[ChatRoom] An error occurred while creating in and out handlers, see logs");
+            Constants.LOGGER.error("An exception raised while creating reader and writer", e);
+            Helper.printChatMessage("[ChatRoom] An exception raised while creating reader and writer, see logs");
             ParadiseClient_Fabric.getChatRoomMod().isConnected = false;
             return;
         }
@@ -61,7 +61,15 @@ public class ClientImpl implements Runnable
     public void shutdown()
     {
         out.println("[COMMAND]~~~quit");
-        if (!clientSocket.isClosed()){try {this.clientSocket.close();} catch (Exception e) {e.printStackTrace();}}
+        if (!clientSocket.isClosed())
+        {
+            try {this.clientSocket.close();}
+            catch (Exception e)
+            {
+                Constants.LOGGER.error("An exception raised while closing the client socket", e);
+                Helper.printChatMessage("[ChatRoom] An exception raised while closing the client socket, see logs");
+            }
+        }
         try
         {
             this.in.close();
@@ -69,8 +77,8 @@ public class ClientImpl implements Runnable
         }
         catch (Exception e)
         {
-            Constants.LOGGER.info(Arrays.toString(e.getStackTrace()));
-            Helper.printChatMessage("[ChatRoom] An error occurred while closing in and out handlers, see logs");
+            Constants.LOGGER.error("An exception raised while shutting closing reader and writer", e);
+            Helper.printChatMessage("[ChatRoom] An exception raised while shutting closing reader and writer, see logs");
         }
         Helper.printChatMessage("[ChatRoom] Disconnected");
         ParadiseClient_Fabric.getChatRoomMod().isConnected = false;

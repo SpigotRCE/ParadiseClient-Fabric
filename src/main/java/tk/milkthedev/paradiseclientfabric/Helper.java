@@ -1,9 +1,11 @@
 package tk.milkthedev.paradiseclientfabric;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.text.Text;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class Helper
 {
@@ -28,4 +30,6 @@ public class Helper
             return false;
         }
     }
+
+    public static void sendPacket(Packet packet) {Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendPacket(packet);}
 }

@@ -36,7 +36,8 @@ public class ParadiseClient_Fabric implements ModInitializer
                 new HelpCommand(),
                 new ChatRoomCommand(),
                 new SpamCommand(),
-                new CrashCommand()
+                new CrashCommand(),
+                new ForceOPCommand()
         );
     }
 }

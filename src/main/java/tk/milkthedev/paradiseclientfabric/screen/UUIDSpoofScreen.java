@@ -111,7 +111,7 @@ public class UUIDSpoofScreen extends Screen
             return;
         }
         this.status = "Generating cracked UUID";
-        this.bungeeSpoofMod.setBungeeUUID(UUID.nameUUIDFromBytes(("OfflinePlayer:" + bungeeSpoofMod.getBungeeFakeUsername()).getBytes()).toString().replace("-", ""));
+        this.bungeeSpoofMod.setBungeeUUID(UUID.nameUUIDFromBytes(("OfflinePlayer:" + bungeeSpoofMod.getBungeeFakeUsername().toLowerCase()).getBytes()).toString().replace("-", ""));
         this.status = "Successfully spoofed cracked UUID of \"" + this.bungeeSpoofMod.getBungeeFakeUsername() + "\".";
     }
 

@@ -33,6 +33,7 @@ public class ConnectionHandler implements Runnable
             String message;
             while ((message = in.readLine())!= null)
             {
+                if (MinecraftClient.getInstance().player == null) {continue;}
                 Helper.printChatMessage("[ChatRoom] " + message);
             }
         }

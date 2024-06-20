@@ -26,7 +26,7 @@ public class HandshakeC2SMixin
     private void HandshakeC2SPacket(int i, String string, int j, ConnectionIntent connectionIntent, CallbackInfo ci)
     {
         BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
-        if (bungeeSpoofMod.isBungeeEnabled())
+        if (bungeeSpoofMod.isBungeeEnabled() && connectionIntent == ConnectionIntent.LOGIN)
         {
             LOGGER.info("Spoofing into HandshakeC2SPacket");
             this.address += "\000" + bungeeSpoofMod.getBungeeIP() + "\000" + bungeeSpoofMod.getBungeeUUID();

@@ -14,9 +14,10 @@ public class BungeeSpoofMod
     private boolean bungeeUUIDPremium;
     private String bungeeUUID;
     private String bungeeIP;
-    private String targetIP; // yet to implement
+    private String targetIP;
     private String bungeeToken; // yet to implement
     private boolean bungeeEnabled;
+    private boolean bungeeTargetEnabled;
 
     public BungeeSpoofMod()
     {
@@ -86,7 +87,7 @@ public class BungeeSpoofMod
         this.bungeeIP = bungeeIP;
     }
 
-    public String getTargetIP()
+    public String getBungeeTargetIP()
     {
         return targetIP;
     }
@@ -110,9 +111,17 @@ public class BungeeSpoofMod
     {
         return bungeeEnabled;
     }
+    public boolean isBungeeTargetEnabled()
+    {
+        return bungeeTargetEnabled;
+    }
 
     public void setBungeeEnabled(boolean bungeeEnabled)
     {
         this.bungeeEnabled = bungeeEnabled;
+    }
+    public void setBungeeTargetEnabled(boolean bungeeTargetEnabled)
+    {
+        this.bungeeTargetEnabled = bungeeTargetEnabled;
     }
 }

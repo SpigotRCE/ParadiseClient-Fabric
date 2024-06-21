@@ -29,6 +29,12 @@ public abstract class MultiplayerScreenMixin extends Screen
     TextFieldWidget bungeeIPButton;
 
     @Unique
+    ButtonWidget bungeeTargetButton;
+
+    @Unique
+    TextFieldWidget bungeeTargetIPButton;
+
+    @Unique
     TextRenderer textRenderer;
 
     protected MultiplayerScreenMixin(Text title) {super(title);}
@@ -46,7 +52,10 @@ public abstract class MultiplayerScreenMixin extends Screen
         );
 
         this.bungeeButton = this.addDrawableChild(ButtonWidget.builder(getBungeeButtonText(),
-                        onPress -> onBungeeButtonPress())
+                        onPress -> {
+                            this.bungeeSpoofMod.setBungeeEnabled(!bungeeSpoofMod.isBungeeEnabled());
+                            this.bungeeButton.setMessage(getBungeeButtonText());
+                        })
                 .width(100)
                 .position(5, this.height - 128)
                 .build()
@@ -55,24 +64,31 @@ public abstract class MultiplayerScreenMixin extends Screen
         this.bungeeIPButton = new TextFieldWidget(this.textRenderer, 5, this.height - 160, 50, 20, Text.literal("Bungee IP")); // Set width to 150 and height to 20
         this.bungeeIPButton.setMaxLength(128);
         this.bungeeIPButton.setText(bungeeSpoofMod.getBungeeIP());
-        this.bungeeIPButton.setChangedListener((text) -> this.onBungeeIPButtonPress());
+        this.bungeeIPButton.setChangedListener((text) -> bungeeSpoofMod.setBungeeIP(this.bungeeIPButton.getText()));
         this.addSelectableChild(this.bungeeIPButton);
         this.addDrawable(this.bungeeIPButton);
-    }
 
-    @Unique
-    private void onBungeeButtonPress()
-    {
-        this.bungeeSpoofMod.setBungeeEnabled(!bungeeSpoofMod.isBungeeEnabled());
-        this.bungeeButton.setMessage(getBungeeButtonText());
+        this.bungeeTargetButton = this.addDrawableChild(ButtonWidget.builder(getBungeeTargetButtonText(),
+                        onPress -> {
+                            this.bungeeSpoofMod.setBungeeTargetEnabled(!bungeeSpoofMod.isBungeeTargetEnabled());
+                            this.bungeeTargetButton.setMessage(getBungeeTargetButtonText());
+                        })
+                .width(100)
+                .position(5, this.height - 192)
+                .build()
+        );
+
+        this.bungeeTargetIPButton = new TextFieldWidget(this.textRenderer, 5, this.height - 224, 50, 20, Text.literal("Hostname")); // Set width to 150 and height to 20
+        this.bungeeTargetIPButton.setMaxLength(128);
+        this.bungeeTargetIPButton.setText(bungeeSpoofMod.getBungeeTargetIP());
+        this.bungeeTargetIPButton.setChangedListener((text) -> bungeeSpoofMod.setTargetIP(this.bungeeTargetIPButton.getText()));
+        this.addSelectableChild(this.bungeeTargetIPButton);
+        this.addDrawable(this.bungeeTargetIPButton);
+
     }
 
     @Unique
     private Text getBungeeButtonText() {return bungeeSpoofMod.isBungeeEnabled()? Text.literal("Bungee Enabled") : Text.literal("Bungee Disabled");}
-
     @Unique
-    private void onBungeeIPButtonPress()
-    {
-        bungeeSpoofMod.setBungeeIP(this.bungeeIPButton.getText());
-    }
+    private Text getBungeeTargetButtonText() {return bungeeSpoofMod.isBungeeTargetEnabled()? Text.literal("Hostname Enabled") : Text.literal("Hostname Disabled");}
 }

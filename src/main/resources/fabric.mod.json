@@ -6,7 +6,7 @@
   "description": "",
   "authors": [],
   "contact": {
-    "repo": "https://github.com/Milkthedev/ParadiseClient-Fabric"
+    "repo": "https://github.com/SpigotRCE/ParadiseClient-Fabric"
   },
   "license": "All-Rights-Reserved",
   "icon": "assets/paradiseclient-fabric/icon.png",
@@ -24,7 +24,6 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
     "minecraft": "${minecraft_version}"
   }
 }

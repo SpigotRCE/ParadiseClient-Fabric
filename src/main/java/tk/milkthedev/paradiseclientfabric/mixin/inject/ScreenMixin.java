@@ -20,7 +20,7 @@ public abstract class ScreenMixin
     @Shadow public int height;
     @Shadow public int width;
     @Unique
-    private final Identifier backgroundImage = new Identifier(Constants.MOD_ID, "wallpaper.png");
+    private final Identifier backgroundImage = Identifier.of(Constants.MOD_ID, "wallpaper.png");
 
     @Inject(method = "renderBackground", at = @At(value = "HEAD"), cancellable = true)
     private void renderBackground(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci)

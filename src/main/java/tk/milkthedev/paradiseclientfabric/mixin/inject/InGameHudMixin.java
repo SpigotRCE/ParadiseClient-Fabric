@@ -5,6 +5,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.render.RenderTickCounter;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -43,7 +44,7 @@ public abstract class InGameHudMixin
     }
 
     @Inject(method = "render", at = @At("TAIL"))
-    public void renderMainHud(DrawContext context, float tickDelta, CallbackInfo info)
+    public void renderMainHud(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci)
     {
         if (this.client == null)
         {

@@ -17,18 +17,18 @@ import tk.milkthedev.paradiseclientfabric.Constants;
 @Mixin(Screen.class)
 public abstract class ScreenMixin
 {
-//    @Shadow public int height;
-//    @Shadow public int width;
-//    @Unique
-//    private final Identifier backgroundImage = Identifier.of(Constants.MOD_ID, "wallpaper.png");
-//
-//    @Inject(method = "renderBackground", at = @At(value = "HEAD"), cancellable = true)
-//    private void renderBackground(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci)
-//    {
-//        if (MinecraftClient.getInstance().currentScreen instanceof MultiplayerScreen)
-//        {
-//            context.drawTexture(backgroundImage, 0, 0, this.width, this.height, 0.0F, 0.0F, this.width, this.height, this.width, this.height);
-//            ci.cancel();
-//        }
-//    }
+    @Shadow public int height;
+    @Shadow public int width;
+    @Unique
+    private final Identifier backgroundImage = Identifier.of(Constants.MOD_ID, "wallpaper.png");
+
+    @Inject(method = "renderBackground", at = @At(value = "HEAD"), cancellable = true)
+    private void renderBackground(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci)
+    {
+        if (MinecraftClient.getInstance().currentScreen instanceof MultiplayerScreen)
+        {
+            context.drawTexture(backgroundImage, 0, 0, this.width, this.height, 0.0F, 0.0F, this.width, this.height, this.width, this.height);
+            ci.cancel();
+        }
+    }
 }

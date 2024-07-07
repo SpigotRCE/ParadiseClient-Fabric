@@ -13,24 +13,35 @@ import java.util.Objects;
 @CommandInfo(
         alias = "crash",
         description = "Crashes the server.",
-        usage = "crash <method|list>"
+        usage = "crash <method|list|off>"
 )
 public class CrashCommand extends Command
 {
     @Override
     public boolean execute(String commandAlias, String... args) throws CommandException
     {
-        if (args.length != 1) return false;
-
-        if (Objects.equals(args[0], "list"))
+        if (args.length == 1)
         {
-            Helper.printChatMessage("Available commands:");
-            for (Exploit exploit : ParadiseClient_Fabric.getExploitManager().getExploits()) {Helper.printChatMessage(exploit.getAlias() + " " + exploit.getDescription());}
+            if (Objects.equals(args[0], "list"))
+            {
+                Helper.printChatMessage("Available commands:");
+                for (Exploit exploit : ParadiseClient_Fabric.getExploitManager().getExploits())
+                {
+                    Helper.printChatMessage(exploit.getAlias() + " " + exploit.getDescription());
+                }
+                return true;
+            }
+
+            if (Objects.equals(args[0], "off"))
+            {
+                ParadiseClient_Fabric.getExploitMod().isRunning = false;
+                Helper.printChatMessage("[CrashExploit] Stopping all exploits");
+                return true;
+            }
+            ParadiseClient_Fabric.getExploitManager().handleExploit(args[0]);
             return true;
         }
-
-        ParadiseClient_Fabric.getExploitManager().handleExploit(args[0]);
-        return true;
+        return false;
     }
 
     @Override

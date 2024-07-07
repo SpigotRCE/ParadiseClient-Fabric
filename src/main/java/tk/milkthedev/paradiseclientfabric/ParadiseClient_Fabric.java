@@ -6,26 +6,27 @@ import tk.milkthedev.paradiseclientfabric.command.impl.*;
 import tk.milkthedev.paradiseclientfabric.exploit.ExploitManager;
 import tk.milkthedev.paradiseclientfabric.exploit.impl.BrigadierExploit;
 import tk.milkthedev.paradiseclientfabric.exploit.impl.PaperWindowExploit;
-import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
-import tk.milkthedev.paradiseclientfabric.mod.ChatRoomMod;
-import tk.milkthedev.paradiseclientfabric.mod.HudMod;
-import tk.milkthedev.paradiseclientfabric.mod.MiscMod;
+import tk.milkthedev.paradiseclientfabric.mod.*;
 
 public class ParadiseClient_Fabric implements ModInitializer
 {
     private static BungeeSpoofMod bungeeSpoofMod;
     private static MiscMod miscMod;
     private static HudMod hudMod;
+    private static ChatRoomMod chatRoomMod;
+    private static ExploitMod exploitMod;
     private static CommandManager commandManager;
     private static ExploitManager exploitManager;
-    private static ChatRoomMod chatRoomMod;
+
 
     public static BungeeSpoofMod getBungeeSpoofMod() {return bungeeSpoofMod;}
     public static MiscMod getMiscMod() {return miscMod;}
     public static HudMod getHudMod() {return hudMod;}
+    public static ChatRoomMod getChatRoomMod() {return chatRoomMod;}
+    public static ExploitMod getExploitMod() {return exploitMod;}
     public static CommandManager getCommandManager() {return commandManager;}
     public static ExploitManager getExploitManager() {return exploitManager;}
-    public static ChatRoomMod getChatRoomMod() {return chatRoomMod;}
+
 
     @Override
     public void onInitialize()
@@ -34,6 +35,7 @@ public class ParadiseClient_Fabric implements ModInitializer
         miscMod = new MiscMod();
         hudMod = new HudMod();
         chatRoomMod = new ChatRoomMod();
+        exploitMod = new ExploitMod();
         commandManager = new CommandManager(
                 new SayCommand(),
                 new ScreenShareCommand(),

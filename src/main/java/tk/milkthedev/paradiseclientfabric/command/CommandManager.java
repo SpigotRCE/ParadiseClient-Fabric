@@ -45,27 +45,25 @@ public class CommandManager {
             for (Command command : getCommands()) {dispatcher.register(literal(command.getAlias()));}
             return dispatcher;
         }
-//
-//        String[] args = Arrays.copyOfRange(input.split(" "), 1, input.split(" ").length);
-//        String alias = input.split(" ")[0].replace(getPrefix(), "");
-//        Command command = getCommand(alias);
-//
-//        if (command == null) {return dispatcher;}
-//
-//        String[] suggestions = command.onTabComplete(alias, args);
-//
-//        CommandNode<CommandSource> node = dispatcher.getRoot();
-//
-//        node = node.getChild(alias);
-//        for (String arg : args)
-//        {
-//            if (node.getChild(arg) != null) {node = node.getChild(arg);}
-//        }
-//        node.getChildren().removeAll(node.getChildren());
-//        for (String suggestion : suggestions)
-//        {
-//            node.addChild(literal(suggestion).build());
-//        }
+
+        String[] args = Arrays.copyOfRange(input.split(" "), 1, input.split(" ").length);
+        String alias = input.split(" ")[0].replace(getPrefix(), "");
+        Command command = getCommand(alias);
+
+        if (command == null) return dispatcher;
+
+        String[] suggestions = command.onTabComplete(alias, args);
+
+        CommandNode<CommandSource> node = dispatcher.getRoot();
+
+        node = node.getChild(alias);
+        for (String arg : args)
+            if (node.getChild(arg) != null)
+                node = node.getChild(arg);
+
+        node.getChildren().removeAll(node.getChildren());
+        for (String suggestion : suggestions)
+            node.addChild(literal(suggestion).build());
 
         return dispatcher;
     }

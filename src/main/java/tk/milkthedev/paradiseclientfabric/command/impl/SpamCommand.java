@@ -21,6 +21,7 @@ public class SpamCommand extends Command
 {
     public static Thread thread;
     public static boolean isRunning = false;
+
     @Override
     public boolean execute(String commandAlias, String... args) throws CommandException
     {
@@ -57,21 +58,13 @@ public class SpamCommand extends Command
         {
             for (int i = 0; i < repetition; i++)
             {
-                System.out.println("tick");
                 if (!SpamCommand.isRunning)
                 {
                     SpamCommand.thread = null;
                     return;
                 }
-                try
-                {
-                    Thread.sleep(delay);
-                }
-                catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
-                System.out.println(command);
+                try {Thread.sleep(delay);}
+                catch (InterruptedException e) {e.printStackTrace();}
                 assert MinecraftClient.getInstance().player!= null;
                 MinecraftClient.getInstance().player.networkHandler.sendChatCommand(command.toString());
             }
@@ -91,21 +84,13 @@ public class SpamCommand extends Command
         }
         if (args.length == 1)
         {
-            if ("stop".startsWith(args[args.length - 1]))
-            {
-                suggestions.add("stop");
-            }
             if (!isNumber(args[args.length - 1]))
-            {
                 suggestions.add("10");
-            }
         }
         if (args.length == 2)
         {
             if (!isNumber(args[args.length - 1]))
-            {
                 suggestions.add("10");
-            }
         }
         if (args.length == 3)
         {

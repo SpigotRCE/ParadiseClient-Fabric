@@ -8,6 +8,7 @@ import tk.milkthedev.paradiseclientfabric.command.exception.CommandException;
 import tk.milkthedev.paradiseclientfabric.exploit.Exploit;
 import tk.milkthedev.paradiseclientfabric.exploit.impl.BrigadierExploit;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 @CommandInfo(
@@ -47,6 +48,14 @@ public class CrashCommand extends Command
     @Override
     public String[] onTabComplete(String commandAlias, String... args)
     {
+        ArrayList<String> suggestions = new ArrayList<>();
+        if (args.length == 0)
+        {
+            suggestions.add("off");
+            for (Exploit exploit : ParadiseClient_Fabric.getExploitManager().getExploits())
+                suggestions.add(exploit.getAlias());
+            return suggestions.toArray(new String[0]);
+        }
         return new String[0];
     }
 }

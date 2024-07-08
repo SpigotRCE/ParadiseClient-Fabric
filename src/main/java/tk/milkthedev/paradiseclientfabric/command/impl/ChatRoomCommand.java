@@ -59,7 +59,9 @@ public class ChatRoomCommand extends Command
         if (args.length == 0) {suggestions.add("connect"); suggestions.add("say"); suggestions.add("quit");}
         if (args.length > 0)
         {
-            if (args[0].equals("connect")) {suggestions.add("127.0.0.1");}
+            if (args.length == 1 && args[0].equals("connect"))
+                suggestions.add("127.0.0.1");
+
             if (args[0].equals("say") || (args[0].equals("quit"))) {return suggestions.toArray(new String[0]);}
         }
         return suggestions.toArray(new String[0]);

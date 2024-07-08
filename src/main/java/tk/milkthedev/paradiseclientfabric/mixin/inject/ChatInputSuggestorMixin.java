@@ -54,9 +54,8 @@ public abstract class ChatInputSuggestorMixin
             reader.setCursor(reader.getCursor() + length);
 
             if (this.parse == null)
-            {
                 this.parse = DISPATCHER.parse(reader, Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).getCommandSource());
-            }
+
 
             int cursor = textField.getCursor();
             if (cursor >= length && (this.window == null || !this.completingSuggestions))
@@ -66,9 +65,7 @@ public abstract class ChatInputSuggestorMixin
                 this.pendingSuggestions.thenRun(() ->
                 {
                     if (this.pendingSuggestions.isDone())
-                    {
                         this.showCommandSuggestions();
-                    }
                 });
             }
 

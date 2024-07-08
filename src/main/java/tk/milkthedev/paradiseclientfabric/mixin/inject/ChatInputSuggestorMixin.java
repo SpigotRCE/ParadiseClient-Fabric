@@ -59,7 +59,7 @@ public abstract class ChatInputSuggestorMixin
             }
 
             int cursor = textField.getCursor();
-            if ((this.window == null || !this.completingSuggestions))
+            if (cursor >= length && (this.window == null || !this.completingSuggestions))
             {
                 DISPATCHER = ParadiseClient_Fabric.getCommandManager().getCommandDispatcher(reader, DISPATCHER);
                 this.pendingSuggestions = DISPATCHER.getCompletionSuggestions(this.parse, cursor);

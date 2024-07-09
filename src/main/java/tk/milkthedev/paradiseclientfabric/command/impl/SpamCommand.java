@@ -76,6 +76,7 @@ public class SpamCommand extends Command
     @Override
     public String[] onTabComplete(String commandAlias, String... args)
     {
+        System.out.println(Arrays.toString(args));
         ArrayList<String> suggestions = new ArrayList<>();
         if (args.length == 0)
         {
@@ -84,18 +85,16 @@ public class SpamCommand extends Command
         }
         if (args.length == 1)
         {
-            if (!isNumber(args[args.length - 1]))
+            if (isNumber(args[0]))
                 suggestions.add("10");
         }
         if (args.length == 2)
         {
-            if (!isNumber(args[args.length - 1]))
-                suggestions.add("10");
-        }
-        if (args.length == 3)
-        {
-            suggestions.add("say Hi");
-            suggestions.add("/sphere 0 10");
+            if (isNumber(args[1]))
+            {
+                suggestions.add("say Hi");
+                suggestions.add("/sphere 0 10");
+            }
         }
         return suggestions.toArray(new String[0]);
     }

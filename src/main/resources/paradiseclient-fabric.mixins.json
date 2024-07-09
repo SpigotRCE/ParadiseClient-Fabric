@@ -15,7 +15,8 @@
     "ChatScreenMixin",
     "InGameHudMixin",
     "MainMixin",
-    "ScreenMixin"
+    "ScreenMixin",
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

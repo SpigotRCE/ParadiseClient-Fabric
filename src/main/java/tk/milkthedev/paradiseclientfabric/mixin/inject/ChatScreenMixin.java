@@ -32,15 +32,15 @@ public class ChatScreenMixin extends Screen
 //        System.out.println(this.chatInputSuggestor.toString());
 //    }
 
-    @Inject(method = "sendMessage", at = @At("HEAD"), cancellable = true)
-    public void sendMessageHead(String chatText, boolean addToHistory, CallbackInfo ci)
-    {
-        if (!ChatEvent.outgoingChatMessage(chatText))
-        {
-            assert this.client != null;
-            this.client.inGameHud.getChatHud().addToMessageHistory(chatText);
-
-            ci.cancel();
-        }
-    }
+//    @Inject(method = "sendMessage", at = @At("HEAD"), cancellable = true)
+//    public void sendMessageHead(String chatText, boolean addToHistory, CallbackInfo ci)
+//    {
+//        if (!ChatEvent.outgoingChatMessage(chatText))
+//        {
+//            assert this.client != null;
+//            this.client.inGameHud.getChatHud().addToMessageHistory(chatText);
+//
+//            ci.cancel();
+//        }
+//    }
 }

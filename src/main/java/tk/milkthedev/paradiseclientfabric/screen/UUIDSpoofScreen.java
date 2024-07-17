@@ -19,8 +19,7 @@ import java.util.UUID;
 
 import static tk.milkthedev.paradiseclientfabric.Constants.LOGGER;
 
-public class UUIDSpoofScreen extends Screen
-{
+public class UUIDSpoofScreen extends Screen {
     private String status;
     private TextFieldWidget bungeeUsernameField;
     private TextFieldWidget bungeeFakeUsernameField;
@@ -28,15 +27,14 @@ public class UUIDSpoofScreen extends Screen
     private final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
     private final Screen parentScreen;
     private final MinecraftClient minecraftClient = MinecraftClient.getInstance();
-    public UUIDSpoofScreen(Screen parentScreen)
-    {
+
+    public UUIDSpoofScreen(Screen parentScreen) {
         super(Text.literal("UUID Spoof"));
         this.parentScreen = parentScreen;
     }
 
     @Override
-    protected void init()
-    {
+    protected void init() {
         this.status = "Stand by";
 
         int widgetWidth = 200;
@@ -54,33 +52,33 @@ public class UUIDSpoofScreen extends Screen
         this.addSelectableChild(this.bungeeFakeUsernameField);
         this.addDrawable(this.bungeeFakeUsernameField);
 
-        premiumButton = this.addDrawableChild(ButtonWidget.builder(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium()? "Premium" : "Cracked"), button -> {
+        premiumButton = this.addDrawableChild(ButtonWidget.builder(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"), button -> {
                     bungeeSpoofMod.setBungeeUUIDPremium(!bungeeSpoofMod.isBungeeUUIDPremium());
                     premiumButton.setMessage(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"));
                 })
                 .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 15, widgetWidth, 20).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Spoof"), button -> spoof())
-            .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 40, widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 40, widgetWidth, 20).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Exit"), button -> close())
                 .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 65, widgetWidth, 20).build());
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta)
-    {
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         this.renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(this.textRenderer, this.status, this.width / 2, 20, 16777215);
     }
 
     @Override
-    public void close() {minecraftClient.setScreen(parentScreen);}
+    public void close() {
+        minecraftClient.setScreen(parentScreen);
+    }
 
     @Override
-    public void resize(MinecraftClient client, int width, int height)
-    {
+    public void resize(MinecraftClient client, int width, int height) {
         String s1 = this.bungeeUsernameField.getText();
         String s2 = this.bungeeFakeUsernameField.getText();
         this.init(client, width, height);
@@ -88,20 +86,15 @@ public class UUIDSpoofScreen extends Screen
         this.bungeeFakeUsernameField.setText(s2);
     }
 
-    private void spoof()
-    {
+    private void spoof() {
         this.bungeeSpoofMod.setBungeeUsername(this.bungeeUsernameField.getText());
         this.bungeeSpoofMod.setBungeeFakeUsername(this.bungeeFakeUsernameField.getText());
-        if (this.bungeeSpoofMod.isBungeeUUIDPremium())
-        {
-            try
-            {
+        if (this.bungeeSpoofMod.isBungeeUUIDPremium()) {
+            try {
 
                 this.bungeeSpoofMod.setBungeeUUID(fetchUUID(this.bungeeSpoofMod.getBungeeFakeUsername()));
                 this.status = "Successfully spoofed premium UUID of \"" + this.bungeeSpoofMod.getBungeeFakeUsername() + "\".";
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 this.status = "Error fetching UUID, \"" + this.bungeeSpoofMod.getBungeeFakeUsername() + "\" may not be premium.";
                 LOGGER.error(Arrays.toString(e.getStackTrace()));
             }
@@ -113,8 +106,7 @@ public class UUIDSpoofScreen extends Screen
     }
 
     // Don't blame me, it's chatgpt's code
-    public String fetchUUID(String username) throws Exception
-    {
+    public String fetchUUID(String username) throws Exception {
         String urlString = "https://api.mojang.com/users/profiles/minecraft/" + username;
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

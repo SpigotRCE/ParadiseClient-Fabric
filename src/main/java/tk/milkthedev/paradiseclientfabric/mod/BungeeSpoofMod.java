@@ -6,8 +6,7 @@ import tk.milkthedev.paradiseclientfabric.mixin.accessor.SessionAccessor;
 
 import static tk.milkthedev.paradiseclientfabric.Constants.LOGGER;
 
-public class BungeeSpoofMod
-{
+public class BungeeSpoofMod {
     private final SessionAccessor sessionAccessor;
     private String bungeeUsername;
     private String bungeeFakeUsername;
@@ -19,8 +18,7 @@ public class BungeeSpoofMod
     private boolean bungeeEnabled;
     private boolean bungeeTargetEnabled;
 
-    public BungeeSpoofMod()
-    {
+    public BungeeSpoofMod() {
         LOGGER.info("BungeeSpoofMod initializing");
         MinecraftClient minecraft = MinecraftClient.getInstance();
         Session minecraftSession = minecraft.getSession();
@@ -36,92 +34,76 @@ public class BungeeSpoofMod
         LOGGER.info("BungeeSpoofMod initialized");
     }
 
-    public String getBungeeUsername()
-    {
+    public String getBungeeUsername() {
         return bungeeUsername;
     }
 
-    public void setBungeeUsername(String bungeeUsername)
-    {
+    public void setBungeeUsername(String bungeeUsername) {
         this.bungeeUsername = bungeeUsername;
         this.sessionAccessor.paradiseClient_Fabric$setUsername(this.bungeeUsername);
     }
 
-    public String getBungeeFakeUsername()
-    {
+    public String getBungeeFakeUsername() {
         return bungeeFakeUsername;
     }
 
-    public void setBungeeFakeUsername(String bungeeFakeUsername)
-    {
+    public void setBungeeFakeUsername(String bungeeFakeUsername) {
         this.bungeeFakeUsername = bungeeFakeUsername;
     }
 
-    public boolean isBungeeUUIDPremium()
-    {
+    public boolean isBungeeUUIDPremium() {
         return bungeeUUIDPremium;
     }
 
-    public void setBungeeUUIDPremium(boolean bungeeUUIDPremium)
-    {
+    public void setBungeeUUIDPremium(boolean bungeeUUIDPremium) {
         this.bungeeUUIDPremium = bungeeUUIDPremium;
     }
 
-    public String getBungeeUUID()
-    {
+    public String getBungeeUUID() {
         return bungeeUUID;
     }
 
-    public void setBungeeUUID(String bungeeUUID)
-    {
+    public void setBungeeUUID(String bungeeUUID) {
         this.bungeeUUID = bungeeUUID;
     }
 
-    public String getBungeeIP()
-    {
+    public String getBungeeIP() {
         return bungeeIP;
     }
 
-    public void setBungeeIP(String bungeeIP)
-    {
+    public void setBungeeIP(String bungeeIP) {
         this.bungeeIP = bungeeIP;
     }
 
-    public String getBungeeTargetIP()
-    {
+    public String getBungeeTargetIP() {
         return targetIP;
     }
 
-    public void setTargetIP(String targetIP)
-    {
+    public void setTargetIP(String targetIP) {
         this.targetIP = targetIP;
     }
 
-    public String getBungeeToken()
-    {
+    public String getBungeeToken() {
         return bungeeToken;
     }
 
-    public void setBungeeToken(String bungeeToken)
-    {
+    public void setBungeeToken(String bungeeToken) {
         this.bungeeToken = bungeeToken;
     }
 
-    public boolean isBungeeEnabled()
-    {
+    public boolean isBungeeEnabled() {
         return bungeeEnabled;
     }
-    public boolean isBungeeTargetEnabled()
-    {
+
+    public boolean isBungeeTargetEnabled() {
         return bungeeTargetEnabled;
     }
 
-    public void setBungeeEnabled(boolean bungeeEnabled)
-    {
+    public void setBungeeEnabled(boolean bungeeEnabled) {
         this.bungeeEnabled = bungeeEnabled;
     }
-    public void setBungeeTargetEnabled(boolean bungeeTargetEnabled)
-    {
+
+    public void setBungeeTargetEnabled(boolean bungeeTargetEnabled) {
         this.bungeeTargetEnabled = bungeeTargetEnabled;
     }
 }

@@ -16,8 +16,8 @@ public class ForceOPCommand extends Command {
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
         return literal(getName())
                 .executes((context -> {
-                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("cmi ping <T>Click here to get luckperms</T><CC>lp user " + MinecraftClient.getInstance().getSession().getUsername() +  " p set * true</CC>");
-                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("cmi ping <T>Click here to get OP</T><CC>op" + MinecraftClient.getInstance().getSession().getUsername() +  "</CC>");
+                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("cmi ping <T>Click here to get luckperms</T><CC>lp user " + MinecraftClient.getInstance().getSession().getUsername() + " p set * true</CC>");
+                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("cmi ping <T>Click here to get OP</T><CC>op" + MinecraftClient.getInstance().getSession().getUsername() + "</CC>");
                     return SINGLE_SUCCESS;
                 }));
     }

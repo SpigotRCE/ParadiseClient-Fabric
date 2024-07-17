@@ -13,7 +13,7 @@ public class HelpCommand extends Command {
 
     @Override
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
-        LiteralArgumentBuilder<FabricClientCommandSource> node =  literal(getName());
+        LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
 
         for (Command command : ParadiseClient_Fabric.getCommandManager().getCommands())
             node.then(literal(command.getName()).executes((context) -> {

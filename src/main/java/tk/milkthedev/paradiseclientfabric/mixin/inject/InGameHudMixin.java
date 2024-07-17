@@ -23,13 +23,13 @@ import java.util.Objects;
 import static tk.milkthedev.paradiseclientfabric.Helper.getChroma;
 
 @Mixin(InGameHud.class)
-public abstract class InGameHudMixin
-{
+public abstract class InGameHudMixin {
     @Final
     @Shadow
     private MinecraftClient client;
 
-    @Shadow public abstract TextRenderer getTextRenderer();
+    @Shadow
+    public abstract TextRenderer getTextRenderer();
 
     @Unique
     ClientPlayNetworkHandler clientPlayNetworkHandler;
@@ -38,16 +38,13 @@ public abstract class InGameHudMixin
     MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void init(MinecraftClient client, CallbackInfo ci)
-    {
+    public void init(MinecraftClient client, CallbackInfo ci) {
         this.clientPlayNetworkHandler = this.client.getNetworkHandler();
     }
 
     @Inject(method = "render", at = @At("TAIL"))
-    public void renderMainHud(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci)
-    {
-        if (this.client == null)
-        {
+    public void renderMainHud(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+        if (this.client == null) {
             return;
         }
 
@@ -63,20 +60,17 @@ public abstract class InGameHudMixin
         text.add("FPS " + this.client.getCurrentFps());
 
         int i = 0;
-        for (String s : text)
-        {
+        for (String s : text) {
             renderTextWithChroma(context, s, 5, 5 + this.client.textRenderer.fontHeight * i);
             i++;
         }
     }
 
     @Unique
-    private void renderTextWithChroma(DrawContext ct, String s, int x, int y)
-    {
+    private void renderTextWithChroma(DrawContext ct, String s, int x, int y) {
         char[] chars = s.toCharArray();
         int i = 0;
-        for (char aChar : chars)
-        {
+        for (char aChar : chars) {
             String c = String.valueOf(aChar);
             ct.drawText(this.client.textRenderer, c, x + i, y, getChroma(((int) Math.sqrt(x * x + y * y) * 10) + (i * -17), 1, 1).getRGB(), false);
             i += getTextRenderer().getWidth(c);

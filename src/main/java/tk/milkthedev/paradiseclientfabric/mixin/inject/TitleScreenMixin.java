@@ -14,16 +14,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TitleScreen.class)
-public abstract class TitleScreenMixin extends Screen
-{
-    protected TitleScreenMixin(Text title) {super(title);}
+public abstract class TitleScreenMixin extends Screen {
+    protected TitleScreenMixin(Text title) {
+        super(title);
+    }
 
     @Unique
     String VIAFABRICPLUS_REMINDER = "We recommend to install ViaFabricPlus";
 
     @Inject(method = "init", at = @At(value = "TAIL"))
-    public void init(CallbackInfo ci)
-    {
+    public void init(CallbackInfo ci) {
         if (!FabricLoader.getInstance().isModLoaded("viafabricplus"))
             this.addDrawableChild(ButtonWidget.builder(Text.literal(VIAFABRICPLUS_REMINDER),
                             onPress ->

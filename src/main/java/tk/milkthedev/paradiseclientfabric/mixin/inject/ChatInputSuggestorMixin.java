@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
+import tk.milkthedev.paradiseclientfabric.command.CommandManager;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -33,43 +34,40 @@ public abstract class ChatInputSuggestorMixin
     @Shadow private CompletableFuture<Suggestions> pendingSuggestions;
     @Shadow private ChatInputSuggestor.SuggestionWindow window;
 
-    @Unique
-    private static CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();
 
     @Shadow
     protected abstract void showCommandSuggestions();
 
     // Got brain fucked so used meteor's code don't mind me
-    @Inject(method = "refresh",
-            at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false),
-            cancellable = true,
-            locals = LocalCapture.CAPTURE_FAILHARD)
-    public void onRefresh(CallbackInfo ci, String string, StringReader reader)
-    {
-        String prefix = "?";
-        int length = prefix.length();
-
-        if (reader.canRead(length) && reader.getString().startsWith(prefix, reader.getCursor()))
-        {
-            reader.setCursor(reader.getCursor() + length);
-
-            if (this.parse == null)
-                this.parse = DISPATCHER.parse(reader, Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).getCommandSource());
-
-
-            int cursor = textField.getCursor();
-            if (cursor >= length && (this.window == null || !this.completingSuggestions))
-            {
-                DISPATCHER = ParadiseClient_Fabric.getCommandManager().getCommandDispatcher(reader, DISPATCHER);
-                this.pendingSuggestions = DISPATCHER.getCompletionSuggestions(this.parse, cursor);
-                this.pendingSuggestions.thenRun(() ->
-                {
-                    if (this.pendingSuggestions.isDone())
-                        this.showCommandSuggestions();
-                });
-            }
-
-            ci.cancel();
-        }
-    }
+//    @Inject(method = "refresh",
+//            at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false),
+//            cancellable = true,
+//            locals = LocalCapture.CAPTURE_FAILHARD)
+//    public void onRefresh(CallbackInfo ci, String string, StringReader reader)
+//    {
+//        String prefix = ParadiseClient_Fabric.getCommandManager().getPrefix();
+//        int length = prefix.length();
+//
+//        if (reader.canRead(length) && reader.getString().startsWith(prefix, reader.getCursor()))
+//        {
+//            reader.setCursor(reader.getCursor() + length);
+//
+//            if (this.parse == null)
+//                this.parse = ParadiseClient_Fabric.getCommandManager().DISPATCHER.parse(reader, Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).getCommandSource());
+//
+//
+//            int cursor = textField.getCursor();
+//            if (cursor >= length && (this.window == null || !this.completingSuggestions))
+//            {
+//                this.pendingSuggestions = ParadiseClient_Fabric.getCommandManager().DISPATCHER.getCompletionSuggestions(this.parse, cursor);
+//                this.pendingSuggestions.thenRun(() ->
+//                {
+//                    if (this.pendingSuggestions.isDone())
+//                        this.showCommandSuggestions();
+//                });
+//            }
+//
+//            ci.cancel();
+//        }
+//    }
 }

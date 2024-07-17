@@ -1,40 +1,34 @@
 package tk.milkthedev.paradiseclientfabric.command;
 
-import org.apache.commons.lang3.Validate;
-import tk.milkthedev.paradiseclientfabric.command.exception.CommandException;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.minecraft.client.MinecraftClient;
 
+import java.util.List;
 
-public abstract class Command
-{
-    private final String alias;
+public abstract class Command {
+    protected static final int SINGLE_SUCCESS = com.mojang.brigadier.Command.SINGLE_SUCCESS;
+    protected static final MinecraftClient mc = MinecraftClient.getInstance();
+
+    private final String name;
     private final String description;
-    private final String usage;
 
-    public Command()
-    {
-        CommandInfo commandInfo = this.getClass().getDeclaredAnnotation(CommandInfo.class);
-        Validate.notNull(commandInfo, "CONFUSED ANNOTATION EXCEPTION");
-
-        this.alias = commandInfo.alias();
-        this.description = commandInfo.description();
-        this.usage = commandInfo.usage();
+    public Command(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    public abstract boolean execute(String commandAlias, String... args) throws CommandException;
-    public abstract String[] onTabComplete(String commandAlias, String... args);
+    abstract public LiteralArgumentBuilder<FabricClientCommandSource> build();
 
-    public String getAlias()
-    {
-        return alias;
+    public String getName() {
+        return name;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public String getUsage()
-    {
-        return usage;
+    protected LiteralArgumentBuilder<FabricClientCommandSource> literal(String name) {
+        return LiteralArgumentBuilder.literal(name);
     }
 }

@@ -11,15 +11,13 @@ import tk.milkthedev.paradiseclientfabric.Constants;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 
 @Mixin(MinecraftClient.class)
-public class MinecraftClientMixin
-{
+public class MinecraftClientMixin {
     @Inject(method = "getWindowTitle", at = @At(
             value = "INVOKE",
             target = "Ljava/lang/StringBuilder;append(Ljava/lang/String;)Ljava/lang/StringBuilder;",
             ordinal = 1),
             cancellable = true)
-    private void getClientTitle(CallbackInfoReturnable<String> callback)
-    {
+    private void getClientTitle(CallbackInfoReturnable<String> callback) {
         StringBuilder titleBuilder = new StringBuilder();
         titleBuilder.append("ParadiseClient-Fabric -v ");
         titleBuilder.append(Constants.VERSION);
@@ -29,8 +27,7 @@ public class MinecraftClientMixin
     }
 
     @Inject(method = "close", at = @At(value = "HEAD"))
-    private void closeHead(CallbackInfo ci)
-    {
+    private void closeHead(CallbackInfo ci) {
         ParadiseClient_Fabric.getChatRoomMod().client.shutdown();
     }
 }

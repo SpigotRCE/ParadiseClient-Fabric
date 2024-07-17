@@ -10,42 +10,35 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ConnectionHandler implements Runnable
-{
+public class ConnectionHandler implements Runnable {
     private final Socket client;
     private final BufferedReader in;
     private final PrintWriter out;
 
-    public ConnectionHandler(Socket client, BufferedReader in, PrintWriter out)
-    {
+    public ConnectionHandler(Socket client, BufferedReader in, PrintWriter out) {
         this.client = client;
         this.in = in;
         this.out = out;
     }
 
     @Override
-    public void run()
-    {
-        try
-        {
+    public void run() {
+        try {
             assert MinecraftClient.getInstance().player != null;
             out.println(MinecraftClient.getInstance().player.getName().getLiteralString());
             String message;
-            while ((message = in.readLine())!= null)
-            {
-                if (MinecraftClient.getInstance().player == null) {continue;}
+            while ((message = in.readLine()) != null) {
+                if (MinecraftClient.getInstance().player == null) {
+                    continue;
+                }
                 Helper.printChatMessage("[ChatRoom] " + message);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             ClientImpl.getClientImpl().shutdown();
-            try
-            {
+            try {
                 this.in.close();
                 this.out.close();
-            } catch (IOException ex)
-            {
+            } catch (IOException ex) {
                 Constants.LOGGER.error("An exception raised while shutting closing reader and writer", e);
                 Helper.printChatMessage("[ChatRoom] An exception raised while shutting closing reader and writer, see logs");
                 ParadiseClient_Fabric.getChatRoomMod().isConnected = false;

@@ -15,21 +15,20 @@ import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import static tk.milkthedev.paradiseclientfabric.Constants.LOGGER;
 
 @Mixin(HandshakeC2SPacket.class)
-public class HandshakeC2SMixin
-{
+public class HandshakeC2SMixin {
     @Mutable
     @Shadow
     @Final
     private String address;
 
     @Inject(method = "<init>(ILjava/lang/String;ILnet/minecraft/network/packet/c2s/handshake/ConnectionIntent;)V", at = @At("RETURN"))
-    private void HandshakeC2SPacket(int i, String string, int j, ConnectionIntent connectionIntent, CallbackInfo ci)
-    {
+    private void HandshakeC2SPacket(int i, String string, int j, ConnectionIntent connectionIntent, CallbackInfo ci) {
         BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
 
-        if (bungeeSpoofMod.isBungeeTargetEnabled()) {this.address = bungeeSpoofMod.getBungeeTargetIP();}
-        if (bungeeSpoofMod.isBungeeEnabled() && connectionIntent == ConnectionIntent.LOGIN)
-        {
+        if (bungeeSpoofMod.isBungeeTargetEnabled()) {
+            this.address = bungeeSpoofMod.getBungeeTargetIP();
+        }
+        if (bungeeSpoofMod.isBungeeEnabled() && connectionIntent == ConnectionIntent.LOGIN) {
             this.address += "\000" + bungeeSpoofMod.getBungeeIP() + "\000" + bungeeSpoofMod.getBungeeUUID();
         }
     }

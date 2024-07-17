@@ -7,8 +7,7 @@ import tk.milkthedev.paradiseclientfabric.mod.ExploitMod;
 import tk.milkthedev.paradiseclientfabric.mod.MiscMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 
-public class PacketEvent
-{
+public class PacketEvent {
     private static final MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
     private static final ExploitMod exploitMod = ParadiseClient_Fabric.getExploitMod();
     private static final String signPayload = "{\"translate\":\"%2$s%2$s%2$s%2$s%2$s\"," +
@@ -21,23 +20,19 @@ public class PacketEvent
             "\"with\":[\"\",{\"translate\":\"%2$s%2$s%2$s%2$s\"," +
             "\"with\":[\"a\",\"a\"]}]}]}]}]}]}]}]}";
 
-    public static boolean PreIncomingPacket(Packet<?> packet)
-    {
+    public static boolean PreIncomingPacket(Packet<?> packet) {
         return true;// false means cancellation
     }
 
-    public static void PostIncomingPacket(Packet<?> packet)
-    {
+    public static void PostIncomingPacket(Packet<?> packet) {
         miscMod.averageIncomingPacketDelay = System.currentTimeMillis() - miscMod.lastIncomingPacketTime;
         miscMod.lastIncomingPacketTime = System.currentTimeMillis();
         miscMod.lastIncomingPacket = packet;
     }
 
 
-    public static boolean PreOutgoingPacket(Packet<?> packet)
-    {
-        if (packet instanceof UpdateSignC2SPacket && exploitMod.isSignExploitRunning)
-        {
+    public static boolean PreOutgoingPacket(Packet<?> packet) {
+        if (packet instanceof UpdateSignC2SPacket && exploitMod.isSignExploitRunning) {
             exploitMod.isSignExploitRunning = false;
             MinecraftClient.getInstance().getNetworkHandler().sendPacket(
                     new UpdateSignC2SPacket(
@@ -54,8 +49,7 @@ public class PacketEvent
         return true;
     }
 
-    public static void PostOutgoingPacket(Packet<?> packet)
-    {
+    public static void PostOutgoingPacket(Packet<?> packet) {
         miscMod.averageOutgoingPacketDelay = System.currentTimeMillis() - miscMod.lastOutgoingPacketTime;
         miscMod.lastOutgoingPacketTime = System.currentTimeMillis();
         miscMod.lastOutgoingPacket = packet;

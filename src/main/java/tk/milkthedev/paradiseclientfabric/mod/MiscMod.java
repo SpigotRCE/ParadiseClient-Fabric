@@ -2,8 +2,7 @@ package tk.milkthedev.paradiseclientfabric.mod;
 
 import net.minecraft.network.packet.Packet;
 
-public class MiscMod
-{
+public class MiscMod {
     public Packet<?> lastIncomingPacket;
     public long lastIncomingPacketTime;
     public long averageIncomingPacketDelay;

@@ -26,13 +26,18 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 @Mixin(ChatInputSuggestor.class)
-public abstract class ChatInputSuggestorMixin
-{
-    @Shadow private ParseResults<CommandSource> parse;
-    @Shadow @Final TextFieldWidget textField;
-    @Shadow boolean completingSuggestions;
-    @Shadow private CompletableFuture<Suggestions> pendingSuggestions;
-    @Shadow private ChatInputSuggestor.SuggestionWindow window;
+public abstract class ChatInputSuggestorMixin {
+    @Shadow
+    private ParseResults<CommandSource> parse;
+    @Shadow
+    @Final
+    TextFieldWidget textField;
+    @Shadow
+    boolean completingSuggestions;
+    @Shadow
+    private CompletableFuture<Suggestions> pendingSuggestions;
+    @Shadow
+    private ChatInputSuggestor.SuggestionWindow window;
 
 
     @Shadow

@@ -3,8 +3,7 @@ package tk.milkthedev.paradiseclientfabric.event;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import tk.milkthedev.paradiseclientfabric.command.CommandManager;
 
-public class ChatEvent
-{
+public class ChatEvent {
     private static final CommandManager commandManager = ParadiseClient_Fabric.getCommandManager();
 //    public static boolean outgoingChatMessage(String message)
 //    {

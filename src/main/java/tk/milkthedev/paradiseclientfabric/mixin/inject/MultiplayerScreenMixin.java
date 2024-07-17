@@ -14,10 +14,10 @@ import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import tk.milkthedev.paradiseclientfabric.screen.UUIDSpoofScreen;
 @Mixin(MultiplayerScreen.class)
-public abstract class MultiplayerScreenMixin extends Screen
-{
+public abstract class MultiplayerScreenMixin extends Screen {
 
-    @Shadow protected abstract void init();
+    @Shadow
+    protected abstract void init();
 
     @Unique
     BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
@@ -37,11 +37,12 @@ public abstract class MultiplayerScreenMixin extends Screen
     @Unique
     TextRenderer textRenderer;
 
-    protected MultiplayerScreenMixin(Text title) {super(title);}
+    protected MultiplayerScreenMixin(Text title) {
+        super(title);
+    }
 
     @Inject(method = "init", at = @At(value = "TAIL", target = "Lnet/minecraft/client/gui/screen/multiplayer/MultiplayerScreen;updateButtonActivationStates()V"))
-    private void init(CallbackInfo info)
-    {
+    private void init(CallbackInfo info) {
         this.textRenderer = MinecraftClient.getInstance().textRenderer;
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("UUIDSpoof"),
@@ -88,7 +89,12 @@ public abstract class MultiplayerScreenMixin extends Screen
     }
 
     @Unique
-    private Text getBungeeButtonText() {return bungeeSpoofMod.isBungeeEnabled()? Text.literal("Bungee Enabled") : Text.literal("Bungee Disabled");}
+    private Text getBungeeButtonText() {
+        return bungeeSpoofMod.isBungeeEnabled() ? Text.literal("Bungee Enabled") : Text.literal("Bungee Disabled");
+    }
+
     @Unique
-    private Text getBungeeTargetButtonText() {return bungeeSpoofMod.isBungeeTargetEnabled()? Text.literal("Hostname Enabled") : Text.literal("Hostname Disabled");}
+    private Text getBungeeTargetButtonText() {
+        return bungeeSpoofMod.isBungeeTargetEnabled() ? Text.literal("Hostname Enabled") : Text.literal("Hostname Disabled");
+    }
 }

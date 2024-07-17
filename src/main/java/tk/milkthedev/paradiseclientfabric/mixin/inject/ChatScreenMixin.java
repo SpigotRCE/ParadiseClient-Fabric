@@ -13,15 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import tk.milkthedev.paradiseclientfabric.event.ChatEvent;
 
 @Mixin(ChatScreen.class)
-public class ChatScreenMixin extends Screen
-{
+public class ChatScreenMixin extends Screen {
     @Shadow
     ChatInputSuggestor chatInputSuggestor;
-    protected ChatScreenMixin(Text title) {super(title);}
+
+    protected ChatScreenMixin(Text title) {
+        super(title);
+    }
 
     @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/ChatScreen;sendMessage(Ljava/lang/String;Z)V", shift = At.Shift.BEFORE))
-    private void keyPressedInvoke(CallbackInfoReturnable<Boolean> ci)
-    {
+    private void keyPressedInvoke(CallbackInfoReturnable<Boolean> ci) {
         assert this.client != null;
         this.client.setScreen(null);
     }

@@ -52,12 +52,13 @@ public abstract class InGameHudMixin {
 
         text.add("ParadiseClient by SpigotRCE#0");
         text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.getHudMod().showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
-        text.add("Engine " + (Objects.isNull(this.client.getNetworkHandler()) ? "" : this.client.getNetworkHandler().getBrand()));
+        text.add("Engine " + (Objects.isNull(this.clientPlayNetworkHandler) ? "" : this.clientPlayNetworkHandler.getBrand()));
         text.add("Last Incoming Packet " + (System.currentTimeMillis() - miscMod.lastIncomingPacketTime) + "ms Average " + miscMod.averageIncomingPacketDelay + "ms");
         text.add("Packet " + miscMod.lastIncomingPacket.getPacketId().id());
         text.add("Last Outgoing Packet " + (System.currentTimeMillis() - miscMod.lastOutgoingPacketTime) + "ms Average " + miscMod.averageOutgoingPacketDelay + "ms");
         text.add("Packet " + miscMod.lastOutgoingPacket.getPacketId().id());
         text.add("FPS " + this.client.getCurrentFps());
+        text.add("Player " +  this.clientPlayNetworkHandler.getPlayerList().size());
 
         int i = 0;
         for (String s : text) {

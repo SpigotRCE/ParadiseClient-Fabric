@@ -31,15 +31,12 @@ public abstract class InGameHudMixin {
     @Shadow
     public abstract TextRenderer getTextRenderer();
 
-    @Unique
-    ClientPlayNetworkHandler clientPlayNetworkHandler;
 
     @Unique
     MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(MinecraftClient client, CallbackInfo ci) {
-        this.clientPlayNetworkHandler = this.client.getNetworkHandler();
     }
 
     @Inject(method = "render", at = @At("TAIL"))
@@ -52,13 +49,13 @@ public abstract class InGameHudMixin {
 
         text.add("ParadiseClient by SpigotRCE#0");
         text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.getHudMod().showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
-        text.add("Engine " + (Objects.isNull(this.clientPlayNetworkHandler) ? "" : this.clientPlayNetworkHandler.getBrand()));
+        text.add("Engine " + (Objects.isNull(this.client.player.networkHandler) ? "" : this.client.player.networkHandler.getBrand()));
         text.add("Last Incoming Packet " + (System.currentTimeMillis() - miscMod.lastIncomingPacketTime) + "ms Average " + miscMod.averageIncomingPacketDelay + "ms");
         text.add("Packet " + miscMod.lastIncomingPacket.getPacketId().id());
         text.add("Last Outgoing Packet " + (System.currentTimeMillis() - miscMod.lastOutgoingPacketTime) + "ms Average " + miscMod.averageOutgoingPacketDelay + "ms");
         text.add("Packet " + miscMod.lastOutgoingPacket.getPacketId().id());
         text.add("FPS " + this.client.getCurrentFps());
-        text.add("Player " +  this.clientPlayNetworkHandler.getPlayerList().size());
+        text.add("Players: " + this.client.player.networkHandler.getPlayerList().size());
 
         int i = 0;
         for (String s : text) {

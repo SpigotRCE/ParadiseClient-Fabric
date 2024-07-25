@@ -24,6 +24,7 @@ public class CommandManager {
         register(new GriefCommand());
         register(new ScreenShareCommand());
         register(new SpamCommand());
+        register(new PlayersCommand());
     }
 
     private void register(Command command) {

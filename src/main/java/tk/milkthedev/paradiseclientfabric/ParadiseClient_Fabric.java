@@ -2,7 +2,6 @@ package tk.milkthedev.paradiseclientfabric;
 
 import net.fabricmc.api.ModInitializer;
 import tk.milkthedev.paradiseclientfabric.command.CommandManager;
-import tk.milkthedev.paradiseclientfabric.command.impl.*;
 import tk.milkthedev.paradiseclientfabric.exploit.ExploitManager;
 import tk.milkthedev.paradiseclientfabric.exploit.impl.BrigadierExploit;
 import tk.milkthedev.paradiseclientfabric.exploit.impl.PaperWindowExploit;

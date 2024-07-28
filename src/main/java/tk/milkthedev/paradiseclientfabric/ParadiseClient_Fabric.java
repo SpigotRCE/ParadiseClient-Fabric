@@ -5,6 +5,7 @@ import tk.milkthedev.paradiseclientfabric.command.CommandManager;
 import tk.milkthedev.paradiseclientfabric.exploit.ExploitManager;
 import tk.milkthedev.paradiseclientfabric.exploit.impl.BrigadierExploit;
 import tk.milkthedev.paradiseclientfabric.exploit.impl.PaperWindowExploit;
+import tk.milkthedev.paradiseclientfabric.exploit.impl.NegativeInfinityExploit;
 import tk.milkthedev.paradiseclientfabric.exploit.impl.SignExploit;
 import tk.milkthedev.paradiseclientfabric.mod.*;
 
@@ -58,7 +59,8 @@ public class ParadiseClient_Fabric implements ModInitializer {
         exploitManager = new ExploitManager(
                 new BrigadierExploit(),
                 new PaperWindowExploit(),
-                new SignExploit()
+                new SignExploit(),
+                new NegativeInfinityExploit()
         );
     }
 }

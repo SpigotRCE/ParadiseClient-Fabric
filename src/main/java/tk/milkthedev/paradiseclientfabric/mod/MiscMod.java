@@ -9,4 +9,5 @@ public class MiscMod {
     public Packet<?> lastOutgoingPacket;
     public long lastOutgoingPacketTime;
     public long averageOutgoingPacketDelay;
+    public String lastMessage;
 }

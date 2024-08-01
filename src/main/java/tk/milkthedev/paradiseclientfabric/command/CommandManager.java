@@ -25,6 +25,7 @@ public class CommandManager {
         register(new ScreenShareCommand());
         register(new SpamCommand());
         register(new PlayersCommand());
+        register(new ChatSentryCommand());
     }
 
     private void register(Command command) {

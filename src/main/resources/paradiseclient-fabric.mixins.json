@@ -11,11 +11,14 @@
     "SessionMixin"
   ],
   "client": [
+    "ChatHudMixin",
     "ChatInputSuggestorMixin",
     "ChatScreenMixin",
+    "EntryListWidgetMixin",
     "InGameHudMixin",
     "MainMixin",
     "ScreenMixin",
+    "SuggestionWindowMixin",
     "TitleScreenMixin"
   ],
   "injectors": {

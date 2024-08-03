@@ -14,6 +14,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
     private static ExploitMod exploitMod;
     private static CommandManager commandManager;
     private static ExploitManager exploitManager;
+    private static NetworkMod networkMod;
 
 
     public static BungeeSpoofMod getBungeeSpoofMod() {
@@ -44,6 +45,9 @@ public class ParadiseClient_Fabric implements ModInitializer {
         return exploitManager;
     }
 
+    public static NetworkMod getNetworkMod() {
+        return networkMod;
+    }
 
     @Override
     public void onInitialize() {
@@ -53,6 +57,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
         chatRoomMod = new ChatRoomMod();
         exploitMod = new ExploitMod();
         commandManager = new CommandManager();
+        networkMod = new NetworkMod();
         exploitManager = new ExploitManager(
                 new BrigadierExploit(),
                 new PaperWindowExploit(),

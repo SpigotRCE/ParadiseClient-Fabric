@@ -1,4 +1,4 @@
-package tk.milkthedev.paradiseclientfabric.mixin.inject;
+package tk.milkthedev.paradiseclientfabric.mixin.inject.minecraft;
 
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
@@ -11,8 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import tk.milkthedev.paradiseclientfabric.Constants;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import tk.milkthedev.paradiseclientfabric.discord.RPC;
-
-import java.util.concurrent.Executors;
 
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {

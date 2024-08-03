@@ -1,4 +1,4 @@
-package tk.milkthedev.paradiseclientfabric.mixin.inject;
+package tk.milkthedev.paradiseclientfabric.mixin.inject.network;
 
 import net.minecraft.network.packet.c2s.handshake.ConnectionIntent;
 import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
@@ -11,8 +11,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
-
-import static tk.milkthedev.paradiseclientfabric.Constants.LOGGER;
 
 @Mixin(HandshakeC2SPacket.class)
 public class HandshakeC2SMixin {

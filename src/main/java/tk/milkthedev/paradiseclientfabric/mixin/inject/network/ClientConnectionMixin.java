@@ -1,4 +1,4 @@
-package tk.milkthedev.paradiseclientfabric.mixin.inject;
+package tk.milkthedev.paradiseclientfabric.mixin.inject.network;
 
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.ClientConnection;

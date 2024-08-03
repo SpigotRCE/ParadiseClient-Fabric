@@ -1,4 +1,4 @@
-package tk.milkthedev.paradiseclientfabric.mixin.inject;
+package tk.milkthedev.paradiseclientfabric.mixin.inject.network;
 
 import net.minecraft.client.session.Session;
 import org.spongepowered.asm.mixin.*;

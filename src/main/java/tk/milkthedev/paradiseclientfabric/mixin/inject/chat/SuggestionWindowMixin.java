@@ -1,4 +1,4 @@
-package tk.milkthedev.paradiseclientfabric.mixin.inject;
+package tk.milkthedev.paradiseclientfabric.mixin.inject.chat;
 
 import com.mojang.brigadier.suggestion.Suggestion;
 import net.minecraft.client.MinecraftClient;

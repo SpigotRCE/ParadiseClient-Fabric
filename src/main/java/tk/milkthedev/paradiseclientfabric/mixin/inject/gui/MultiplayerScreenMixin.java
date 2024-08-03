@@ -1,4 +1,4 @@
-package tk.milkthedev.paradiseclientfabric.mixin.inject;
+package tk.milkthedev.paradiseclientfabric.mixin.inject.gui;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;

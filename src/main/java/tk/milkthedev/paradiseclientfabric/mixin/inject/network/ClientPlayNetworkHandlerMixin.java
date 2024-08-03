@@ -1,16 +1,12 @@
-package tk.milkthedev.paradiseclientfabric.mixin.inject;
+package tk.milkthedev.paradiseclientfabric.mixin.inject.network;
 
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
-
-import java.util.Objects;
 
 @Mixin(ClientPlayNetworkHandler.class)
 public abstract class ClientPlayNetworkHandlerMixin {

@@ -48,7 +48,7 @@ public class ChatHudMixin {
         savedContext = context;
         savedCurrentTick = currentTick;
 
-        scrollOffset = (float) (scrollOffset * Math.pow(0.5f, getLastFrameDuration()));
+        scrollOffset = (float) (scrollOffset * Math.pow(0.3f, getLastFrameDuration()));
 
         scrollValBefore = scrolledLines;
         scrolledLines -= getChatScrollOffset() / getLineHeight();
@@ -60,7 +60,7 @@ public class ChatHudMixin {
         int x = (int) (float) args.get(0) - 4;
         int y = (int) (float) args.get(1);
 
-        var newY = (float) ((mtc.y - y) * Math.pow(0.5f, getLastFrameDuration()) + y);
+        var newY = (float) ((mtc.y - y) * Math.pow(0.3f, getLastFrameDuration()) + y);
 
         args.set(1, (float) Math.round(newY));
         mtc = new Vec2f(x, newY);
@@ -75,7 +75,7 @@ public class ChatHudMixin {
         }
         var targetHeight = shownLineCount * getLineHeight();
 
-        maskHeightBuffer = (float) ((maskHeightBuffer - targetHeight) * Math.pow(0.5f, getLastFrameDuration()) + targetHeight);
+        maskHeightBuffer = (float) ((maskHeightBuffer - targetHeight) * Math.pow(0.3f, getLastFrameDuration()) + targetHeight);
 
         var masktop = m - Math.round(maskHeightBuffer) + (int) mtc.y;
         var maskbottom = m + (int) mtc.y;

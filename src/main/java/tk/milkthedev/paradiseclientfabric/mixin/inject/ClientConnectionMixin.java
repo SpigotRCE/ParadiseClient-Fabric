@@ -2,12 +2,14 @@ package tk.milkthedev.paradiseclientfabric.mixin.inject;
 
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.ClientConnection;
+import net.minecraft.network.DisconnectionInfo;
 import net.minecraft.network.PacketCallbacks;
 import net.minecraft.network.packet.Packet;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import tk.milkthedev.paradiseclientfabric.event.PacketEvent;
 
 @Mixin(ClientConnection.class)
@@ -34,5 +36,10 @@ public class ClientConnectionMixin {
     @Inject(method = "sendImmediately", at = @At("TAIL"))
     public void sendImmediatelyTail(Packet<?> packet, PacketCallbacks callbacks, boolean flush, CallbackInfo ci) {
         PacketEvent.PostOutgoingPacket(packet);
+    }
+
+    @Inject(method = "disconnect(Lnet/minecraft/network/DisconnectionInfo;)V", at = @At("HEAD"))
+    public void disconnectHead(DisconnectionInfo disconnectionInfo, CallbackInfo ci) {
+        ParadiseClient_Fabric.getNetworkMod().isConnected = false;
     }
 }

@@ -38,7 +38,7 @@ public class EntryListWidgetMixin {
     private void renderWidget(DrawContext dc, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         updateScActive = true;
 
-        scrollAmountBuffer = (scrollAmountBuffer - targetScroll) * Math.pow(0.5f, getLastFrameDuration()) + targetScroll;
+        scrollAmountBuffer = (scrollAmountBuffer - targetScroll) * Math.pow(0.3f, getLastFrameDuration()) + targetScroll;
         scrollAmount = Math.round(scrollAmountBuffer);
     }
 

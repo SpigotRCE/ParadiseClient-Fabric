@@ -40,7 +40,7 @@ public class SuggestionWindowMixin {
     @Inject(method = "render", at = @At("HEAD"))
     private void renderHead(DrawContext context, int mouseX, int mouseY, CallbackInfo ci) {
         savedContext = context;
-        scrollPixelOffset = (float) (scrollPixelOffset * Math.pow(0.5f, getLastFrameDuration()));
+        scrollPixelOffset = (float) (scrollPixelOffset * Math.pow(0.3f, getLastFrameDuration()));
         inWindowIndex = clamp(targetIndex - getScrollOffset() / 12, 0, suggestions.size() - 10);
     }
 

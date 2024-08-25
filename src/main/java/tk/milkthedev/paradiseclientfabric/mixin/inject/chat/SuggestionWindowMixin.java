@@ -20,14 +20,6 @@ import java.util.List;
 
 @Mixin(ChatInputSuggestor.SuggestionWindow.class)
 public class SuggestionWindowMixin {
-    @Shadow
-    private int inWindowIndex;
-    @Final
-    @Shadow
-    private List<Suggestion> suggestions;
-    @Final
-    @Shadow
-    private Rect2i area;
     @Unique
     DrawContext savedContext;
     @Unique
@@ -36,6 +28,14 @@ public class SuggestionWindowMixin {
     float scrollPixelOffset;
     @Unique
     int targetIndex;
+    @Shadow
+    private int inWindowIndex;
+    @Final
+    @Shadow
+    private List<Suggestion> suggestions;
+    @Final
+    @Shadow
+    private Rect2i area;
 
     @Inject(method = "render", at = @At("HEAD"))
     private void renderHead(DrawContext context, int mouseX, int mouseY, CallbackInfo ci) {

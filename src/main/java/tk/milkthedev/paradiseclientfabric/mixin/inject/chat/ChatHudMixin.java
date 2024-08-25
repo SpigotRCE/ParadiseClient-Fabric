@@ -22,12 +22,6 @@ import java.util.List;
 
 @Mixin(value = ChatHud.class, priority = 1001) // just above the default priority
 public class ChatHudMixin {
-    @Shadow
-    private int scrolledLines;
-    @Final
-    @Shadow
-    private List<ChatHudLine.Visible> visibleMessages;
-
     @Unique
     float scrollOffset;
     @Unique
@@ -42,6 +36,11 @@ public class ChatHudMixin {
     int savedCurrentTick;
     @Unique
     Vec2f mtc = new Vec2f(0, 0); // matrix translate
+    @Shadow
+    private int scrolledLines;
+    @Final
+    @Shadow
+    private List<ChatHudLine.Visible> visibleMessages;
 
     @Inject(method = "render", at = @At("HEAD"))
     public void renderH(DrawContext context, int currentTick, int mouseX, int mouseY, boolean focused, CallbackInfo ci) {

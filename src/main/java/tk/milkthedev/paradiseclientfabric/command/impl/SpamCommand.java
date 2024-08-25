@@ -1,20 +1,17 @@
 package tk.milkthedev.paradiseclientfabric.command.impl;
 
-import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.tree.CommandNode;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import tk.milkthedev.paradiseclientfabric.Helper;
 import tk.milkthedev.paradiseclientfabric.command.Command;
 
 public class SpamCommand extends Command {
+    public static boolean isRunning = false;
+    private Thread thread;
     public SpamCommand() {
         super("paradisespam", "Spams the specified command");
     }
-
-    private Thread thread;
-    public static boolean isRunning = false;
 
     @Override
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {

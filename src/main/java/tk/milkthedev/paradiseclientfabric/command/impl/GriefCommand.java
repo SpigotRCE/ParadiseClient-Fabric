@@ -1,7 +1,6 @@
 package tk.milkthedev.paradiseclientfabric.command.impl;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import tk.milkthedev.paradiseclientfabric.Helper;

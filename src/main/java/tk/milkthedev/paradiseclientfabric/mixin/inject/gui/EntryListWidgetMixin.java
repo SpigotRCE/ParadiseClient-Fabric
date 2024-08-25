@@ -13,19 +13,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EntryListWidget.class)
 public class EntryListWidgetMixin {
-    @Shadow
-    private double scrollAmount;
     @Unique
     double scrollAmountBuffer;
     @Unique
     double targetScroll;
     @Unique
     boolean activeMouseScrolling = false;
-
     @Unique
     double scrollValBefore;
     @Unique
     boolean updateScActive = false;
+    @Shadow
+    private double scrollAmount;
 
     @Inject(method = "setScrollAmount", at = @At("TAIL"))
     private void setScrollAmount(double s, CallbackInfo ci) {

@@ -4,8 +4,8 @@ import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import tk.milkthedev.paradiseclientfabric.Constants;
@@ -20,12 +20,11 @@ public class MinecraftClientMixin {
             ordinal = 1),
             cancellable = true)
     private void getClientTitle(CallbackInfoReturnable<String> callback) {
-        StringBuilder titleBuilder = new StringBuilder();
-        titleBuilder.append("ParadiseClient-Fabric -v ");
-        titleBuilder.append(Constants.VERSION);
-        titleBuilder.append(" | ");
-        titleBuilder.append(SharedConstants.getGameVersion().getName());
-        callback.setReturnValue(titleBuilder.toString());
+        String titleBuilder = "ParadiseClient-Fabric -v " +
+                Constants.VERSION +
+                " | " +
+                SharedConstants.getGameVersion().getName();
+        callback.setReturnValue(titleBuilder);
     }
 
     @Inject(method = "close", at = @At(value = "HEAD"))
@@ -39,7 +38,7 @@ public class MinecraftClientMixin {
     }
 
     @Inject(method = "setScreen", at = @At(value = "HEAD"))
-    private void setScreenHead(Screen screen, CallbackInfo ci)  {
+    private void setScreenHead(Screen screen, CallbackInfo ci) {
         ParadiseClient_Fabric.getMiscMod().currentScreen = screen;
     }
 }

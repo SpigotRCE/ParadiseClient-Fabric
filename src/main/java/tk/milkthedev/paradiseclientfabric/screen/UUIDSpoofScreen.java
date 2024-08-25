@@ -1,14 +1,14 @@
 package tk.milkthedev.paradiseclientfabric.screen;
 
-import com.google.gson.*;
+import com.google.gson.JsonParser;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
-import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
+import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -20,13 +20,13 @@ import java.util.UUID;
 import static tk.milkthedev.paradiseclientfabric.Constants.LOGGER;
 
 public class UUIDSpoofScreen extends Screen {
+    private final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
+    private final Screen parentScreen;
+    private final MinecraftClient minecraftClient = MinecraftClient.getInstance();
     private String status;
     private TextFieldWidget bungeeUsernameField;
     private TextFieldWidget bungeeFakeUsernameField;
     private ButtonWidget premiumButton;
-    private final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
-    private final Screen parentScreen;
-    private final MinecraftClient minecraftClient = MinecraftClient.getInstance();
 
     public UUIDSpoofScreen(Screen parentScreen) {
         super(Text.literal("UUID Spoof"));

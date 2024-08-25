@@ -8,13 +8,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Arrays;
 
 public class ClientImpl implements Runnable {
-    private Socket clientSocket;
-    private String host;
-    private int port;
     private static ClientImpl clientImpl;
+    private Socket clientSocket;
+    private final String host;
+    private final int port;
     private BufferedReader in;
     private PrintWriter out;
     private Thread thread;
@@ -23,6 +22,10 @@ public class ClientImpl implements Runnable {
         clientImpl = this;
         this.host = host;
         this.port = port;
+    }
+
+    public static ClientImpl getClientImpl() {
+        return clientImpl;
     }
 
     @Override
@@ -76,9 +79,5 @@ public class ClientImpl implements Runnable {
 
     public void sendMessage(String message) {
         out.println(message);
-    }
-
-    public static ClientImpl getClientImpl() {
-        return clientImpl;
     }
 }

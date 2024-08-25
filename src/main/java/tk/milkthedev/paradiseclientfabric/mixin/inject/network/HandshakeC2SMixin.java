@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
+import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
 
 @Mixin(HandshakeC2SPacket.class)
 public class HandshakeC2SMixin {

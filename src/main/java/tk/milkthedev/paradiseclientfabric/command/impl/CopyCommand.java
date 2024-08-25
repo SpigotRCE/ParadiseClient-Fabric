@@ -5,9 +5,9 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import tk.milkthedev.paradiseclientfabric.Helper;
 import tk.milkthedev.paradiseclientfabric.command.Command;
 
-import java.awt.datatransfer.StringSelection;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 
 public class CopyCommand extends Command {
     public CopyCommand() {

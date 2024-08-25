@@ -3,9 +3,9 @@ package tk.milkthedev.paradiseclientfabric.event;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.c2s.play.UpdateSignC2SPacket;
+import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import tk.milkthedev.paradiseclientfabric.mod.ExploitMod;
 import tk.milkthedev.paradiseclientfabric.mod.MiscMod;
-import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 
 public class PacketEvent {
     private static final MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();

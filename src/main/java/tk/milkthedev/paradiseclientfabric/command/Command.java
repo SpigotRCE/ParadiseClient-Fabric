@@ -4,8 +4,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 
-import java.util.List;
-
 public abstract class Command {
     protected static final int SINGLE_SUCCESS = com.mojang.brigadier.Command.SINGLE_SUCCESS;
     protected static final MinecraftClient mc = MinecraftClient.getInstance();

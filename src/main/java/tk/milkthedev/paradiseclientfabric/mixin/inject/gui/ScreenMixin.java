@@ -19,12 +19,12 @@ import tk.milkthedev.paradiseclientfabric.Constants;
 
 @Mixin(Screen.class)
 public abstract class ScreenMixin {
+    @Unique
+    private final Identifier backgroundImage = Identifier.of(Constants.MOD_ID, "wallpaper.png");
     @Shadow
     public int height;
     @Shadow
     public int width;
-    @Unique
-    private final Identifier backgroundImage = Identifier.of(Constants.MOD_ID, "wallpaper.png");
     @Unique
     private Screen screen;
 

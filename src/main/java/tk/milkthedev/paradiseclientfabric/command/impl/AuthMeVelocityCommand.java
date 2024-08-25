@@ -4,10 +4,8 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
-import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 import tk.milkthedev.paradiseclientfabric.command.Command;
 import tk.milkthedev.paradiseclientfabric.packet.AuthMeVelocityPayloadPacket;
-import tk.milkthedev.paradiseclientfabric.packet.ChatSentryPayloadPacket;
 
 public class AuthMeVelocityCommand extends Command {
     public AuthMeVelocityCommand() {

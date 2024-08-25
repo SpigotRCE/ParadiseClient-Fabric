@@ -1,14 +1,11 @@
 package tk.milkthedev.paradiseclientfabric.command;
 
 import com.mojang.brigadier.CommandDispatcher;
-
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.minecraft.command.CommandSource;
 import tk.milkthedev.paradiseclientfabric.command.impl.*;
 
 import java.util.ArrayList;
-
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 public class CommandManager {
 

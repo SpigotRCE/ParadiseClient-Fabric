@@ -12,10 +12,9 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import tk.milkthedev.paradiseclientfabric.mod.MiscMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
+import tk.milkthedev.paradiseclientfabric.mod.MiscMod;
 
-import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -23,16 +22,14 @@ import static tk.milkthedev.paradiseclientfabric.Helper.getChroma;
 
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
+    @Unique
+    MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
     @Final
     @Shadow
     private MinecraftClient client;
 
     @Shadow
     public abstract TextRenderer getTextRenderer();
-
-
-    @Unique
-    MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(MinecraftClient client, CallbackInfo ci) {

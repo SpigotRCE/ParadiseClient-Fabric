@@ -17,7 +17,7 @@ public class PlayersCommand extends Command {
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
         return literal(getName())
                 .executes((context) -> {
-                    for(PlayerListEntry player : context.getSource().getPlayer().networkHandler.getPlayerList()) {
+                    for (PlayerListEntry player : context.getSource().getPlayer().networkHandler.getPlayerList()) {
                         Helper.printChatMessage(Objects.isNull(player.getDisplayName().getLiteralString()) ? "NULL" : player.getDisplayName().getLiteralString() + " " + player.getProfile().getName() + " " + player.getProfile().getId());
                     }
                     return SINGLE_SUCCESS;

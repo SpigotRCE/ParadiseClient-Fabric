@@ -95,12 +95,12 @@ public class BungeeSpoofMod {
         return bungeeEnabled;
     }
 
-    public boolean isBungeeTargetEnabled() {
-        return bungeeTargetEnabled;
-    }
-
     public void setBungeeEnabled(boolean bungeeEnabled) {
         this.bungeeEnabled = bungeeEnabled;
+    }
+
+    public boolean isBungeeTargetEnabled() {
+        return bungeeTargetEnabled;
     }
 
     public void setBungeeTargetEnabled(boolean bungeeTargetEnabled) {

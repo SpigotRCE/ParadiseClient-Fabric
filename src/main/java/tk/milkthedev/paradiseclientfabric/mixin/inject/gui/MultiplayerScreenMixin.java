@@ -4,42 +4,41 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
-import net.minecraft.client.gui.widget.*;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
 import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
+import tk.milkthedev.paradiseclientfabric.mod.BungeeSpoofMod;
 import tk.milkthedev.paradiseclientfabric.screen.UUIDSpoofScreen;
+
 @Mixin(MultiplayerScreen.class)
 public abstract class MultiplayerScreenMixin extends Screen {
 
-    @Shadow
-    protected abstract void init();
-
     @Unique
     BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
-
     @Unique
     ButtonWidget bungeeButton;
-
     @Unique
     TextFieldWidget bungeeIPButton;
-
     @Unique
     ButtonWidget bungeeTargetButton;
-
     @Unique
     TextFieldWidget bungeeTargetIPButton;
-
     @Unique
     TextRenderer textRenderer;
 
     protected MultiplayerScreenMixin(Text title) {
         super(title);
     }
+
+    @Shadow
+    protected abstract void init();
 
     @Inject(method = "init", at = @At(value = "TAIL", target = "Lnet/minecraft/client/gui/screen/multiplayer/MultiplayerScreen;updateButtonActivationStates()V"))
     private void init(CallbackInfo info) {

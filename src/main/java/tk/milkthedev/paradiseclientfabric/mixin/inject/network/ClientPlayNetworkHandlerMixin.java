@@ -12,8 +12,9 @@ import tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric;
 public abstract class ClientPlayNetworkHandlerMixin {
     /**
      * On game join
+     *
      * @param packet Game join packet
-     * @param info Callback info
+     * @param info   Callback info
      */
     @Inject(method = "onGameJoin", at = @At("TAIL"))
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo info) {

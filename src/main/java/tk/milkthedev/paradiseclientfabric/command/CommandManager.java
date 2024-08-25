@@ -26,6 +26,7 @@ public class CommandManager {
         register(new SpamCommand());
         register(new PlayersCommand());
         register(new ChatSentryCommand());
+        register(new AuthMeVelocityCommand());
     }
 
     private void register(Command command) {

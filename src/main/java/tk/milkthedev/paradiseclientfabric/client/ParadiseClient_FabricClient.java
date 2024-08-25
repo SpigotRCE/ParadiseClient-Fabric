@@ -2,6 +2,7 @@ package tk.milkthedev.paradiseclientfabric.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import tk.milkthedev.paradiseclientfabric.packet.AuthMeVelocityPayloadPacket;
 import tk.milkthedev.paradiseclientfabric.packet.ChatSentryPayloadPacket;
 
 public class ParadiseClient_FabricClient implements ClientModInitializer {
@@ -9,5 +10,7 @@ public class ParadiseClient_FabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         PayloadTypeRegistry.playC2S().register(ChatSentryPayloadPacket.ID, ChatSentryPayloadPacket.CODEC);
         PayloadTypeRegistry.playS2C().register(ChatSentryPayloadPacket.ID, ChatSentryPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(AuthMeVelocityPayloadPacket.ID, AuthMeVelocityPayloadPacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(AuthMeVelocityPayloadPacket.ID, AuthMeVelocityPayloadPacket.CODEC);
     }
 }

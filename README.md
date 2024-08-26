@@ -1,4 +1,4 @@
-# ParadiseClient-Fabric v2.17
+# ParadiseClient-Fabric v2.18
 
 * ParadiseClient-Fabric is a Minecraft Fabric mod made for pentesting Minecraft servers/networks.
 * This project is open source, but you are not allowed to modify, or distribute as your own without the permission of

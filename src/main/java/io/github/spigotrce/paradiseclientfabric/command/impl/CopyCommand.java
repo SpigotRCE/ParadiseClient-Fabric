@@ -4,14 +4,15 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
+import net.minecraft.client.MinecraftClient;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
 public class CopyCommand extends Command {
-    public CopyCommand() {
-        super("paradisecopy", "Copies the broadcast of SpigotRCE");
+    public CopyCommand(MinecraftClient minecraftClient) {
+        super("paradisecopy", "Copies the broadcast of SpigotRCE", minecraftClient);
     }
 
     @Override

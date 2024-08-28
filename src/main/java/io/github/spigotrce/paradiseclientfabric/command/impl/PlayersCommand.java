@@ -2,6 +2,7 @@ package io.github.spigotrce.paradiseclientfabric.command.impl;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
@@ -10,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayersCommand extends Command {
-    public PlayersCommand() {
-        super("paradiseplayers", "Gets info about players online on the server");
+    public PlayersCommand(MinecraftClient minecraftClient) {
+        super("paradiseplayers", "Gets info about players online on the server", minecraftClient);
     }
 
     @Override

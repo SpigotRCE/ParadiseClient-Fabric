@@ -6,14 +6,15 @@ import net.minecraft.client.MinecraftClient;
 
 public abstract class Command {
     protected static final int SINGLE_SUCCESS = com.mojang.brigadier.Command.SINGLE_SUCCESS;
-    protected static final MinecraftClient mc = MinecraftClient.getInstance();
+    private final MinecraftClient minecraftClient;
 
     private final String name;
     private final String description;
 
-    public Command(String name, String description) {
+    public Command(String name, String description, MinecraftClient minecraftClient) {
         this.name = name;
         this.description = description;
+        this.minecraftClient = minecraftClient;
     }
 
     abstract public LiteralArgumentBuilder<FabricClientCommandSource> build();
@@ -24,6 +25,10 @@ public abstract class Command {
 
     public String getDescription() {
         return description;
+    }
+
+    public MinecraftClient getMinecraftClient() {
+        return minecraftClient;
     }
 
     protected LiteralArgumentBuilder<FabricClientCommandSource> literal(String name) {

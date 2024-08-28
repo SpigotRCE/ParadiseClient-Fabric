@@ -5,10 +5,11 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
+import net.minecraft.client.MinecraftClient;
 
 public class ScreenShareCommand extends Command {
-    public ScreenShareCommand() {
-        super("paradisescreenshare", "Toggles IP displayed on HUD");
+    public ScreenShareCommand(MinecraftClient minecraftClient) {
+        super("paradisescreenshare", "Toggles IP displayed on HUD", minecraftClient);
     }
 
     @Override

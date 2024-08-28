@@ -8,8 +8,8 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 import java.util.Objects;
 
 public class ForceOPCommand extends Command {
-    public ForceOPCommand() {
-        super("paradiseforceop", "Gives OP thru CMI console command sender exploit");
+    public ForceOPCommand(MinecraftClient minecraftClient) {
+        super("paradiseforceop", "Gives OP thru CMI console command sender exploit", minecraftClient);
     }
 
     @Override

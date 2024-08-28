@@ -6,11 +6,12 @@ import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
 import io.github.spigotrce.paradiseclientfabric.exploit.Exploit;
+import net.minecraft.client.MinecraftClient;
 
 public class CrashCommand extends Command {
 
-    public CrashCommand() {
-        super("paradisecrash", "Crashes the server");
+    public CrashCommand(MinecraftClient minecraftClient) {
+        super("paradisecrash", "Crashes the server", minecraftClient);
     }
 
     @Override

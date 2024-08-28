@@ -5,8 +5,10 @@ import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
 import io.github.spigotrce.paradiseclientfabric.command.CommandManager;
 import io.github.spigotrce.paradiseclientfabric.exploit.ExploitManager;
+import net.minecraft.client.MinecraftClient;
 
 public class ParadiseClient_Fabric implements ModInitializer {
+    private MinecraftClient minecraftClient;
     private static BungeeSpoofMod bungeeSpoofMod;
     private static MiscMod miscMod;
     private static HudMod hudMod;
@@ -51,12 +53,13 @@ public class ParadiseClient_Fabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        this.minecraftClient = MinecraftClient.getInstance();
         bungeeSpoofMod = new BungeeSpoofMod();
         miscMod = new MiscMod();
         hudMod = new HudMod();
         chatRoomMod = new ChatRoomMod();
         exploitMod = new ExploitMod();
-        commandManager = new CommandManager();
+        commandManager = new CommandManager(this.minecraftClient);
         networkMod = new NetworkMod();
         exploitManager = new ExploitManager(
                 new BrigadierExploit(),

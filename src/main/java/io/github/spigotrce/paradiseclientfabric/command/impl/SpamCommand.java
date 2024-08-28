@@ -50,8 +50,8 @@ public class SpamCommand extends Command {
                                                     } catch (InterruptedException e) {
                                                         e.printStackTrace();
                                                     }
-                                                    assert MinecraftClient.getInstance().player != null;
-                                                    MinecraftClient.getInstance().player.networkHandler.sendChatCommand(context.getInput().split(" ")[3]);
+                                                    assert getMinecraftClient().player != null;
+                                                    getMinecraftClient().player.networkHandler.sendChatCommand(context.getInput().split(" ")[3]);
                                                 }
                                             });
                                             thread.start();

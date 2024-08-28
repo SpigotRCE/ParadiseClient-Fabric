@@ -17,7 +17,7 @@ public class ChatSentryCommand extends Command {
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
         return literal(getName())
                 .executes(context -> {
-                    MinecraftClient.getInstance().getNetworkHandler().sendPacket(new CustomPayloadC2SPacket(new ChatSentryPayloadPacket(ParadiseClient_Fabric.getMiscMod().lastMessage)));
+                    getMinecraftClient().getNetworkHandler().sendPacket(new CustomPayloadC2SPacket(new ChatSentryPayloadPacket(ParadiseClient_Fabric.getMiscMod().lastMessage)));
                     return SINGLE_SUCCESS;
                 });
     }

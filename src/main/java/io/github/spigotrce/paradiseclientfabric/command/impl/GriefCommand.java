@@ -18,23 +18,23 @@ public class GriefCommand extends Command {
         return literal(getName())
                 .then(literal("tpall")
                         .executes((context) -> {
-                            Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("tpall");
-                            Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("etpall");
-                            Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("minecraft:tp @a @p");
-                            Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("tp @a @p");
+                            Objects.requireNonNull(getMinecraftClient().getNetworkHandler()).sendChatCommand("tpall");
+                            Objects.requireNonNull(getMinecraftClient().getNetworkHandler()).sendChatCommand("etpall");
+                            Objects.requireNonNull(getMinecraftClient().getNetworkHandler()).sendChatCommand("minecraft:tp @a @p");
+                            Objects.requireNonNull(getMinecraftClient().getNetworkHandler()).sendChatCommand("tp @a @p");
                             return SINGLE_SUCCESS;
                         })
                 )
                 .then(literal("fill")
                         .then(literal("air")
                                 .executes((context) -> {
-                                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("minecraft:fill ~12 ~12 ~12 ~-12 ~-12 ~-12 air");
+                                    Objects.requireNonNull(getMinecraftClient().getNetworkHandler()).sendChatCommand("minecraft:fill ~12 ~12 ~12 ~-12 ~-12 ~-12 air");
                                     return SINGLE_SUCCESS;
                                 })
                         )
                         .then(literal("lava")
                                 .executes((context) -> {
-                                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("minecraft:fill ~12 ~12 ~12 ~-12 ~-12 ~-12 lava");
+                                    Objects.requireNonNull(getMinecraftClient().getNetworkHandler()).sendChatCommand("minecraft:fill ~12 ~12 ~12 ~-12 ~-12 ~-12 lava");
                                     return SINGLE_SUCCESS;
                                 })
                         )
@@ -46,13 +46,13 @@ public class GriefCommand extends Command {
                 .then(literal("sphere")
                         .then(literal("air")
                                 .executes((context) -> {
-                                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("/sphere air 10");
+                                    Objects.requireNonNull(getMinecraftClient().getNetworkHandler()).sendChatCommand("/sphere air 10");
                                     return SINGLE_SUCCESS;
                                 })
                         )
                         .then(literal("lava")
                                 .executes((context) -> {
-                                    Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendChatCommand("/sphere lava 10");
+                                    Objects.requireNonNull(getMinecraftClient().getNetworkHandler()).sendChatCommand("/sphere lava 10");
                                     return SINGLE_SUCCESS;
                                 })
                         )

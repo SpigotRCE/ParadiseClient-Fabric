@@ -16,7 +16,7 @@ public class AuthMeVelocityCommand extends Command {
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
         return literal(getName())
                 .executes(context -> {
-                    MinecraftClient.getInstance().getNetworkHandler().sendPacket(new CustomPayloadC2SPacket(new AuthMeVelocityPayloadPacket()));
+                    getMinecraftClient().getNetworkHandler().sendPacket(new CustomPayloadC2SPacket(new AuthMeVelocityPayloadPacket()));
                     return SINGLE_SUCCESS;
                 });
     }

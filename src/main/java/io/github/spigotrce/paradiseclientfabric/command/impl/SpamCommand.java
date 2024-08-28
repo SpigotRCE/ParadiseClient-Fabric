@@ -9,8 +9,8 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 public class SpamCommand extends Command {
     public static boolean isRunning = false;
     private Thread thread;
-    public SpamCommand() {
-        super("paradisespam", "Spams the specified command");
+    public SpamCommand(MinecraftClient minecraftClient) {
+        super("paradisespam", "Spams the specified command", minecraftClient);
     }
 
     @Override

@@ -5,10 +5,11 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
+import net.minecraft.client.MinecraftClient;
 
 public class HelpCommand extends Command {
-    public HelpCommand() {
-        super("paradisehelp", "Shows help page");
+    public HelpCommand(MinecraftClient minecraftClient) {
+        super("paradisehelp", "Shows help page", minecraftClient);
     }
 
     @Override

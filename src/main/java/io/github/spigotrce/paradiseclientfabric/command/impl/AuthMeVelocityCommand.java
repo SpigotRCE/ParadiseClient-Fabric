@@ -8,8 +8,8 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 import io.github.spigotrce.paradiseclientfabric.packet.AuthMeVelocityPayloadPacket;
 
 public class AuthMeVelocityCommand extends Command {
-    public AuthMeVelocityCommand() {
-        super("paradiseauthmebypass", "Bypasses AuthMe if the server is using AuthMeVelocity");
+    public AuthMeVelocityCommand(MinecraftClient minecraftClient) {
+        super("paradiseauthmebypass", "Bypasses AuthMe if the server is using AuthMeVelocity", minecraftClient);
     }
 
     @Override

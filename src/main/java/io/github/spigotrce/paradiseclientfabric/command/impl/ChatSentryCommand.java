@@ -9,8 +9,8 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 import io.github.spigotrce.paradiseclientfabric.packet.ChatSentryPayloadPacket;
 
 public class ChatSentryCommand extends Command {
-    public ChatSentryCommand() {
-        super("paradisechatsentry", "Executes bungee command thru console");
+    public ChatSentryCommand(MinecraftClient minecraftClient) {
+        super("paradisechatsentry", "Executes bungee command thru console", minecraftClient);
     }
 
     @Override

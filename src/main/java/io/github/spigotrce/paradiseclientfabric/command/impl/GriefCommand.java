@@ -9,8 +9,8 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 import java.util.Objects;
 
 public class GriefCommand extends Command {
-    public GriefCommand() {
-        super("paradisegrief", "Multiple grief commands");
+    public GriefCommand(MinecraftClient minecraftClient) {
+        super("paradisegrief", "Multiple grief commands", minecraftClient);
     }
 
     @Override

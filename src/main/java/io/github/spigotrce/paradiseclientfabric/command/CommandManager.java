@@ -23,8 +23,6 @@ public class CommandManager {
         register(new ScreenShareCommand(minecraftClient));
         register(new SpamCommand(minecraftClient));
         register(new PlayersCommand(minecraftClient));
-        register(new ChatSentryCommand(minecraftClient));
-        register(new AuthMeVelocityCommand(minecraftClient));
     }
 
     private void register(Command command) {

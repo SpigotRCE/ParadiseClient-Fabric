@@ -13,10 +13,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "tk.milkthedev.paradiseclientfabric.client.ParadiseClient_FabricClient"
+      "io.github.spigotrce.paradiseclientfabric.client.ParadiseClient_FabricClient"
     ],
     "main": [
-      "tk.milkthedev.paradiseclientfabric.ParadiseClient_Fabric"
+      "io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric"
     ]
   },
   "mixins": [

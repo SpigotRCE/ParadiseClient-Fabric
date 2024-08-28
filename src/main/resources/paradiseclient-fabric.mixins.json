@@ -1,14 +1,9 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "tk.milkthedev.paradiseclientfabric.mixin.inject",
+  "package": "io.github.spigotrce.paradiseclientfabric.mixin.inject",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "gui.MultiplayerScreenMixin",
-    "minecraft.MinecraftClientMixin",
-    "network.ClientConnectionMixin",
-    "network.HandshakeC2SMixin",
-    "network.SessionMixin"
   ],
   "client": [
     "chat.ChatHudMixin",
@@ -16,10 +11,15 @@
     "chat.ChatScreenMixin",
     "chat.SuggestionWindowMixin",
     "gui.EntryListWidgetMixin",
+    "gui.MultiplayerScreenMixin",
     "gui.InGameHudMixin",
+    "minecraft.MinecraftClientMixin",
     "gui.ScreenMixin",
+    "network.ClientConnectionMixin",
     "gui.TitleScreenMixin",
+    "network.HandshakeC2SMixin",
     "minecraft.MainMixin",
+    "network.SessionMixin",
     "network.ClientPlayNetworkHandlerMixin"
   ],
   "injectors": {

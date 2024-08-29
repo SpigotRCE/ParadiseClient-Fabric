@@ -29,9 +29,16 @@ jobs:
       - name: Find JAR file
         id: find-jar
         run: |
-          JAR_FILE=$(ls build/libs/*.jar)
+          # Find JAR files that start with 'ParadiseClient'
+          JAR_FILES=(build/libs/ParadiseClient*.jar)
+          if [ ${#JAR_FILES[@]} -ne 1 ]; then
+            echo "Error: Expected exactly one JAR file starting with 'ParadiseClient', found ${#JAR_FILES[@]} files."
+            exit 1
+          fi
+          JAR_FILE="${JAR_FILES[0]}"
+          JAR_NAME=$(basename "$JAR_FILE")
           echo "JAR_FILE=$JAR_FILE" >> $GITHUB_ENV
-          echo "JAR_NAME=$(basename $JAR_FILE)" >> $GITHUB_ENV
+          echo "JAR_NAME=$JAR_NAME" >> $GITHUB_ENV
 
       - name: Upload artifact to Nexus
         run: |

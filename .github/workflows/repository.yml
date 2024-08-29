@@ -1,0 +1,39 @@
+name: Build and Upload to Nexus
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on pushes to the main branch
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'  # Adjust the version as needed
+
+      - name: Build project
+        run: ./gradlew build  # Adjust to your build command
+
+      - name: Find JAR file
+        id: find-jar
+        run: |
+          JAR_FILE=$(ls build/libs/*.jar)
+          echo "JAR_FILE=$JAR_FILE" >> $GITHUB_ENV
+          echo "JAR_NAME=$(basename $JAR_FILE)" >> $GITHUB_ENV
+
+      - name: Upload artifact to Nexus
+        run: |
+          curl -u ${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }} \
+               --upload-file ${{ env.JAR_FILE }} \
+               https://repo.nexus-craft.org/ParadiseClient/${{ env.JAR_NAME }}
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}

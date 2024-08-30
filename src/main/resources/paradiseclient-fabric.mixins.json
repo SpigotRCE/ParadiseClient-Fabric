@@ -11,16 +11,17 @@
     "chat.ChatScreenMixin",
     "chat.SuggestionWindowMixin",
     "gui.EntryListWidgetMixin",
-    "gui.MultiplayerScreenMixin",
     "gui.InGameHudMixin",
-    "minecraft.MinecraftClientMixin",
+    "gui.MultiplayerScreenMixin",
+    "gui.RotatingCubeMapRendererMixin",
     "gui.ScreenMixin",
-    "network.ClientConnectionMixin",
     "gui.TitleScreenMixin",
-    "network.HandshakeC2SMixin",
     "minecraft.MainMixin",
-    "network.SessionMixin",
-    "network.ClientPlayNetworkHandlerMixin"
+    "minecraft.MinecraftClientMixin",
+    "network.ClientConnectionMixin",
+    "network.ClientPlayNetworkHandlerMixin",
+    "network.HandshakeC2SMixin",
+    "network.SessionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

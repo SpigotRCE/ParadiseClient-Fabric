@@ -19,8 +19,6 @@ import io.github.spigotrce.paradiseclientfabric.Constants;
 
 @Mixin(Screen.class)
 public abstract class ScreenMixin {
-    @Unique
-    private final Identifier backgroundImage = Identifier.of(Constants.MOD_ID, "wallpaper.png");
     @Shadow
     public int height;
     @Shadow
@@ -33,7 +31,7 @@ public abstract class ScreenMixin {
         screen = MinecraftClient.getInstance().currentScreen;
         if (screen instanceof MultiplayerScreen || screen instanceof DisconnectedScreen || screen instanceof AddServerScreen
                 || screen instanceof DirectConnectScreen || screen instanceof ConnectScreen) {
-            context.drawTexture(backgroundImage, 0, 0, this.width, this.height, 0.0F, 0.0F, this.width, this.height, this.width, this.height);
+            context.drawTexture(Constants.backgroundImage, 0, 0, this.width, this.height, 0.0F, 0.0F, this.width, this.height, this.width, this.height);
             ci.cancel();
         }
     }

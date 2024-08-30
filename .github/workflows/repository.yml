@@ -1,0 +1,60 @@
+name: Build and Upload to Nexus
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build project
+        run: ./gradlew build
+
+      - name: Find JAR file
+        id: find-jar
+        run: |
+          # Find JAR files that start with 'ParadiseClient-Fabric-' and do not end with '-dev.jar' or '-sources.jar'
+          JAR_FILES=(build/libs/ParadiseClient-Fabric-*.jar)
+          
+          # Filter to get the base version JAR (exclude -dev and -sources)
+          BASE_JAR_FILES=()
+          for file in "${JAR_FILES[@]}"; do
+            if [[ ! "$file" == *"-dev.jar" && ! "$file" == *"-sources.jar" ]]; then
+              BASE_JAR_FILES+=("$file")
+            fi
+          done
+
+          if [ ${#BASE_JAR_FILES[@]} -ne 1 ]; then
+            echo "Error: Expected exactly one base version JAR file, found ${#BASE_JAR_FILES[@]} files."
+            exit 1
+          fi
+
+          JAR_FILE="${BASE_JAR_FILES[0]}"
+          JAR_NAME=$(basename "$JAR_FILE")
+          echo "JAR_FILE=$JAR_FILE" >> $GITHUB_ENV
+          echo "JAR_NAME=$JAR_NAME" >> $GITHUB_ENV
+
+      - name: Upload artifact to Nexus
+        run: |
+          curl -u ${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }} \
+               --upload-file ${{ env.JAR_FILE }} \
+               https://repo.nexus-craft.org/ParadiseClient/${{ env.JAR_NAME }}
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}

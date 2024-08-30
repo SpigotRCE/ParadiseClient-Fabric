@@ -25,7 +25,7 @@ public class CommandManager {
         register(new PlayersCommand(minecraftClient));
     }
 
-    private void register(Command command) {
+    public void register(Command command) {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
                         command.build()

@@ -6,13 +6,38 @@ import net.minecraft.client.MinecraftClient;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
 
+/**
+ * This class represents a command for spamming a specified command in Minecraft.
+ * It extends the {@link Command} class and overrides the {@link #build()} method to define the command structure.
+ *
+ * @author SpigotRCE
+ * @since 1.5
+ */
 public class SpamCommand extends Command {
+    /**
+     * A static boolean flag indicating whether the spamming is currently running.
+     */
     public static boolean isRunning = false;
+
+    /**
+     * A thread for executing the spamming process.
+     */
     private Thread thread;
+
+    /**
+     * Constructs a new SpamCommand instance.
+     *
+     * @param minecraftClient The Minecraft client instance.
+     */
     public SpamCommand(MinecraftClient minecraftClient) {
         super("paradisespam", "Spams the specified command", minecraftClient);
     }
 
+    /**
+     * Builds the command structure using Brigadier's LiteralArgumentBuilder.
+     *
+     * @return The built command structure.
+     */
     @Override
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
         return literal(getName())
@@ -61,6 +86,5 @@ public class SpamCommand extends Command {
                                     Helper.printChatMessage("§4§l" + context.getInput() + "<repetion> <delay> <command>");
                                     return SINGLE_SUCCESS;
                                 })));
-
     }
 }

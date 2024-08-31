@@ -101,7 +101,7 @@ public abstract class TitleScreenMixin extends Screen {
                 this.splashText.render(context, this.width, this.textRenderer, i);
 
 
-            String string = "ParadiseClient " + Constants.VERSION + "/" + SharedConstants.getGameVersion().getName();
+            String string = "ParadiseClient [" + Constants.EDITION + "]" + Constants.VERSION + "/" + SharedConstants.getGameVersion().getName();
 
             context.drawTextWithShadow(this.textRenderer, string, 2, this.height - 10, 16777215 | i);
             if (this.isRealmsNotificationsGuiDisplayed() && f >= 1.0F) {

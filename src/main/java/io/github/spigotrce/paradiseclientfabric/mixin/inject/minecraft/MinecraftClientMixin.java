@@ -20,7 +20,7 @@ public class MinecraftClientMixin {
             ordinal = 1),
             cancellable = true)
     private void getClientTitle(CallbackInfoReturnable<String> callback) {
-        callback.setReturnValue("ParadiseClient " + Constants.VERSION + "/" + SharedConstants.getGameVersion().getName());
+        callback.setReturnValue("ParadiseClient [" + Constants.EDITION + "]" + Constants.VERSION + "/" + SharedConstants.getGameVersion().getName());
     }
 
     @Inject(method = "close", at = @At(value = "HEAD"))

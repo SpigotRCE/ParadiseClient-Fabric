@@ -1,5 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
 
+import io.github.spigotrce.paradiseclientfabric.Constants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -43,7 +44,7 @@ public abstract class InGameHudMixin {
 
         ArrayList<String> text = new ArrayList<>();
 
-        text.add("ParadiseClient by SpigotRCE#0");
+        text.add("ParadiseClient [" + Constants.EDITION + "]" + " by SpigotRCE#0");
         text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.getHudMod().showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
         text.add("Engine " + (Objects.isNull(this.client.player.networkHandler) ? "" : this.client.player.networkHandler.getBrand()));
         text.add("Last Incoming Packet " + (System.currentTimeMillis() - miscMod.lastIncomingPacketTime) + "ms Average " + miscMod.averageIncomingPacketDelay + "ms");

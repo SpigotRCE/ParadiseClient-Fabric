@@ -7,6 +7,7 @@ import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.mod.ExploitMod;
 import io.github.spigotrce.paradiseclientfabric.mod.MiscMod;
 
+// TODO: Marked for removal
 public class PacketEvent {
     private static final MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
     private static final ExploitMod exploitMod = ParadiseClient_Fabric.getExploitMod();

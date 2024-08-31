@@ -8,11 +8,29 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 
 import java.util.Objects;
 
+/**
+ * This class represents a command for griefing actions in a Minecraft client.
+ * It extends the {@link Command} class and overrides the {@link #build()} method to define the command structure.
+ *
+ * @author SpigotRCE
+ * @since 1.4
+ */
 public class GriefCommand extends Command {
+
+    /**
+     * Constructs a new instance of {@link GriefCommand}.
+     *
+     * @param minecraftClient The Minecraft client instance
+     */
     public GriefCommand(MinecraftClient minecraftClient) {
         super("paradisegrief", "Multiple grief commands", minecraftClient);
     }
 
+    /**
+     * Builds the command structure using Brigadier's {@link LiteralArgumentBuilder}.
+     *
+     * @return The root command node
+     */
     @Override
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
         return literal(getName())

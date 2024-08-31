@@ -20,11 +20,7 @@ public class MinecraftClientMixin {
             ordinal = 1),
             cancellable = true)
     private void getClientTitle(CallbackInfoReturnable<String> callback) {
-        String titleBuilder = "ParadiseClient-Fabric -v " +
-                Constants.VERSION +
-                " | " +
-                SharedConstants.getGameVersion().getName();
-        callback.setReturnValue(titleBuilder);
+        callback.setReturnValue("ParadiseClient " + Constants.VERSION + "/" + SharedConstants.getGameVersion().getName());
     }
 
     @Inject(method = "close", at = @At(value = "HEAD"))

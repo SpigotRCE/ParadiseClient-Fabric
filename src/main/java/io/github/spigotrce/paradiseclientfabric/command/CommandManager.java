@@ -8,12 +8,27 @@ import net.minecraft.command.CommandSource;
 
 import java.util.ArrayList;
 
+/**
+ * Manages and registers commands for the Paradise Client Fabric mod.
+ */
 public class CommandManager {
 
+    /**
+     * The command dispatcher used to register commands.
+     */
     public final CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();
+
+    /**
+     * A list of all registered commands.
+     */
     private final ArrayList<Command> commands = new ArrayList<>();
 
 
+    /**
+     * Constructs a new CommandManager instance and registers all commands.
+     *
+     * @param minecraftClient The Minecraft client instance.
+     */
     public CommandManager(MinecraftClient minecraftClient) {
         register(new CopyCommand(minecraftClient));
         register(new CrashCommand(minecraftClient));
@@ -25,6 +40,11 @@ public class CommandManager {
         register(new PlayersCommand(minecraftClient));
     }
 
+    /**
+     * Registers a command with the command dispatcher.
+     *
+     * @param command The command to register.
+     */
     public void register(Command command) {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
@@ -34,15 +54,25 @@ public class CommandManager {
         this.commands.add(command);
     }
 
+    /**
+     * Returns a list of all registered commands.
+     *
+     * @return The list of commands.
+     */
     public ArrayList<Command> getCommands() {
         return this.commands;
     }
 
+    /**
+     * Returns the command with the specified alias, or null if no such command exists.
+     *
+     * @param alias The alias of the command to find.
+     * @return The command with the specified alias, or null if not found.
+     */
     public Command getCommand(String alias) {
         for (Command command : commands) {
             if (command.getName().equals(alias))
                 return command;
-
         }
         return null;
     }

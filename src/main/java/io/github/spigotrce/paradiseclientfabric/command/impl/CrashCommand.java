@@ -8,16 +8,33 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 import io.github.spigotrce.paradiseclientfabric.exploit.Exploit;
 import net.minecraft.client.MinecraftClient;
 
+/**
+ * Represents a command for crashing the server using various exploits.
+ *
+ * @author SpigotRCE
+ * @since 1.0.0
+ */
 public class CrashCommand extends Command {
 
+    /**
+     * Constructs a new instance of CrashCommand.
+     *
+     * @param minecraftClient The Minecraft client instance.
+     */
     public CrashCommand(MinecraftClient minecraftClient) {
         super("paradisecrash", "Crashes the server", minecraftClient);
     }
 
+    /**
+     * Builds the command structure using Brigadier's LiteralArgumentBuilder.
+     *
+     * @return The root node of the command structure.
+     */
     @Override
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
         LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
 
+        // Add subcommands for each exploit
         for (Exploit exploit : ParadiseClient_Fabric.getExploitManager().getExploits())
             node.then(literal(exploit.getAlias())
                     .executes((context) -> {
@@ -26,6 +43,7 @@ public class CrashCommand extends Command {
                         return SINGLE_SUCCESS;
                     }));
 
+        // Add a subcommand to stop all exploits
         node.then(literal("off")
                 .executes((context) -> {
                     ParadiseClient_Fabric.getExploitMod().isRunning = false;

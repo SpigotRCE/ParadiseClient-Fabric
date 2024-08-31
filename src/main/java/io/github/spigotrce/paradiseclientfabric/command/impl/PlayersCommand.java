@@ -10,11 +10,28 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a command to get information about players online on the server.
+ *
+ * @author Spigotrce
+ * @since 2.12
+ */
 public class PlayersCommand extends Command {
+
+    /**
+     * Constructs a new instance of PlayersCommand.
+     *
+     * @param minecraftClient The Minecraft client instance.
+     */
     public PlayersCommand(MinecraftClient minecraftClient) {
         super("paradiseplayers", "Gets info about players online on the server", minecraftClient);
     }
 
+    /**
+     * Builds the command using Brigadier library.
+     *
+     * @return The built command.
+     */
     @Override
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
         return literal(getName())
@@ -38,12 +55,23 @@ public class PlayersCommand extends Command {
                 });
     }
 
+    /**
+     * Represents player data.
+     */
     public static class PlayerData {
         String name;
         String uuid;
         String gameMode;
         int ping;
 
+        /**
+         * Constructs a new instance of PlayerData.
+         *
+         * @param name      The player's name.
+         * @param uuid      The player's UUID.
+         * @param gameMode  The player's game mode.
+         * @param ping      The player's ping.
+         */
         public PlayerData(String name, String uuid, String gameMode, int ping) {
             this.name = name;
             this.uuid = uuid;
@@ -51,6 +79,11 @@ public class PlayersCommand extends Command {
             this.ping = ping;
         }
 
+        /**
+         * Gets the player's information as a formatted message.
+         *
+         * @return The formatted message.
+         */
         public Text getMessage() {
             Text nameText = Helper.parseColoredText("&7" + name);
             Text uuidText = Helper.parseColoredText(" &8[&bCopy UUID&8]", uuid);
@@ -63,6 +96,11 @@ public class PlayersCommand extends Command {
                     .append(pingText);
         }
 
+        /**
+         * Gets the color code for the player's game mode.
+         *
+         * @return The color code.
+         */
         public String getGameModeColor() {
             return switch (gameMode.toLowerCase()) {
                 case "survival" -> "&c";

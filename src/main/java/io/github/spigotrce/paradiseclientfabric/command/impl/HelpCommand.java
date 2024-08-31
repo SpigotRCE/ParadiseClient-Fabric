@@ -7,15 +7,33 @@ import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
 import net.minecraft.client.MinecraftClient;
 
+/**
+ * Represents a command that displays help information for other commands.
+ *
+ * @author SpigotRCE
+ * @since 1.4
+ */
 public class HelpCommand extends Command {
+
+    /**
+     * Constructs a new instance of {@link HelpCommand}.
+     *
+     * @param minecraftClient The Minecraft client instance.
+     */
     public HelpCommand(MinecraftClient minecraftClient) {
         super("paradisehelp", "Shows help page", minecraftClient);
     }
 
+    /**
+     * Builds the command structure using Brigadier's {@link LiteralArgumentBuilder}.
+     *
+     * @return The built command structure.
+     */
     @Override
     public LiteralArgumentBuilder<FabricClientCommandSource> build() {
         LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
 
+        // Adds sub-commands for each registered command
         for (Command command : ParadiseClient_Fabric.getCommandManager().getCommands())
             node.then(literal(command.getName()).executes((context) -> {
                 Command c = ParadiseClient_Fabric.getCommandManager().getCommand(context.getInput().split(" ")[1]);
@@ -23,6 +41,7 @@ public class HelpCommand extends Command {
                 return SINGLE_SUCCESS;
             }));
 
+        // Adds a command to display all registered commands
         node.executes((context -> {
             for (Command command : ParadiseClient_Fabric.getCommandManager().getCommands())
                 Helper.printChatMessage("§4§l" + command.getName() + "§r §6" + command.getDescription());

@@ -21,39 +21,86 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * Mixin class to customize the behavior of the Title Screen in Minecraft.
+ * <p>
+ * This class modifies the Title Screen to include a custom button recommending
+ * the installation of "ViaFabricPlus" and customizes the background fade effect.
+ * It also displays additional information about the client and game version.
+ * @author SpigotRCE
+ * @since 2.9
+ * </p>
+ */
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
+    /**
+     * Message recommending the installation of "ViaFabricPlus".
+     */
     @Unique
-    String VIAFABRICPLUS_REMINDER = "We recommend to install ViaFabricPlus";
+    private final String VIAFABRICPLUS_REMINDER = "We recommend installing ViaFabricPlus";
+
+    /**
+     * The splash text renderer used to display splash texts on the Title Screen.
+     */
     @Nullable
     @Shadow
     private SplashTextRenderer splashText;
+
+    /**
+     * The Realms Notifications Screen displayed on the Title Screen if active.
+     */
     @Nullable
     @Shadow
     private RealmsNotificationsScreen realmsNotificationGui;
+
+    /**
+     * Alpha value for the background fade effect on the Title Screen.
+     */
     @Mutable
     @Shadow
     private float backgroundAlpha;
+
+    /**
+     * Flag indicating whether the background fade effect is enabled.
+     */
     @Mutable
     @Shadow
     private boolean doBackgroundFade;
+
+    /**
+     * The start time for the background fade effect, in milliseconds.
+     */
     @Mutable
     @Shadow
     private long backgroundFadeStart;
+
+    /**
+     * The logo drawer used to render the logo on the Title Screen.
+     */
     @Final
     @Shadow
     private LogoDrawer logoDrawer;
 
+    /**
+     * Constructs a new instance of the TitleScreenMixin.
+     *
+     * @param title The title of the screen.
+     */
     protected TitleScreenMixin(Text title) {
         super(title);
     }
 
+    /**
+     * Injects a custom button into the Title Screen if "viafabricplus" is not loaded.
+     * The button directs the user to a URL for installation.
+     *
+     * @param ci Callback information.
+     */
     @Inject(method = "init", at = @At(value = "TAIL"))
     public void init(CallbackInfo ci) {
-        if (!FabricLoader.getInstance().isModLoaded("viafabricplus"))
+        if (!FabricLoader.getInstance().isModLoaded("viafabricplus")) {
             this.addDrawableChild(ButtonWidget.builder(Text.literal(VIAFABRICPLUS_REMINDER),
-                            onPress ->
-                            {
+                            onPress -> {
                                 Util.getOperatingSystem().open("https://modrinth.com/mod/viafabricplus/version/3.4.2");
                                 MinecraftClient.getInstance().setScreen(new TitleScreen());
                             })
@@ -61,16 +108,40 @@ public abstract class TitleScreenMixin extends Screen {
                     .position((this.width / 2) - ((this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5) / 2), this.height / 4 + 48 + 72 + 12 + 35)
                     .build()
             );
+        }
     }
+
+    /**
+     * Checks if the Realms Notifications GUI is displayed.
+     * This method is shadowed from the original TitleScreen class.
+     *
+     * @return True if the Realms Notifications GUI is displayed, false otherwise.
+     */
     @Shadow
     private boolean isRealmsNotificationsGuiDisplayed() {
         return false;
     }
 
+    /**
+     * Sets the alpha value for widgets.
+     * This method is shadowed from the original TitleScreen class.
+     *
+     * @param alpha The alpha value to set.
+     */
     @Shadow
     private void setWidgetAlpha(float alpha) {
     }
 
+    /**
+     * Renders the Title Screen with custom background and additional information.
+     * This method handles background fading and custom text rendering.
+     *
+     * @param context The draw context used for rendering.
+     * @param mouseX  The mouse X position.
+     * @param mouseY  The mouse Y position.
+     * @param delta   The delta time since the last frame.
+     * @param ci      Callback information.
+     */
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (this.backgroundFadeStart == 0L && this.doBackgroundFade) {
@@ -97,12 +168,11 @@ public abstract class TitleScreenMixin extends Screen {
         if ((i & -67108864) != 0) {
             super.render(context, mouseX, mouseY, delta);
             this.logoDrawer.draw(context, this.width, f);
-            if (this.splashText != null && !(Boolean)this.client.options.getHideSplashTexts().getValue())
+            if (this.splashText != null && !(Boolean)this.client.options.getHideSplashTexts().getValue()) {
                 this.splashText.render(context, this.width, this.textRenderer, i);
-
+            }
 
             String string = "ParadiseClient [" + Constants.EDITION + "]" + Constants.VERSION + "/" + SharedConstants.getGameVersion().getName();
-
             context.drawTextWithShadow(this.textRenderer, string, 2, this.height - 10, 16777215 | i);
             if (this.isRealmsNotificationsGuiDisplayed() && f >= 1.0F) {
                 RenderSystem.enableDepthTest();

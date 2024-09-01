@@ -21,21 +21,49 @@ import java.util.Objects;
 
 import static io.github.spigotrce.paradiseclientfabric.Helper.getChroma;
 
+/**
+ * Mixin for the InGameHud class to inject custom HUD rendering behavior.
+ * This mixin is used to display additional information on the HUD.
+ * @author SpigotRCE
+ * @since 1.0
+ */
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
+
+    /** Reference to the MiscMod instance for accessing mod data. */
     @Unique
     MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
+
+    /** The Minecraft client instance. */
     @Final
     @Shadow
     private MinecraftClient client;
 
+    /**
+     * Gets the TextRenderer instance used for rendering text.
+     *
+     * @return The TextRenderer instance.
+     */
     @Shadow
     public abstract TextRenderer getTextRenderer();
 
+    /**
+     * Injects behavior at the end of the InGameHud constructor.
+     *
+     * @param client The Minecraft client instance.
+     * @param ci     Callback information for the method.
+     */
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(MinecraftClient client, CallbackInfo ci) {
     }
 
+    /**
+     * Injects behavior at the end of the render method to add custom HUD information.
+     *
+     * @param context      The DrawContext used for rendering.
+     * @param tickCounter  The RenderTickCounter for frame timing.
+     * @param ci           Callback information for the method.
+     */
     @Inject(method = "render", at = @At("TAIL"))
     public void renderMainHud(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         if (this.client == null) {
@@ -61,6 +89,14 @@ public abstract class InGameHudMixin {
         }
     }
 
+    /**
+     * Renders text with a chroma color effect.
+     *
+     * @param ct  The DrawContext used for rendering.
+     * @param s   The string to render.
+     * @param x   The x-coordinate for the text.
+     * @param y   The y-coordinate for the text.
+     */
     @Unique
     private void renderTextWithChroma(DrawContext ct, String s, int x, int y) {
         char[] chars = s.toCharArray();

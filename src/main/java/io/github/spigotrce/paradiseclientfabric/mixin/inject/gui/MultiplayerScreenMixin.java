@@ -17,33 +17,58 @@ import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;
 import io.github.spigotrce.paradiseclientfabric.screen.UUIDSpoofScreen;
 
+/**
+ * Mixin for the MultiplayerScreen class to add custom GUI elements.
+ * This mixin injects additional buttons and text fields into the multiplayer settings screen.
+ * @author SpigotRCE
+ * @since 1.0
+ */
 @Mixin(MultiplayerScreen.class)
 public abstract class MultiplayerScreenMixin extends Screen {
 
+    /** Reference to the BungeeSpoofMod instance for accessing mod data. */
     @Unique
     BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
+
+    /** Button for toggling BungeeCord spoofing. */
     @Unique
     ButtonWidget bungeeButton;
+
+    /** Text field for inputting BungeeCord IP. */
     @Unique
     TextFieldWidget bungeeIPButton;
+
+    /** Button for toggling BungeeCord target hostname spoofing. */
     @Unique
     ButtonWidget bungeeTargetButton;
+
+    /** Text field for inputting BungeeCord target hostname. */
     @Unique
     TextFieldWidget bungeeTargetIPButton;
+
+    /** Renderer for displaying text. */
     @Unique
     TextRenderer textRenderer;
 
+    /**
+     * Constructor for MultiplayerScreenMixin.
+     *
+     * @param title The title of the screen.
+     */
     protected MultiplayerScreenMixin(Text title) {
         super(title);
     }
 
-    @Shadow
-    protected abstract void init();
-
-    @Inject(method = "init", at = @At(value = "TAIL", target = "Lnet/minecraft/client/gui/screen/multiplayer/MultiplayerScreen;updateButtonActivationStates()V"))
+    /**
+     * Initializes the screen with additional buttons and text fields.
+     *
+     * @param info Callback information for the method.
+     */
+    @Inject(method = "init", at = @At("TAIL"))
     private void init(CallbackInfo info) {
         this.textRenderer = MinecraftClient.getInstance().textRenderer;
 
+        // Adds the UUIDSpoof button which opens the UUIDSpoofScreen.
         this.addDrawableChild(ButtonWidget.builder(Text.literal("UUIDSpoof"),
                         onPress -> MinecraftClient.getInstance().setScreen(new UUIDSpoofScreen(this)))
                 .width(80)
@@ -51,6 +76,7 @@ public abstract class MultiplayerScreenMixin extends Screen {
                 .build()
         );
 
+        // Adds the BungeeCord toggle button.
         this.bungeeButton = this.addDrawableChild(ButtonWidget.builder(getBungeeButtonText(),
                         onPress -> {
                             this.bungeeSpoofMod.setBungeeEnabled(!bungeeSpoofMod.isBungeeEnabled());
@@ -61,13 +87,15 @@ public abstract class MultiplayerScreenMixin extends Screen {
                 .build()
         );
 
-        this.bungeeIPButton = new TextFieldWidget(this.textRenderer, 5, this.height - 160, 50, 20, Text.literal("Bungee IP")); // Set width to 150 and height to 20
+        // Adds the BungeeCord IP text field.
+        this.bungeeIPButton = new TextFieldWidget(this.textRenderer, 5, this.height - 160, 50, 20, Text.literal("Bungee IP"));
         this.bungeeIPButton.setMaxLength(128);
         this.bungeeIPButton.setText(bungeeSpoofMod.getBungeeIP());
         this.bungeeIPButton.setChangedListener((text) -> bungeeSpoofMod.setBungeeIP(this.bungeeIPButton.getText()));
         this.addSelectableChild(this.bungeeIPButton);
         this.addDrawable(this.bungeeIPButton);
 
+        // Adds the BungeeCord target hostname toggle button.
         this.bungeeTargetButton = this.addDrawableChild(ButtonWidget.builder(getBungeeTargetButtonText(),
                         onPress -> {
                             this.bungeeSpoofMod.setBungeeTargetEnabled(!bungeeSpoofMod.isBungeeTargetEnabled());
@@ -78,20 +106,30 @@ public abstract class MultiplayerScreenMixin extends Screen {
                 .build()
         );
 
-        this.bungeeTargetIPButton = new TextFieldWidget(this.textRenderer, 5, this.height - 224, 50, 20, Text.literal("Hostname")); // Set width to 150 and height to 20
+        // Adds the BungeeCord target hostname text field.
+        this.bungeeTargetIPButton = new TextFieldWidget(this.textRenderer, 5, this.height - 224, 50, 20, Text.literal("Hostname"));
         this.bungeeTargetIPButton.setMaxLength(128);
         this.bungeeTargetIPButton.setText(bungeeSpoofMod.getBungeeTargetIP());
         this.bungeeTargetIPButton.setChangedListener((text) -> bungeeSpoofMod.setTargetIP(this.bungeeTargetIPButton.getText()));
         this.addSelectableChild(this.bungeeTargetIPButton);
         this.addDrawable(this.bungeeTargetIPButton);
-
     }
 
+    /**
+     * Gets the text for the BungeeCord toggle button based on its current state.
+     *
+     * @return The text to display on the BungeeCord button.
+     */
     @Unique
     private Text getBungeeButtonText() {
         return bungeeSpoofMod.isBungeeEnabled() ? Text.literal("Bungee Enabled") : Text.literal("Bungee Disabled");
     }
 
+    /**
+     * Gets the text for the BungeeCord target hostname toggle button based on its current state.
+     *
+     * @return The text to display on the BungeeCord target hostname button.
+     */
     @Unique
     private Text getBungeeTargetButtonText() {
         return bungeeSpoofMod.isBungeeTargetEnabled() ? Text.literal("Hostname Enabled") : Text.literal("Hostname Disabled");

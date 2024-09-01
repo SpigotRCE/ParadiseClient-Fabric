@@ -2,6 +2,7 @@ package io.github.spigotrce.paradiseclientfabric;
 
 import io.github.spigotrce.eventbus.event.EventManager;
 import io.github.spigotrce.paradiseclientfabric.exploit.impl.*;
+import io.github.spigotrce.paradiseclientfabric.listener.PacketListener;
 import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
 import io.github.spigotrce.paradiseclientfabric.command.CommandManager;
@@ -168,5 +169,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
                 new NegativeInfinityExploit(),
                 new SlotCrashExploit()
         );
+
+        eventManager.registerListener(new PacketListener());
     }
 }

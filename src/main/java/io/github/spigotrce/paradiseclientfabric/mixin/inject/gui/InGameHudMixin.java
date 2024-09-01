@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.mod.NetworkMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -33,6 +34,10 @@ public abstract class InGameHudMixin {
     /** Reference to the MiscMod instance for accessing mod data. */
     @Unique
     MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
+
+    /** Reference to the MiscMod instance for accessing mod data. */
+    @Unique
+    NetworkMod networkMod = ParadiseClient_Fabric.getNetworkMod();
 
     /** The Minecraft client instance. */
     @Final
@@ -75,10 +80,10 @@ public abstract class InGameHudMixin {
         text.add("ParadiseClient [" + Constants.EDITION + "] " + " by SpigotRCE#0");
         text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.getHudMod().showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
         text.add("Engine " + (Objects.isNull(this.client.player.networkHandler) ? "" : this.client.player.networkHandler.getBrand()));
-        text.add("Last Incoming Packet " + (System.currentTimeMillis() - miscMod.lastIncomingPacketTime) + "ms Average " + miscMod.averageIncomingPacketDelay + "ms");
-        text.add("Packet " + miscMod.lastIncomingPacket.getPacketId().id());
-        text.add("Last Outgoing Packet " + (System.currentTimeMillis() - miscMod.lastOutgoingPacketTime) + "ms Average " + miscMod.averageOutgoingPacketDelay + "ms");
-        text.add("Packet " + miscMod.lastOutgoingPacket.getPacketId().id());
+        text.add("Last Incoming Packet " + (System.currentTimeMillis() - networkMod.lastIncomingPacketTime) + "ms Average " + networkMod.averageIncomingPacketDelay + "ms");
+        text.add("Packet " + networkMod.lastIncomingPacket.getPacketId().id());
+        text.add("Last Outgoing Packet " + (System.currentTimeMillis() - networkMod.lastOutgoingPacketTime) + "ms Average " + networkMod.averageOutgoingPacketDelay + "ms");
+        text.add("Packet " + networkMod.lastOutgoingPacket.getPacketId().id());
         text.add("FPS " + this.client.getCurrentFps());
         text.add("Players: " + this.client.player.networkHandler.getPlayerList().size());
 

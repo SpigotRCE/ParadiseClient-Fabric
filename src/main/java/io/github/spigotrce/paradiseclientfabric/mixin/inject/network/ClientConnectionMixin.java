@@ -1,5 +1,10 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
 
+import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.event.packet.incoming.PacketIncomingPostEvent;
+import io.github.spigotrce.paradiseclientfabric.event.packet.incoming.PacketIncomingPreEvent;
+import io.github.spigotrce.paradiseclientfabric.event.packet.outgoing.PacketOutgoingPostEvent;
+import io.github.spigotrce.paradiseclientfabric.event.packet.outgoing.PacketOutgoingPreEvent;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.DisconnectionInfo;
@@ -28,7 +33,7 @@ public class ClientConnectionMixin {
     /**
      * Injects code at the start of the channelRead0 method to handle incoming packets.
      * <p>
-     * This method cancels the processing of the packet if the PreIncomingPacket event returns false.
+     * This method cancels the processing of the packet if the PacketIncomingPreEvent event returns false.
      * </p>
      *
      * @param channelHandlerContext The Netty channel handler context.
@@ -37,7 +42,15 @@ public class ClientConnectionMixin {
      */
     @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/packet/Packet;)V", at = @At("HEAD"), cancellable = true)
     public void channelRead0Head(ChannelHandlerContext channelHandlerContext, Packet<?> packet, CallbackInfo ci) {
-        if (!PacketEvent.PreIncomingPacket(packet)) {
+        PacketIncomingPreEvent event = new PacketIncomingPreEvent(packet);
+
+        try {
+            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+        } catch (Exception e) {
+            Constants.LOGGER.error("Unable to fire PacketIncomingPreEvent", e);
+            return;
+        }
+        if (event.isCancel()) {
             ci.cancel();
         }
     }
@@ -45,7 +58,7 @@ public class ClientConnectionMixin {
     /**
      * Injects code at the end of the channelRead0 method to handle post-processing of incoming packets.
      * <p>
-     * This method triggers the PostIncomingPacket event after the packet has been processed.
+     * This method triggers the PacketIncomingPostEvent event after the packet has been processed.
      * </p>
      *
      * @param channelHandlerContext The Netty channel handler context.
@@ -54,13 +67,19 @@ public class ClientConnectionMixin {
      */
     @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/packet/Packet;)V", at = @At("TAIL"))
     public void channelRead0Tail(ChannelHandlerContext channelHandlerContext, Packet<?> packet, CallbackInfo ci) {
-        PacketEvent.PostIncomingPacket(packet);
+        PacketIncomingPostEvent event = new PacketIncomingPostEvent(packet);
+
+        try {
+            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+        } catch (Exception e) {
+            Constants.LOGGER.error("Unable to fire PacketIncomingPostEvent", e);
+        }
     }
 
     /**
      * Injects code at the start of the sendImmediately method to handle outgoing packets.
      * <p>
-     * This method cancels the sending of the packet if the PreOutgoingPacket event returns false.
+     * This method cancels the sending of the packet if the PacketOutgoingPreEvent event returns false.
      * </p>
      *
      * @param packet    The outgoing packet.
@@ -70,7 +89,15 @@ public class ClientConnectionMixin {
      */
     @Inject(method = "sendImmediately", at = @At("HEAD"), cancellable = true)
     public void sendImmediatelyHead(Packet<?> packet, PacketCallbacks callbacks, boolean flush, CallbackInfo ci) {
-        if (!PacketEvent.PreOutgoingPacket(packet)) {
+        PacketOutgoingPreEvent event = new PacketOutgoingPreEvent(packet);
+
+        try {
+            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+        } catch (Exception e) {
+            Constants.LOGGER.error("Unable to fire PacketOutgoingPreEvent", e);
+            return;
+        }
+        if (event.isCancel()) {
             ci.cancel();
         }
     }
@@ -78,7 +105,7 @@ public class ClientConnectionMixin {
     /**
      * Injects code at the end of the sendImmediately method to handle post-processing of outgoing packets.
      * <p>
-     * This method triggers the PostOutgoingPacket event after the packet has been sent.
+     * This method triggers the PacketOutgoingPostEvent event after the packet has been sent.
      * </p>
      *
      * @param packet    The outgoing packet.
@@ -88,7 +115,13 @@ public class ClientConnectionMixin {
      */
     @Inject(method = "sendImmediately", at = @At("TAIL"))
     public void sendImmediatelyTail(Packet<?> packet, PacketCallbacks callbacks, boolean flush, CallbackInfo ci) {
-        PacketEvent.PostOutgoingPacket(packet);
+        PacketOutgoingPostEvent event = new PacketOutgoingPostEvent(packet);
+
+        try {
+            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+        } catch (Exception e) {
+            Constants.LOGGER.error("Unable to fire PacketOutgoingPostEvent", e);
+        }
     }
 
     /**

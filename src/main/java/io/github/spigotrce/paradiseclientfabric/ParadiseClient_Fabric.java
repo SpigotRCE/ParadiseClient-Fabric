@@ -74,7 +74,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
      *
      * @return The instance of {@link EventManager}.
      */
-    public static EventManager getEvenManager() {
+    public static EventManager getEventManager() {
         return eventManager;
     }
 

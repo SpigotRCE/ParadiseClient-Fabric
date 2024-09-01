@@ -12,18 +12,47 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Utility class providing various helper methods for Minecraft client operations.
+ * <p>
+ * This class includes methods for generating chroma colors, sending chat messages,
+ * parsing and formatting colored text, and more.
+ * </p>
+ *
+ * @author SpigotRCE
+ * @since 1.0
+ */
 public class Helper {
+    /**
+     * Generates a chroma color based on the current time and given delay.
+     *
+     * @param delay The delay in milliseconds to affect the color shift.
+     * @param saturation The saturation of the color.
+     * @param brightness The brightness of the color.
+     * @return The generated {@link Color} object.
+     */
     public static Color getChroma(int delay, float saturation, float brightness) {
         double chroma = Math.ceil((double) (System.currentTimeMillis() + delay) / 20);
         chroma %= 360;
         return Color.getHSBColor((float) (chroma / 360), saturation, brightness);
     }
 
+    /**
+     * Sends a chat message to the Minecraft player.
+     *
+     * @param message The message to be sent.
+     */
     public static void printChatMessage(String message) {
         assert MinecraftClient.getInstance().player != null;
         MinecraftClient.getInstance().player.sendMessage(Text.of(message));
     }
 
+    /**
+     * Checks if a string can be parsed as a number.
+     *
+     * @param s The string to check.
+     * @return {@code true} if the string is a valid number, {@code false} otherwise.
+     */
     public static boolean isNumber(String s) {
         try {
             Double.parseDouble(s);
@@ -33,14 +62,32 @@ public class Helper {
         }
     }
 
+    /**
+     * Sends a network packet to the Minecraft server.
+     *
+     * @param packet The packet to be sent.
+     */
     public static void sendPacket(Packet packet) {
         Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendPacket(packet);
     }
 
+    /**
+     * Parses a string message into a colored {@link Text} object.
+     *
+     * @param message The message to be parsed.
+     * @return The formatted {@link Text} object.
+     */
     public static Text parseColoredText(String message) {
         return parseColoredText(message, null);
     }
 
+    /**
+     * Parses a string message into a colored {@link Text} object with an optional click-to-copy action.
+     *
+     * @param message The message to be parsed.
+     * @param copyMessage The message to copy to the clipboard when clicked, or {@code null} for no action.
+     * @return The formatted {@link Text} object.
+     */
     public static Text parseColoredText(String message, String copyMessage) {
         MutableText text = Text.literal("");
         String[] parts = message.split("(?=&)");
@@ -74,6 +121,12 @@ public class Helper {
         return text;
     }
 
+    /**
+     * Converts a color code string to a {@link Formatting} enum value.
+     *
+     * @param code The color code string (e.g., "&0", "&1").
+     * @return The corresponding {@link Formatting} value.
+     */
     private static Formatting getColorFromCode(String code) {
         return switch (code) {
             case "&0" -> Formatting.BLACK;
@@ -101,6 +154,12 @@ public class Helper {
         };
     }
 
+    /**
+     * Capitalizes the first letter of a string.
+     *
+     * @param str The string to capitalize.
+     * @return The string with the first letter capitalized, or the original string if it is null or empty.
+     */
     public static String capitalizeFirstLetter(String str) {
         if (str == null || str.isEmpty()) {
             return str;

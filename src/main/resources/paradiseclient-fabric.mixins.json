@@ -7,7 +7,6 @@
   ],
   "client": [
     "chat.ChatHudMixin",
-    "chat.ChatScreenMixin",
     "chat.SuggestionWindowMixin",
     "gui.EntryListWidgetMixin",
     "gui.InGameHudMixin",

@@ -19,15 +19,57 @@ import java.util.UUID;
 
 import static io.github.spigotrce.paradiseclientfabric.Constants.LOGGER;
 
+/**
+ * Screen for spoofing UUIDs.
+ * <p>
+ * This screen allows users to spoof their UUID by setting a Bungee username and a fake username,
+ * and choosing whether the UUID should be premium or cracked.
+ * </p>
+ *
+ * @author SpigotRCE
+ * @since 1.0
+ */
 public class UUIDSpoofScreen extends Screen {
+    /**
+     * The BungeeSpoofMod instance used to manage Bungee spoofing settings.
+     */
     private final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
+
+    /**
+     * The parent screen to return to when this screen is closed.
+     */
     private final Screen parentScreen;
+
+    /**
+     * The Minecraft client instance used to interact with the game.
+     */
     private final MinecraftClient minecraftClient = MinecraftClient.getInstance();
+
+    /**
+     * The current status message displayed on the screen.
+     */
     private String status;
+
+    /**
+     * Text field for entering the Bungee username.
+     */
     private TextFieldWidget bungeeUsernameField;
+
+    /**
+     * Text field for entering the Bungee fake username.
+     */
     private TextFieldWidget bungeeFakeUsernameField;
+
+    /**
+     * Button to toggle between premium and cracked UUIDs.
+     */
     private ButtonWidget premiumButton;
 
+    /**
+     * Creates a new UUIDSpoofScreen.
+     *
+     * @param parentScreen The screen to return to when this screen is closed.
+     */
     public UUIDSpoofScreen(Screen parentScreen) {
         super(Text.literal("UUID Spoof"));
         this.parentScreen = parentScreen;
@@ -40,13 +82,13 @@ public class UUIDSpoofScreen extends Screen {
         int widgetWidth = 200;
         int widgetXOffset = widgetWidth / 2;
 
-        this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 - 35, widgetWidth, 20, Text.literal("Bungee Username")); // Set width to 150 and height to 20
+        this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 - 35, widgetWidth, 20, Text.literal("Bungee Username"));
         this.bungeeUsernameField.setMaxLength(128);
         this.bungeeUsernameField.setText(this.bungeeSpoofMod.getBungeeUsername());
         this.addSelectableChild(this.bungeeUsernameField);
         this.addDrawable(this.bungeeUsernameField);
 
-        this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 - 10, widgetWidth, 20, Text.literal("Bungee FakeUsername")); // Set width to 150 and height to 20
+        this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 - 10, widgetWidth, 20, Text.literal("Bungee FakeUsername"));
         this.bungeeFakeUsernameField.setMaxLength(128);
         this.bungeeFakeUsernameField.setText(this.bungeeSpoofMod.getBungeeFakeUsername());
         this.addSelectableChild(this.bungeeFakeUsernameField);
@@ -86,12 +128,19 @@ public class UUIDSpoofScreen extends Screen {
         this.bungeeFakeUsernameField.setText(s2);
     }
 
+    /**
+     * Spoofs the UUID based on the input fields.
+     * <p>
+     * This method sets the Bungee username and fake username, and determines if the UUID should be
+     * premium or cracked. It fetches the premium UUID from Mojang's API if necessary, otherwise
+     * generates a cracked UUID.
+     * </p>
+     */
     private void spoof() {
         this.bungeeSpoofMod.setBungeeUsername(this.bungeeUsernameField.getText());
         this.bungeeSpoofMod.setBungeeFakeUsername(this.bungeeFakeUsernameField.getText());
         if (this.bungeeSpoofMod.isBungeeUUIDPremium()) {
             try {
-
                 this.bungeeSpoofMod.setBungeeUUID(fetchUUID(this.bungeeSpoofMod.getBungeeFakeUsername()));
                 this.status = "Successfully spoofed premium UUID of \"" + this.bungeeSpoofMod.getBungeeFakeUsername() + "\".";
             } catch (Exception e) {
@@ -105,7 +154,13 @@ public class UUIDSpoofScreen extends Screen {
         this.status = "Successfully spoofed cracked UUID of \"" + this.bungeeSpoofMod.getBungeeFakeUsername() + "\".";
     }
 
-    // Don't blame me, it's chatgpt's code
+    /**
+     * Fetches the UUID for a given username from Mojang's API.
+     *
+     * @param username The username to fetch the UUID for.
+     * @return The UUID as a string.
+     * @throws Exception If there is an error fetching the UUID.
+     */
     public String fetchUUID(String username) throws Exception {
         String urlString = "https://api.mojang.com/users/profiles/minecraft/" + username;
         URL url = new URL(urlString);

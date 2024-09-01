@@ -14,36 +14,6 @@ import net.minecraft.network.packet.Packet;
  */
 public class MiscMod {
     /**
-     * The last incoming network packet received.
-     */
-    public Packet<?> lastIncomingPacket;
-
-    /**
-     * The timestamp when the last incoming packet was received.
-     */
-    public long lastIncomingPacketTime;
-
-    /**
-     * The average delay of incoming network packets.
-     */
-    public long averageIncomingPacketDelay;
-
-    /**
-     * The last outgoing network packet sent.
-     */
-    public Packet<?> lastOutgoingPacket;
-
-    /**
-     * The timestamp when the last outgoing packet was sent.
-     */
-    public long lastOutgoingPacketTime;
-
-    /**
-     * The average delay of outgoing network packets.
-     */
-    public long averageOutgoingPacketDelay;
-
-    /**
      * The last message sent or received.
      */
     public String lastMessage;

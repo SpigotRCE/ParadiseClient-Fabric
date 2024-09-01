@@ -1,5 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric;
 
+import io.github.spigotrce.eventbus.event.EventManager;
 import io.github.spigotrce.paradiseclientfabric.exploit.impl.*;
 import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
@@ -22,6 +23,11 @@ public class ParadiseClient_Fabric implements ModInitializer {
      * The Minecraft client instance.
      */
     private MinecraftClient minecraftClient;
+
+    /**
+     * The instance of {@link EventManager}, which handles the events being fired and liste
+     */
+    private static EventManager eventManager;
 
     /**
      * The instance of {@link BungeeSpoofMod}, which handles BungeeCord spoofing functionality.
@@ -62,6 +68,15 @@ public class ParadiseClient_Fabric implements ModInitializer {
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
     private static NetworkMod networkMod;
+
+    /**
+     * Retrieves the instance of {@link EventManager}.
+     *
+     * @return The instance of {@link EventManager}.
+     */
+    public static EventManager getEvenManager() {
+        return eventManager;
+    }
 
     /**
      * Retrieves the instance of {@link BungeeSpoofMod}.

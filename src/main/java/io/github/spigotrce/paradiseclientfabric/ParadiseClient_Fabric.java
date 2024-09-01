@@ -153,6 +153,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
     @Override
     public void onInitialize() {
         this.minecraftClient = MinecraftClient.getInstance();
+        eventManager = new EventManager();
         bungeeSpoofMod = new BungeeSpoofMod();
         miscMod = new MiscMod();
         hudMod = new HudMod();

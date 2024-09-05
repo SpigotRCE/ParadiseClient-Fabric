@@ -25,7 +25,7 @@ public class CopyCommand extends Command {
      * @param minecraftClient The Minecraft client instance.
      */
     public CopyCommand(MinecraftClient minecraftClient) {
-        super("paradisecopy", "Copies the broadcast of SpigotRCE", minecraftClient);
+        super("copy", "Copies the broadcast of SpigotRCE", minecraftClient);
     }
 
     /**

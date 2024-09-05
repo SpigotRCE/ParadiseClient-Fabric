@@ -21,7 +21,7 @@ public class ScreenShareCommand extends Command {
      * @param minecraftClient The Minecraft client instance.
      */
     public ScreenShareCommand(MinecraftClient minecraftClient) {
-        super("paradisescreenshare", "Toggles IP displayed on HUD", minecraftClient);
+        super("screenshare", "Toggles IP displayed on HUD", minecraftClient);
     }
 
     /**

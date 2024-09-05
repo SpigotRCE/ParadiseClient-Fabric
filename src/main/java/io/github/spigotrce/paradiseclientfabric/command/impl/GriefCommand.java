@@ -23,7 +23,7 @@ public class GriefCommand extends Command {
      * @param minecraftClient The Minecraft client instance
      */
     public GriefCommand(MinecraftClient minecraftClient) {
-        super("paradisegrief", "Multiple grief commands", minecraftClient);
+        super("grief", "Multiple grief commands", minecraftClient);
     }
 
     /**

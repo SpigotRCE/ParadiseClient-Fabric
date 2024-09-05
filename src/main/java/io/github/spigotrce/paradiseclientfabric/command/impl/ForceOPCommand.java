@@ -21,7 +21,7 @@ public class ForceOPCommand extends Command {
      * @param minecraftClient The Minecraft client instance.
      */
     public ForceOPCommand(MinecraftClient minecraftClient) {
-        super("paradiseforceop", "Gives OP thru CMI console command sender exploit", minecraftClient);
+        super("forceop", "Gives OP thru CMI console command sender exploit", minecraftClient);
     }
 
     /**

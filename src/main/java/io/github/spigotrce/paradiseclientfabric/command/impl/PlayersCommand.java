@@ -24,7 +24,7 @@ public class PlayersCommand extends Command {
      * @param minecraftClient The Minecraft client instance.
      */
     public PlayersCommand(MinecraftClient minecraftClient) {
-        super("paradiseplayers", "Gets info about players online on the server", minecraftClient);
+        super("players", "Gets info about players online on the server", minecraftClient);
     }
 
     /**

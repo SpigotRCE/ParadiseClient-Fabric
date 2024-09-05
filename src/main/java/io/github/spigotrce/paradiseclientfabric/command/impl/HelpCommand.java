@@ -21,7 +21,7 @@ public class HelpCommand extends Command {
      * @param minecraftClient The Minecraft client instance.
      */
     public HelpCommand(MinecraftClient minecraftClient) {
-        super("paradisehelp", "Shows help page", minecraftClient);
+        super("help", "Shows help page", minecraftClient);
     }
 
     /**

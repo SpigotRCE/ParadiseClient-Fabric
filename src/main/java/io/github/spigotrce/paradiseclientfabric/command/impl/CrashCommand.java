@@ -35,13 +35,13 @@ public class CrashCommand extends Command {
         LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
 
         // Add subcommands for each exploit
-        for (Exploit exploit : ParadiseClient_Fabric.getExploitManager().getExploits())
+        ParadiseClient_Fabric.getExploitManager().getExploits().forEach(exploit -> {
             node.then(literal(exploit.getAlias())
                     .executes((context) -> {
-                        Helper.printChatMessage(context.getInput());
-                        ParadiseClient_Fabric.getExploitManager().handleExploit(context.getInput().split(" ")[1]);
+                        ParadiseClient_Fabric.getExploitManager().handleExploit(exploit.getAlias());
                         return SINGLE_SUCCESS;
                     }));
+        });
 
         // Add a subcommand to stop all exploits
         node.then(literal("off")

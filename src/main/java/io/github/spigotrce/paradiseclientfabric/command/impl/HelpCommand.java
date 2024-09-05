@@ -34,12 +34,13 @@ public class HelpCommand extends Command {
         LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
 
         // Adds sub-commands for each registered command
-        for (Command command : ParadiseClient_Fabric.getCommandManager().getCommands())
-            node.then(literal(command.getName()).executes((context) -> {
-                Command c = ParadiseClient_Fabric.getCommandManager().getCommand(context.getInput().split(" ")[1]);
-                Helper.printChatMessage("§4§l" + c.getName() + "§r §6" + c.getDescription());
-                return SINGLE_SUCCESS;
-            }));
+        ParadiseClient_Fabric.getCommandManager().getCommands().forEach(command -> {
+                node.then(literal(command.getName()).executes((context) -> {
+                    Command c = ParadiseClient_Fabric.getCommandManager().getCommand(command.getName());
+                    Helper.printChatMessage("§4§l" + c.getName() + "§r §6" + c.getDescription());
+                    return SINGLE_SUCCESS;
+                }));
+        });
 
         // Adds a command to display all registered commands
         node.executes((context -> {

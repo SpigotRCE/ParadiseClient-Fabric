@@ -22,7 +22,7 @@ public class CrashCommand extends Command {
      * @param minecraftClient The Minecraft client instance.
      */
     public CrashCommand(MinecraftClient minecraftClient) {
-        super("paradisecrash", "Crashes the server", minecraftClient);
+        super("crash", "Crashes the server", minecraftClient);
     }
 
     /**

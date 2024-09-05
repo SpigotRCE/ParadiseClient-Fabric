@@ -7,7 +7,7 @@ import net.minecraft.client.MinecraftClient;
 
 public class ChatRoomCommand extends Command {
     public ChatRoomCommand(MinecraftClient minecraftClient) {
-        super("paradisechatroom", "Connects you to a chatroom", minecraftClient);
+        super("chatroom", "Connects you to a chatroom", minecraftClient);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
 
+import io.github.spigotrce.paradiseclientfabric.Helper;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,5 +35,12 @@ public abstract class ClientPlayNetworkHandlerMixin {
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo info) {
         ParadiseClient_Fabric.getNetworkMod().isConnected = true;
         ParadiseClient_Fabric.getNetworkMod().serverIP = ((ClientPlayNetworkHandler) (Object) this).getConnection().getAddress().toString().split("/")[0];
+
+        for (String channel :ParadiseClient_Fabric.getMiscMod().delayedMessages) {
+            Helper.printChatMessage(channel);
+            System.out.println(channel);
+        }
+
+        ParadiseClient_Fabric.getMiscMod().delayedMessages.clear();
     }
 }

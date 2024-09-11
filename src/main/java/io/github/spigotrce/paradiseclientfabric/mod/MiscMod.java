@@ -3,6 +3,9 @@ package io.github.spigotrce.paradiseclientfabric.mod;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.network.packet.Packet;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Manages miscellaneous data related to network packets and screen state.
  * <p>
@@ -22,4 +25,9 @@ public class MiscMod {
      * The current screen being displayed in the client.
      */
     public Screen currentScreen;
+
+    /**
+     * Message which needs to be delayed before sending.
+     */
+    public ArrayList<String> delayedMessages = new ArrayList<>();
 }

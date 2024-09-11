@@ -4,6 +4,7 @@
   "package": "io.github.spigotrce.paradiseclientfabric.mixin.inject",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "network.RegistrationPayloadMixin"
   ],
   "client": [
     "chat.ChatHudMixin",

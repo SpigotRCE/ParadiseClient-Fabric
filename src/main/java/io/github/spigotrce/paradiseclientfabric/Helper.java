@@ -1,5 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.text.ClickEvent;
@@ -26,7 +28,7 @@ public class Helper {
     /**
      * Generates a chroma color based on the current time and given delay.
      *
-     * @param delay The delay in milliseconds to affect the color shift.
+     * @param delay      The delay in milliseconds to affect the color shift.
      * @param saturation The saturation of the color.
      * @param brightness The brightness of the color.
      * @return The generated {@link Color} object.
@@ -67,7 +69,7 @@ public class Helper {
      *
      * @param packet The packet to be sent.
      */
-    public static void sendPacket(Packet packet) {
+    public static void sendPacket(Packet<?> packet) {
         Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendPacket(packet);
     }
 
@@ -84,7 +86,7 @@ public class Helper {
     /**
      * Parses a string message into a colored {@link Text} object with an optional click-to-copy action.
      *
-     * @param message The message to be parsed.
+     * @param message     The message to be parsed.
      * @param copyMessage The message to copy to the clipboard when clicked, or {@code null} for no action.
      * @return The formatted {@link Text} object.
      */
@@ -165,5 +167,26 @@ public class Helper {
             return str;
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    public static class ByteArrayOutput {
+        private final ByteArrayDataOutput out;
+
+        public ByteArrayOutput() {
+            this.out = ByteStreams.newDataOutput();
+        }
+
+        public ByteArrayOutput(byte[] bytes) {
+            this.out = ByteStreams.newDataOutput();
+            out.write(bytes);
+        }
+
+        public ByteArrayDataOutput getBuf() {
+            return out;
+        }
+
+        public byte[] toByteArray() {
+            return out.toByteArray();
+        }
     }
 }

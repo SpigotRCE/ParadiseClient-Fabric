@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.event.packet.incoming.PacketIncomingPostEvent;
 import io.github.spigotrce.paradiseclientfabric.event.packet.incoming.PacketIncomingPreEvent;
 import io.github.spigotrce.paradiseclientfabric.event.packet.outgoing.PacketOutgoingPostEvent;
@@ -14,7 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 
 /**
  * Mixin class to modify the behavior of the ClientConnection class.

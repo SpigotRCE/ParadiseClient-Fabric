@@ -1,11 +1,11 @@
 package io.github.spigotrce.paradiseclientfabric.command.impl;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import io.github.spigotrce.paradiseclientfabric.Helper;
+import io.github.spigotrce.paradiseclientfabric.command.Command;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
-import io.github.spigotrce.paradiseclientfabric.Helper;
-import io.github.spigotrce.paradiseclientfabric.command.Command;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,18 +59,18 @@ public class PlayersCommand extends Command {
      * Represents player data.
      */
     public static class PlayerData {
-        String name;
-        String uuid;
-        String gameMode;
-        int ping;
+        final String name;
+        final String uuid;
+        final String gameMode;
+        final int ping;
 
         /**
          * Constructs a new instance of PlayerData.
          *
-         * @param name      The player's name.
-         * @param uuid      The player's UUID.
-         * @param gameMode  The player's game mode.
-         * @param ping      The player's ping.
+         * @param name     The player's name.
+         * @param uuid     The player's UUID.
+         * @param gameMode The player's game mode.
+         * @param ping     The player's ping.
          */
         public PlayerData(String name, String uuid, String gameMode, int ping) {
             this.name = name;

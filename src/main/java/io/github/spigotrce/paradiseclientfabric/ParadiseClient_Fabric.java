@@ -1,12 +1,12 @@
 package io.github.spigotrce.paradiseclientfabric;
 
 import io.github.spigotrce.eventbus.event.EventManager;
+import io.github.spigotrce.paradiseclientfabric.command.CommandManager;
+import io.github.spigotrce.paradiseclientfabric.exploit.ExploitManager;
 import io.github.spigotrce.paradiseclientfabric.exploit.impl.*;
 import io.github.spigotrce.paradiseclientfabric.listener.PacketListener;
 import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
-import io.github.spigotrce.paradiseclientfabric.command.CommandManager;
-import io.github.spigotrce.paradiseclientfabric.exploit.ExploitManager;
 import net.minecraft.client.MinecraftClient;
 
 /**
@@ -21,54 +21,45 @@ import net.minecraft.client.MinecraftClient;
  */
 public class ParadiseClient_Fabric implements ModInitializer {
     /**
-     * The Minecraft client instance.
-     */
-    private MinecraftClient minecraftClient;
-
-    /**
      * The instance of {@link EventManager}, which handles the events being fired and liste
      */
     private static EventManager eventManager;
-
     /**
      * The instance of {@link BungeeSpoofMod}, which handles BungeeCord spoofing functionality.
      */
     private static BungeeSpoofMod bungeeSpoofMod;
-
     /**
      * The instance of {@link MiscMod}, which handles miscellaneous functionalities.
      */
     private static MiscMod miscMod;
-
     /**
      * The instance of {@link HudMod}, which handles HUD (Heads-Up Display) functionalities.
      */
     private static HudMod hudMod;
-
     /**
      * The instance of {@link ChatRoomMod}, which handles chat room functionalities.
      */
     private static ChatRoomMod chatRoomMod;
-
     /**
      * The instance of {@link ExploitMod}, which handles various exploit-related functionalities.
      */
     private static ExploitMod exploitMod;
-
     /**
      * The instance of {@link CommandManager}, which manages commands in the mod.
      */
     private static CommandManager commandManager;
-
     /**
      * The instance of {@link ExploitManager}, which manages different types of exploits.
      */
     private static ExploitManager exploitManager;
-
     /**
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
     private static NetworkMod networkMod;
+    /**
+     * The Minecraft client instance.
+     */
+    private MinecraftClient minecraftClient;
 
     /**
      * Retrieves the instance of {@link EventManager}.

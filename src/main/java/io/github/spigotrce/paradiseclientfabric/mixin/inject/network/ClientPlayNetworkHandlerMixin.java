@@ -1,13 +1,13 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
 
 import io.github.spigotrce.paradiseclientfabric.Helper;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 
 /**
  * Mixin class to modify the behavior of the ClientPlayNetworkHandler class.
@@ -36,7 +36,7 @@ public abstract class ClientPlayNetworkHandlerMixin {
         ParadiseClient_Fabric.getNetworkMod().isConnected = true;
         ParadiseClient_Fabric.getNetworkMod().serverIP = ((ClientPlayNetworkHandler) (Object) this).getConnection().getAddress().toString().split("/")[0];
 
-        for (String channel :ParadiseClient_Fabric.getMiscMod().delayedMessages) {
+        for (String channel : ParadiseClient_Fabric.getMiscMod().delayedMessages) {
             Helper.printChatMessage(channel);
             System.out.println(channel);
         }

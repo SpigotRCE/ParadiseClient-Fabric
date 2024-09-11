@@ -1,5 +1,8 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
 
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;
+import io.github.spigotrce.paradiseclientfabric.screen.UUIDSpoofScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
@@ -8,45 +11,54 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
-import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;
-import io.github.spigotrce.paradiseclientfabric.screen.UUIDSpoofScreen;
 
 /**
  * Mixin for the MultiplayerScreen class to add custom GUI elements.
  * This mixin injects additional buttons and text fields into the multiplayer settings screen.
+ *
  * @author SpigotRCE
  * @since 1.0
  */
 @Mixin(MultiplayerScreen.class)
 public abstract class MultiplayerScreenMixin extends Screen {
 
-    /** Reference to the BungeeSpoofMod instance for accessing mod data. */
+    /**
+     * Reference to the BungeeSpoofMod instance for accessing mod data.
+     */
     @Unique
-    BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
+    final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
 
-    /** Button for toggling BungeeCord spoofing. */
+    /**
+     * Button for toggling BungeeCord spoofing.
+     */
     @Unique
     ButtonWidget bungeeButton;
 
-    /** Text field for inputting BungeeCord IP. */
+    /**
+     * Text field for inputting BungeeCord IP.
+     */
     @Unique
     TextFieldWidget bungeeIPButton;
 
-    /** Button for toggling BungeeCord target hostname spoofing. */
+    /**
+     * Button for toggling BungeeCord target hostname spoofing.
+     */
     @Unique
     ButtonWidget bungeeTargetButton;
 
-    /** Text field for inputting BungeeCord target hostname. */
+    /**
+     * Text field for inputting BungeeCord target hostname.
+     */
     @Unique
     TextFieldWidget bungeeTargetIPButton;
 
-    /** Renderer for displaying text. */
+    /**
+     * Renderer for displaying text.
+     */
     @Unique
     TextRenderer textRenderer;
 

@@ -14,33 +14,46 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /**
  * Mixin for the EntryListWidget class to inject custom behavior.
  * This mixin is used to add smooth scrolling to the entry list widget in Minecraft's GUI.
+ *
  * @author SpigotRCE
  * @since 2.15
  */
 @Mixin(EntryListWidget.class)
 public class EntryListWidgetMixin {
 
-    /** Buffer for scroll amount to facilitate smooth scrolling. */
+    /**
+     * Buffer for scroll amount to facilitate smooth scrolling.
+     */
     @Unique
     double scrollAmountBuffer;
 
-    /** The target scroll amount the list should move to. */
+    /**
+     * The target scroll amount the list should move to.
+     */
     @Unique
     double targetScroll;
 
-    /** Flag to indicate if mouse scrolling is active. */
+    /**
+     * Flag to indicate if mouse scrolling is active.
+     */
     @Unique
     boolean activeMouseScrolling = false;
 
-    /** Stores the scroll value before any scrolling operation begins. */
+    /**
+     * Stores the scroll value before any scrolling operation begins.
+     */
     @Unique
     double scrollValBefore;
 
-    /** Flag to indicate if scroll update is active. */
+    /**
+     * Flag to indicate if scroll update is active.
+     */
     @Unique
     boolean updateScActive = false;
 
-    /** Shadow field representing the current scroll amount of the entry list widget. */
+    /**
+     * Shadow field representing the current scroll amount of the entry list widget.
+     */
     @Shadow
     private double scrollAmount;
 

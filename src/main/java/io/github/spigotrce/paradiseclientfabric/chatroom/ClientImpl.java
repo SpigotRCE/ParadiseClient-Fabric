@@ -11,9 +11,9 @@ import java.net.Socket;
 
 public class ClientImpl implements Runnable {
     private static ClientImpl clientImpl;
-    private Socket clientSocket;
     private final String host;
     private final int port;
+    private Socket clientSocket;
     private BufferedReader in;
     private PrintWriter out;
     private Thread thread;

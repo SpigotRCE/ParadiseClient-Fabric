@@ -3,10 +3,10 @@ package io.github.spigotrce.paradiseclientfabric.discord;
 import de.jcm.discordgamesdk.Core;
 import de.jcm.discordgamesdk.CreateParams;
 import de.jcm.discordgamesdk.activity.Activity;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.Identifier;
 import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.Identifier;
 
 import java.io.File;
 import java.io.FileOutputStream;

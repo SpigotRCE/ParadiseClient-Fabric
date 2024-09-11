@@ -1,9 +1,9 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom;
 
-import net.minecraft.client.MinecraftClient;
 import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import net.minecraft.client.MinecraftClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;

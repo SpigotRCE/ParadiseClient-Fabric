@@ -27,6 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * This class modifies the Title Screen to include a custom button recommending
  * the installation of "ViaFabricPlus" and customizes the background fade effect.
  * It also displays additional information about the client and game version.
+ *
  * @author SpigotRCE
  * @since 2.9
  * </p>
@@ -150,7 +151,7 @@ public abstract class TitleScreenMixin extends Screen {
 
         float f = 1.0F;
         if (this.doBackgroundFade) {
-            float g = (float)(Util.getMeasuringTimeMs() - this.backgroundFadeStart) / 2000.0F;
+            float g = (float) (Util.getMeasuringTimeMs() - this.backgroundFadeStart) / 2000.0F;
             if (g > 1.0F) {
                 this.doBackgroundFade = false;
                 this.backgroundAlpha = 1.0F;
@@ -168,7 +169,7 @@ public abstract class TitleScreenMixin extends Screen {
         if ((i & -67108864) != 0) {
             super.render(context, mouseX, mouseY, delta);
             this.logoDrawer.draw(context, this.width, f);
-            if (this.splashText != null && !(Boolean)this.client.options.getHideSplashTexts().getValue()) {
+            if (this.splashText != null && !(Boolean) this.client.options.getHideSplashTexts().getValue()) {
                 this.splashText.render(context, this.width, this.textRenderer, i);
             }
 

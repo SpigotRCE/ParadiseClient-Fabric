@@ -18,8 +18,8 @@ public abstract class Command {
     /**
      * Constructor for the Command class.
      *
-     * @param name          The name of the command.
-     * @param description   The description of the command.
+     * @param name            The name of the command.
+     * @param description     The description of the command.
      * @param minecraftClient The Minecraft client instance.
      */
     public Command(String name, String description, MinecraftClient minecraftClient) {

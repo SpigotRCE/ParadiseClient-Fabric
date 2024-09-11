@@ -1,14 +1,14 @@
 package io.github.spigotrce.paradiseclientfabric.screen;
 
 import com.google.gson.JsonParser;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
-import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

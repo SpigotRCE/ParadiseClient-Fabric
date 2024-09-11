@@ -1,8 +1,8 @@
 package io.github.spigotrce.paradiseclientfabric.mod;
 
+import io.github.spigotrce.paradiseclientfabric.mixin.accessor.SessionAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.session.Session;
-import io.github.spigotrce.paradiseclientfabric.mixin.accessor.SessionAccessor;
 
 import static io.github.spigotrce.paradiseclientfabric.Constants.LOGGER;
 
@@ -17,34 +17,54 @@ import static io.github.spigotrce.paradiseclientfabric.Constants.LOGGER;
  * @since 1.0
  */
 public class BungeeSpoofMod {
-    /** The session accessor for interacting with Minecraft's session. */
+    /**
+     * The session accessor for interacting with Minecraft's session.
+     */
     private final SessionAccessor sessionAccessor;
 
-    /** The username used for BungeeCord spoofing. */
+    /**
+     * The username used for BungeeCord spoofing.
+     */
     private String bungeeUsername;
 
-    /** A fake username used for BungeeCord spoofing. */
+    /**
+     * A fake username used for BungeeCord spoofing.
+     */
     private String bungeeFakeUsername;
 
-    /** Whether the BungeeCord UUID is for a premium account. */
+    /**
+     * Whether the BungeeCord UUID is for a premium account.
+     */
     private boolean bungeeUUIDPremium;
 
-    /** The UUID used for BungeeCord spoofing. */
+    /**
+     * The UUID used for BungeeCord spoofing.
+     */
     private String bungeeUUID;
 
-    /** The IP address used for BungeeCord spoofing. */
+    /**
+     * The IP address used for BungeeCord spoofing.
+     */
     private String bungeeIP;
 
-    /** The target IP address for BungeeCord spoofing. */
+    /**
+     * The target IP address for BungeeCord spoofing.
+     */
     private String targetIP;
 
-    /** The token used for BungeeCord spoofing (yet to be implemented). */
+    /**
+     * The token used for BungeeCord spoofing (yet to be implemented).
+     */
     private String bungeeToken;
 
-    /** Whether BungeeCord spoofing is enabled. */
+    /**
+     * Whether BungeeCord spoofing is enabled.
+     */
     private boolean bungeeEnabled;
 
-    /** Whether the target IP for BungeeCord spoofing is enabled. */
+    /**
+     * Whether the target IP for BungeeCord spoofing is enabled.
+     */
     private boolean bungeeTargetEnabled;
 
     /**

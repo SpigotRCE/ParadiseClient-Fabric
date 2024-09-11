@@ -1,6 +1,8 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.mod.MiscMod;
 import io.github.spigotrce.paradiseclientfabric.mod.NetworkMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -14,8 +16,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
-import io.github.spigotrce.paradiseclientfabric.mod.MiscMod;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,21 +25,28 @@ import static io.github.spigotrce.paradiseclientfabric.Helper.getChroma;
 /**
  * Mixin for the InGameHud class to inject custom HUD rendering behavior.
  * This mixin is used to display additional information on the HUD.
+ *
  * @author SpigotRCE
  * @since 1.0
  */
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
 
-    /** Reference to the MiscMod instance for accessing mod data. */
+    /**
+     * Reference to the MiscMod instance for accessing mod data.
+     */
     @Unique
     MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
 
-    /** Reference to the MiscMod instance for accessing mod data. */
+    /**
+     * Reference to the MiscMod instance for accessing mod data.
+     */
     @Unique
     NetworkMod networkMod = ParadiseClient_Fabric.getNetworkMod();
 
-    /** The Minecraft client instance. */
+    /**
+     * The Minecraft client instance.
+     */
     @Final
     @Shadow
     private MinecraftClient client;
@@ -65,9 +72,9 @@ public abstract class InGameHudMixin {
     /**
      * Injects behavior at the end of the render method to add custom HUD information.
      *
-     * @param context      The DrawContext used for rendering.
-     * @param tickCounter  The RenderTickCounter for frame timing.
-     * @param ci           Callback information for the method.
+     * @param context     The DrawContext used for rendering.
+     * @param tickCounter The RenderTickCounter for frame timing.
+     * @param ci          Callback information for the method.
      */
     @Inject(method = "render", at = @At("TAIL"))
     public void renderMainHud(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
@@ -93,10 +100,10 @@ public abstract class InGameHudMixin {
     /**
      * Renders text with a chroma color effect.
      *
-     * @param ct  The DrawContext used for rendering.
-     * @param s   The string to render.
-     * @param x   The x-coordinate for the text.
-     * @param y   The y-coordinate for the text.
+     * @param ct The DrawContext used for rendering.
+     * @param s  The string to render.
+     * @param x  The x-coordinate for the text.
+     * @param y  The y-coordinate for the text.
      */
     @Unique
     private void renderTextWithChroma(DrawContext ct, String s, int x, int y) {

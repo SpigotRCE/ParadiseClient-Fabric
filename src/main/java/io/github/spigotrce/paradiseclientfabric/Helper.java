@@ -13,6 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Utility class providing various helper methods for Minecraft client operations.
@@ -167,6 +168,21 @@ public class Helper {
             return str;
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * Generates a random string.
+     *
+     * @param length     The length of the created string.
+     * @param characters The charset the generator will use.
+     * @param random     The {@link Random} instance the generator will use.
+     * @return The random string generated.
+     */
+    public static String generateRandomString(int length, String characters, Random random) {
+        StringBuilder result = new StringBuilder(length);
+        for (int i = 0; i < length; i++)
+            result.append(characters.charAt(random.nextInt(characters.length())));
+        return result.toString();
     }
 
     public static class ByteArrayOutput {

@@ -42,6 +42,7 @@ public class CommandManager {
         register(new ScreenShareCommand(minecraftClient));
         register(new SpamCommand(minecraftClient));
         register(new PlayersCommand(minecraftClient));
+        register(new VelocityReportCommand(minecraftClient));
 
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(

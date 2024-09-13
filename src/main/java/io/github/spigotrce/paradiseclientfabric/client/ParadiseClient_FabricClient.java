@@ -1,6 +1,8 @@
 package io.github.spigotrce.paradiseclientfabric.client;
 
+import io.github.spigotrce.paradiseclientfabric.packet.VelocityReportPayloadPacket;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
 /**
  * This class is the entry point for the client-side functionality of the ParadiseClient mod.
@@ -23,6 +25,6 @@ public class ParadiseClient_FabricClient implements ClientModInitializer {
      */
     @Override
     public void onInitializeClient() {
-        // Add your client-side initialization logic here
+        PayloadTypeRegistry.playC2S().register(VelocityReportPayloadPacket.ID, VelocityReportPayloadPacket.CODEC);
     }
 }

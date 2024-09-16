@@ -47,7 +47,7 @@ public class Helper {
      */
     public static void printChatMessage(String message) {
         assert MinecraftClient.getInstance().player != null;
-        MinecraftClient.getInstance().player.sendMessage(Text.of(message));
+        MinecraftClient.getInstance().player.sendMessage(Text.of(parseColoredText("&aParadise&bClient " + message)));
     }
 
     /**

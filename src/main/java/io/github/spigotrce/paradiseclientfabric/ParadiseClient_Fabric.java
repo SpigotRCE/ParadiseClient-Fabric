@@ -152,15 +152,8 @@ public class ParadiseClient_Fabric implements ModInitializer {
         chatRoomMod = new ChatRoomMod();
         exploitMod = new ExploitMod();
         commandManager = new CommandManager(this.minecraftClient);
+        exploitManager = new ExploitManager(this.minecraftClient);
         networkMod = new NetworkMod();
-        exploitManager = new ExploitManager(
-                new BrigadierExploit(),
-                new PaperWindowExploit(),
-                new SignExploit(),
-                new NegativeInfinityExploit(),
-                new SlotCrashExploit()
-        );
-
         eventManager.registerListener(new PacketListener());
     }
 }

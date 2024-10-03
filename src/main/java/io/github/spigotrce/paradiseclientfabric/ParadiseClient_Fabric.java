@@ -59,6 +59,10 @@ public class ParadiseClient_Fabric implements ModInitializer {
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
     private static final NetworkMod networkMod = new NetworkMod();
+    /**
+     * The instance of {@link NetworkMod}, which manages network-related functionalities.
+     */
+    private static final SoundMod soundMod = new SoundMod(MinecraftClient.getInstance());
 
     /**
      * Retrieves the instance of {@link EventManager}.
@@ -139,6 +143,15 @@ public class ParadiseClient_Fabric implements ModInitializer {
      */
     public static NetworkMod getNetworkMod() {
         return networkMod;
+    }
+
+    /**
+     * Retrieves the instance of {@link SoundMod}.
+     *
+     * @return The instance of {@link SoundMod}.
+     */
+    public static SoundMod getSoundMod() {
+        return soundMod;
     }
 
     /**

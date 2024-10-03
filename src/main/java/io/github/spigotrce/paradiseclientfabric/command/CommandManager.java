@@ -2,11 +2,13 @@ package io.github.spigotrce.paradiseclientfabric.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import io.github.spigotrce.eventbus.event.EventHandler;
+import io.github.spigotrce.eventbus.event.listener.Listener;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.impl.*;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import io.github.spigotrce.paradiseclientfabric.event.chat.ChatPreEvent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
 
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Manages and registers commands for the Paradise Client Fabric mod.
  */
-public class CommandManager {
+public class CommandManager implements Listener {
 
     /**
      * The command dispatcher used to register commands.
@@ -27,13 +29,21 @@ public class CommandManager {
      */
     private final ArrayList<Command> commands = new ArrayList<>();
 
+    /**
+     * The {@link MinecraftClient} instance.
+     */
+    private final MinecraftClient minecraftClient;
+
 
     /**
      * Constructs a new CommandManager instance and registers all commands.
      *
-     * @param minecraftClient The Minecraft client instance.
      */
     public CommandManager(MinecraftClient minecraftClient) {
+        this.minecraftClient = minecraftClient;
+    }
+
+    public void init() {
         register(new CopyCommand(minecraftClient));
         register(new CrashCommand(minecraftClient));
         register(new HelpCommand(minecraftClient));
@@ -44,10 +54,8 @@ public class CommandManager {
         register(new PlayersCommand(minecraftClient));
         register(new VelocityReportCommand(minecraftClient));
 
-        ClientCommandRegistrationCallback.EVENT.register(
-                (dispatcher, registryAccess) -> dispatcher.register(
-                        new ParadiseCommand(minecraftClient).build()
-                )
+        DISPATCHER.register(
+                new ParadiseCommand(minecraftClient).build()
         );
     }
 
@@ -84,6 +92,29 @@ public class CommandManager {
     }
 
     /**
+     * Dispatches the provided command.
+     *
+     * @param message The input message.
+     */
+    public void dispatch(String message) throws CommandSyntaxException {
+        DISPATCHER.execute(message, minecraftClient.getNetworkHandler().getCommandSource());
+    }
+
+    @EventHandler
+    public void onClientCommand(ChatPreEvent event) {
+        Helper.printChatMessage(event.getMessage());
+        if (!event.getMessage().startsWith(".")) return;
+        event.setCancel(true);
+        try {
+            dispatch(event.getMessage().substring(1));
+        } catch (CommandSyntaxException e) {
+            Helper.printChatMessage("§cAn error occurred while executing the command: §7" + e.getMessage());
+        }
+
+        minecraftClient.inGameHud.getChatHud().addToMessageHistory(event.getMessage());
+    }
+
+    /**
      * This class represents a command the root command to execute all sub commands.
      * It extends the {@link Command} class and overrides the {@link #build()} method to define the command structure.
      *
@@ -96,8 +127,8 @@ public class CommandManager {
         }
 
         @Override
-        public LiteralArgumentBuilder<FabricClientCommandSource> build() {
-            LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
+        public LiteralArgumentBuilder<CommandSource> build() {
+            LiteralArgumentBuilder<CommandSource> node = literal(getName());
             node.executes(context -> {
                 for (Command command : ParadiseClient_Fabric.getCommandManager().getCommands())
                     Helper.printChatMessage("§4§l" + command.getName() + "§r §6" + command.getDescription());

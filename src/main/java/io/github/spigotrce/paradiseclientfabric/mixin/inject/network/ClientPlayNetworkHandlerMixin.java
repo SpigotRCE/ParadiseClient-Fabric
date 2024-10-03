@@ -1,7 +1,10 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
 
+import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.event.chat.ChatPostEvent;
+import io.github.spigotrce.paradiseclientfabric.event.chat.ChatPreEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,5 +45,36 @@ public abstract class ClientPlayNetworkHandlerMixin {
         }
 
         ParadiseClient_Fabric.getMiscMod().delayedMessages.clear();
+    }
+
+    /**
+     * This method fires the {@link ChatPreEvent}.
+     * @param content The content entered by the player.
+     * @param ci      The callback information.
+     */
+    @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
+    private void onSendChatMessageH(String content, CallbackInfo ci) {
+        ChatPreEvent event = new ChatPreEvent(content);
+        try {
+            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+        } catch (Exception e) {
+            Constants.LOGGER.error("Failed to fire ChatPreEvent", e);
+        }
+        if (event.isCancel()) ci.cancel();
+    }
+
+    /**
+     * This method fires the {@link ChatPostEvent}.
+     * @param content The content entered by the player.
+     * @param ci      The callback information.
+     */
+    @Inject(method = "sendChatMessage", at = @At("TAIL"))
+    private void onSendChatMessageT(String content, CallbackInfo ci) {
+        ChatPostEvent event = new ChatPostEvent(content);
+        try {
+            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+        } catch (Exception e) {
+            Constants.LOGGER.error("Failed to fire ChatPreEvent", e);
+        }
     }
 }

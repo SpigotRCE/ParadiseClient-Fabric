@@ -8,6 +8,7 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
 
 /**
  * This class represents a command for spamming a specified command in Minecraft.
@@ -42,7 +43,7 @@ public class SpamCommand extends Command {
      * @return The built command structure.
      */
     @Override
-    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
+    public LiteralArgumentBuilder<CommandSource> build() {
         return literal(getName())
                 .then(literal("stop")
                         .executes((context) -> {
@@ -53,17 +54,17 @@ public class SpamCommand extends Command {
                             isRunning = false;
                             return SINGLE_SUCCESS;
                         }))
-                .then(ClientCommandManager.argument("repeation", IntegerArgumentType.integer())
+                .then(argument("repeation", IntegerArgumentType.integer())
                         .executes((context) -> {
                             Helper.printChatMessage("§4§l" + context.getInput() + "<repeation> <delay> <command>");
                             return SINGLE_SUCCESS;
                         })
-                        .then(ClientCommandManager.argument("delay", IntegerArgumentType.integer())
+                        .then(argument("delay", IntegerArgumentType.integer())
                                 .executes((context) -> {
                                     Helper.printChatMessage("§4§l" + context.getInput() + " <command>");
                                     return SINGLE_SUCCESS;
                                 })
-                                .then(ClientCommandManager.argument("command", StringArgumentType.greedyString())
+                                .then(argument("command", StringArgumentType.greedyString())
                                         .executes((context) -> {
                                             int repetition = context.getArgument("repeation", Integer.class);
                                             int delay = context.getArgument("delay", Integer.class);

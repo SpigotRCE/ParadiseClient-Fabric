@@ -6,6 +6,7 @@ import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
 
 /**
  * Represents a command for crashing the server using various exploits.
@@ -30,8 +31,8 @@ public class CrashCommand extends Command {
      * @return The root node of the command structure.
      */
     @Override
-    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
-        LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
+    public LiteralArgumentBuilder<CommandSource> build() {
+        LiteralArgumentBuilder<CommandSource> node = literal(getName());
 
         // Add subcommands for each exploit
         ParadiseClient_Fabric.getExploitManager().getExploits().forEach(exploit -> node.then(literal(exploit.getAlias())

@@ -6,6 +6,7 @@ import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
 
 /**
  * Represents a command that displays help information for other commands.
@@ -30,8 +31,8 @@ public class HelpCommand extends Command {
      * @return The built command structure.
      */
     @Override
-    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
-        LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
+    public LiteralArgumentBuilder<CommandSource> build() {
+        LiteralArgumentBuilder<CommandSource> node = literal(getName());
 
         // Adds sub-commands for each registered command
         ParadiseClient_Fabric.getCommandManager().getCommands().forEach(command -> {

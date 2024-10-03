@@ -1,8 +1,11 @@
 package io.github.spigotrce.paradiseclientfabric.command;
 
+import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
 
 /**
  * Abstract class representing a command in the Paradise Client Fabric mod.
@@ -33,7 +36,7 @@ public abstract class Command {
      *
      * @return A Brigadier literal argument builder for the command.
      */
-    abstract public LiteralArgumentBuilder<FabricClientCommandSource> build();
+    abstract public LiteralArgumentBuilder<CommandSource> build();
 
     /**
      * Getter for the command name.
@@ -68,7 +71,12 @@ public abstract class Command {
      * @param name The name of the literal argument.
      * @return A Brigadier literal argument builder.
      */
-    protected LiteralArgumentBuilder<FabricClientCommandSource> literal(String name) {
+    protected static LiteralArgumentBuilder<CommandSource> literal(final String name) {
         return LiteralArgumentBuilder.literal(name);
+    }
+
+    // TODO: Add javadoc
+    protected static <T> RequiredArgumentBuilder<CommandSource, T> argument(final String name, final ArgumentType<T> type) {
+        return RequiredArgumentBuilder.argument(name, type);
     }
 }

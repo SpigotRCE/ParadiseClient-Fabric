@@ -7,6 +7,7 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 import io.github.spigotrce.paradiseclientfabric.packet.VelocityReportPayloadPacket;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
 import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 
 import java.util.Random;
@@ -36,7 +37,7 @@ public class VelocityReportCommand extends Command {
      * @return The built command structure.
      */
     @Override
-    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
+    public LiteralArgumentBuilder<CommandSource> build() {
         return literal(getName())
                 .executes(context -> {
                     new Thread(() -> {

@@ -5,6 +5,7 @@ import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -35,7 +36,7 @@ public class CopyCommand extends Command {
      * @return The built command structure.
      */
     @Override
-    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
+    public LiteralArgumentBuilder<CommandSource> build() {
         return
                 literal(getName())
                         .then(literal("tellraw")

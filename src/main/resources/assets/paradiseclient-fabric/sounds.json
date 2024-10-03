@@ -1,0 +1,20 @@
+{
+  "matador": {
+    "subtitle": "Matador De",
+    "sounds": [
+      "paradiseclient-fabric:matador"
+    ]
+  },
+  "2steppingwithmyglock": {
+    "subtitle": "2STEPPING WITH MY GLOCK",
+    "sounds": [
+      "paradiseclient-fabric:2steppingwithmyglock"
+    ]
+  },
+  "onmyway": {
+    "subtitle": "On My Way",
+    "sounds": [
+      "paradiseclient-fabric:onmyway"
+    ]
+  }
+}

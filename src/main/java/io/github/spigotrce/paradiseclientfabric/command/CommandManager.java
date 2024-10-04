@@ -34,6 +34,11 @@ public class CommandManager implements Listener {
      */
     private final MinecraftClient minecraftClient;
 
+    /**
+     * The command dispatcher prefix used to execute commands.
+     */
+    public final String prefix = ".";
+
 
     /**
      * Constructs a new CommandManager instance and registers all commands.
@@ -103,7 +108,6 @@ public class CommandManager implements Listener {
 
     @EventHandler
     public void onClientCommand(ChatPreEvent event) {
-        Helper.printChatMessage(event.getMessage());
         if (!event.getMessage().startsWith(".")) return;
         event.setCancel(true);
         try {

@@ -108,7 +108,7 @@ public class CommandManager implements Listener {
 
     @EventHandler
     public void onClientCommand(ChatPreEvent event) {
-        if (!event.getMessage().startsWith(".")) return;
+        if (!event.getMessage().startsWith(prefix)) return;
         event.setCancel(true);
         try {
             dispatch(event.getMessage().substring(1));

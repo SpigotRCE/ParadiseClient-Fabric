@@ -41,7 +41,7 @@ public abstract class ChatInputSuggestorMixin {
             cancellable = true
     )
     public void onRefresh(CallbackInfo ci, @Local StringReader reader) {
-        String prefix = ".";
+        String prefix = ParadiseClient_Fabric.getCommandManager().prefix;
         int length = prefix.length();
 
         if (reader.canRead(length) && reader.getString().startsWith(prefix, reader.getCursor())) {

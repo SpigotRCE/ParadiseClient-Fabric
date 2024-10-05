@@ -15,7 +15,7 @@ public class Constants {
     /**
      * The version of the mod.
      */
-    public static final String VERSION = "1.21-3-4";
+    public static final String VERSION = "v1.21-g3-b5";
 
     /**
      * The ID of the mod.

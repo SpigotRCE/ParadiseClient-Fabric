@@ -29,6 +29,16 @@ repositories {
         name 'Xander Maven'
         url 'https://maven.isxander.dev/releases'
     }
+
+    maven {
+        name = 'Ladysnake Mods'
+        url = 'https://maven.ladysnake.org/releases'
+        content {
+            includeGroup 'io.github.ladysnake'
+            includeGroup 'org.ladysnake'
+            includeGroupByRegex 'dev\\.onyxstudios.*'
+        }
+    }
 }
 
 dependencies {
@@ -39,6 +49,8 @@ dependencies {
     modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "io.github.ladysnake:satin:${satin_version}"
+    include "org.ladysnake:satin:${satin_version}"
     shadow(implementation 'com.github.JnCrMx:discord-game-sdk4j:0.5.5')
 
     shadow(implementation 'io.github.spigotrce.eventbus:EventBus:1.0-SNAPSHOT')

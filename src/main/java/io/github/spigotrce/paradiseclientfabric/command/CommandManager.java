@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.github.spigotrce.eventbus.event.EventHandler;
 import io.github.spigotrce.eventbus.event.listener.Listener;
+import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.impl.*;
@@ -136,8 +137,9 @@ public class CommandManager implements Listener {
         public LiteralArgumentBuilder<CommandSource> build() {
             LiteralArgumentBuilder<CommandSource> node = literal(getName());
             node.executes(context -> {
+                Helper.printChatMessage("Version information " + Constants.VERSION);
                 for (Command command : ParadiseClient_Fabric.getCommandManager().getCommands())
-                    Helper.printChatMessage("§4§l" + command.getName() + "§r §6" + command.getDescription());
+                    Helper.printChatMessage(command.getName() + " " +command.getDescription());
                 return SINGLE_SUCCESS;
             });
 

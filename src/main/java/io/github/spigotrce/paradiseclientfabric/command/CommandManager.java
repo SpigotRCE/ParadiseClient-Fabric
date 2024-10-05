@@ -114,7 +114,7 @@ public class CommandManager implements Listener {
         try {
             dispatch(event.getMessage().substring(1));
         } catch (CommandSyntaxException e) {
-            Helper.printChatMessage("§cAn error occurred while executing the command: §7" + e.getMessage());
+            Helper.printChatMessage("§c" + e.getMessage());
         }
 
         minecraftClient.inGameHud.getChatHud().addToMessageHistory(event.getMessage());

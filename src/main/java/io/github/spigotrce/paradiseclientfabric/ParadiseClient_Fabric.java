@@ -46,7 +46,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
     /**
      * The instance of {@link ExploitMod}, which handles various exploit-related functionalities.
      */
-    private static final ExploitMod exploitMod  = new ExploitMod();
+    private static final ExploitMod exploitMod = new ExploitMod();
     /**
      * The instance of {@link CommandManager}, which manages commands in the mod.
      */
@@ -63,6 +63,10 @@ public class ParadiseClient_Fabric implements ModInitializer {
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
     private static final SoundMod soundMod = new SoundMod(MinecraftClient.getInstance());
+    /**
+     * The instance of {@link MotionBlurMod}, which manages the motion blur.
+     */
+    private static final MotionBlurMod motionBlurMod = new MotionBlurMod(false, 75);
 
     /**
      * Retrieves the instance of {@link EventManager}.
@@ -152,6 +156,15 @@ public class ParadiseClient_Fabric implements ModInitializer {
      */
     public static SoundMod getSoundMod() {
         return soundMod;
+    }
+
+    /**
+     * Retrieves the instance of {@link MotionBlurMod}.
+     *
+     * @return The instance of {@link MotionBlurMod}.
+     */
+    public static MotionBlurMod getMotionBlurMod() {
+        return motionBlurMod;
     }
 
     /**

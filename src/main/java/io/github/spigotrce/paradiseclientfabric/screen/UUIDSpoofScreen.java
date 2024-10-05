@@ -61,6 +61,11 @@ public class UUIDSpoofScreen extends Screen {
     private TextFieldWidget bungeeFakeUsernameField;
 
     /**
+     * Text field for entering the Bungee token.
+     */
+    private TextFieldWidget bungeeTokenField;
+
+    /**
      * Button to toggle between premium and cracked UUIDs.
      */
     private ButtonWidget premiumButton;
@@ -94,17 +99,23 @@ public class UUIDSpoofScreen extends Screen {
         this.addSelectableChild(this.bungeeFakeUsernameField);
         this.addDrawable(this.bungeeFakeUsernameField);
 
+        this.bungeeTokenField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 + 15, widgetWidth, 20, Text.literal("Bungee Token"));
+        this.bungeeTokenField.setMaxLength(256);
+        this.bungeeTokenField.setText(this.bungeeSpoofMod.getBungeeToken());
+        this.addSelectableChild(this.bungeeTokenField);
+        this.addDrawable(this.bungeeTokenField);
+
         premiumButton = this.addDrawableChild(ButtonWidget.builder(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"), button -> {
                     bungeeSpoofMod.setBungeeUUIDPremium(!bungeeSpoofMod.isBungeeUUIDPremium());
                     premiumButton.setMessage(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"));
                 })
-                .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 15, widgetWidth, 20).build());
-
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("Spoof"), button -> spoof())
                 .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 40, widgetWidth, 20).build());
 
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("Exit"), button -> close())
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("Spoof"), button -> spoof())
                 .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 65, widgetWidth, 20).build());
+
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("Exit"), button -> close())
+                .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 90, widgetWidth, 20).build());
     }
 
     @Override
@@ -139,6 +150,7 @@ public class UUIDSpoofScreen extends Screen {
     private void spoof() {
         this.bungeeSpoofMod.setBungeeUsername(this.bungeeUsernameField.getText());
         this.bungeeSpoofMod.setBungeeFakeUsername(this.bungeeFakeUsernameField.getText());
+        this.bungeeSpoofMod.setBungeeToken(this.bungeeTokenField.getText());
         if (this.bungeeSpoofMod.isBungeeUUIDPremium()) {
             try {
                 this.bungeeSpoofMod.setBungeeUUID(fetchUUID(this.bungeeSpoofMod.getBungeeFakeUsername()));

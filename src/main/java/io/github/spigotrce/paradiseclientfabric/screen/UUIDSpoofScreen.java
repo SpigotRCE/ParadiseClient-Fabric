@@ -70,6 +70,8 @@ public class UUIDSpoofScreen extends Screen {
      */
     private ButtonWidget premiumButton;
 
+    private int currentHeight;
+
     /**
      * Creates a new UUIDSpoofScreen.
      *
@@ -87,19 +89,21 @@ public class UUIDSpoofScreen extends Screen {
         int widgetWidth = 200;
         int widgetXOffset = widgetWidth / 2;
 
-        this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 - 35, widgetWidth, 20, Text.literal("Bungee Username"));
+        this.currentHeight = this.height / 2 - 90;
+
+        this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20, Text.literal("Bungee Username"));
         this.bungeeUsernameField.setMaxLength(128);
         this.bungeeUsernameField.setText(this.bungeeSpoofMod.getBungeeUsername());
         this.addSelectableChild(this.bungeeUsernameField);
         this.addDrawable(this.bungeeUsernameField);
 
-        this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 - 10, widgetWidth, 20, Text.literal("Bungee FakeUsername"));
+        this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20, Text.literal("Bungee FakeUsername"));
         this.bungeeFakeUsernameField.setMaxLength(128);
         this.bungeeFakeUsernameField.setText(this.bungeeSpoofMod.getBungeeFakeUsername());
         this.addSelectableChild(this.bungeeFakeUsernameField);
         this.addDrawable(this.bungeeFakeUsernameField);
 
-        this.bungeeTokenField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 + 15, widgetWidth, 20, Text.literal("Bungee Token"));
+        this.bungeeTokenField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20, Text.literal("Bungee Token"));
         this.bungeeTokenField.setMaxLength(256);
         this.bungeeTokenField.setText(this.bungeeSpoofMod.getBungeeToken());
         this.addSelectableChild(this.bungeeTokenField);
@@ -109,13 +113,13 @@ public class UUIDSpoofScreen extends Screen {
                     bungeeSpoofMod.setBungeeUUIDPremium(!bungeeSpoofMod.isBungeeUUIDPremium());
                     premiumButton.setMessage(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"));
                 })
-                .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 40, widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Spoof"), button -> spoof())
-                .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 65, widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Exit"), button -> close())
-                .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 90, widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20).build());
     }
 
     @Override
@@ -190,5 +194,10 @@ public class UUIDSpoofScreen extends Screen {
             return JsonParser.parseString(response.toString()).getAsJsonObject().get("id").getAsString();
         }
         throw new Exception();
+    }
+
+    private int getNewHeight() {
+        this.currentHeight += 25;
+        return this.currentHeight;
     }
 }

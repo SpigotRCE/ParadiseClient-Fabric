@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.mod.MiscMod;
 import io.github.spigotrce.paradiseclientfabric.mod.NetworkMod;
@@ -8,7 +9,12 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.gui.hud.PlayerListHud;
 import net.minecraft.client.render.RenderTickCounter;
+import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.scoreboard.ScoreboardDisplaySlot;
+import net.minecraft.scoreboard.ScoreboardObjective;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -58,6 +64,8 @@ public abstract class InGameHudMixin {
      */
     @Shadow
     public abstract TextRenderer getTextRenderer();
+
+    @Shadow @Final private PlayerListHud playerListHud;
 
     /**
      * Injects behavior at the end of the InGameHud constructor.
@@ -114,5 +122,26 @@ public abstract class InGameHudMixin {
             ct.drawText(this.client.textRenderer, c, x + i, y, getChroma(((int) Math.sqrt(x * x + y * y) * 10) + (i * -17), 1, 1).getRGB(), false);
             i += getTextRenderer().getWidth(c);
         }
+    }
+
+    @Inject(method = "renderPlayerList", at = @At("HEAD"), cancellable = true)
+    private void renderPlayerList(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+        Scoreboard scoreboard = this.client.world.getScoreboard();
+        ScoreboardObjective scoreboardObjective = scoreboard.getObjectiveForSlot(ScoreboardDisplaySlot.LIST);
+        if (!this.client.options.playerListKey.isPressed() || this.client.isInSingleplayer() && this.client.player.networkHandler.getListedPlayerListEntries().size() <= 1 && scoreboardObjective == null) {
+            this.playerListHud.setVisible(false);
+            if (ParadiseClient_Fabric.getHudMod().showPlayerList) {
+                this.renderTAB(context, context.getScaledWindowWidth(), scoreboard, scoreboardObjective);
+            }
+        } else {
+            this.renderTAB(context, context.getScaledWindowWidth(), scoreboard, scoreboardObjective);
+        }
+        ci.cancel();
+    }
+
+    @Unique
+    private void renderTAB(DrawContext context, int scaledWindowWidth, Scoreboard scoreboard, @Nullable ScoreboardObjective scoreboardObjective) {
+        this.playerListHud.setVisible(true);
+        this.playerListHud.render(context, scaledWindowWidth, scoreboard, scoreboardObjective);
     }
 }

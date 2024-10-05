@@ -53,7 +53,11 @@ public class HandshakeC2SMixin {
             this.address = bungeeSpoofMod.getBungeeTargetIP();
         }
         if (bungeeSpoofMod.isBungeeEnabled() && connectionIntent == ConnectionIntent.LOGIN) {
-            this.address += "\000" + bungeeSpoofMod.getBungeeIP() + "\000" + bungeeSpoofMod.getBungeeUUID();
+            this.address += "\000" +
+                    bungeeSpoofMod.getBungeeIP() +
+                    "\000" + bungeeSpoofMod.getBungeeUUID() +
+                    "\000" +
+                    "[{\"name\": \"bungeeguard-token\", \"value\": \"" + ParadiseClient_Fabric.getBungeeSpoofMod().getBungeeToken() + "\"}]";
         }
     }
 }

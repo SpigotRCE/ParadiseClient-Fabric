@@ -74,7 +74,7 @@ public class RPC implements Runnable {
      * Loads the Discord Game SDK DLL file from the resource manager and copies it to the game directory.
      */
     private void loadDiscordRPC() {
-        Identifier identifier = Identifier.of(Constants.MOD_ID, "discord/discord_game_sdk.dll");
+        Identifier identifier = Identifier.of(Constants.MOD_ID, "discord\discord_game_sdk.dll");
 
         String gameDir = MinecraftClient.getInstance().runDirectory.getAbsolutePath();
         String filePath = gameDir + "\\paradise\\";

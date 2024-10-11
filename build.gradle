@@ -2,6 +2,7 @@ plugins {
     id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 version = project.mod_version
@@ -34,6 +35,7 @@ repositories {
             includeGroupByRegex 'dev\\.onyxstudios.*'
         }
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -49,6 +51,7 @@ dependencies {
     shadow(implementation 'com.github.JnCrMx:discord-game-sdk4j:v0.5.5')
 
     shadow(implementation 'io.github.spigotrce.eventbus:EventBus:1.0-SNAPSHOT')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 processResources {
@@ -106,4 +109,7 @@ publishing {
             from components.java
         }
     }
+}
+kotlin {
+    jvmToolchain(21)
 }

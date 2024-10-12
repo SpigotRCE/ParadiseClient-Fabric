@@ -251,6 +251,11 @@ public class ChatHudMixin {
         refreshing = false;
     }
 
+    @Inject(method = "clear", at = @At("HEAD"), cancellable = true)
+    public void clear(boolean clearHistory, CallbackInfo ci) {
+        ci.cancel();
+    }
+
     /**
      * Shadow method to retrieve the line height of chat messages.
      */

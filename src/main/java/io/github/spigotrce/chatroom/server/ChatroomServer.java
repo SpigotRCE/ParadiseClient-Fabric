@@ -2,7 +2,6 @@ package io.github.spigotrce.chatroom.server;
 
 import io.github.spigotrce.chatroom.server.handlers.ServerHandlers;
 import io.github.spigotrce.chatroom.shared.PacketProcessor;
-import io.github.spigotrce.chatroomold.server.ConnectionHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;

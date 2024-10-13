@@ -26,7 +26,7 @@ public class BitBuffer {
         int newIndex = this.bitIndex + bitSize;
 
         // Grabs the bits from the current buffer.
-        int bits = (this.buffers[this.bitIndex / 32] & (((1 << ((this.bitIndex % 32 + bitSize - leftover) - this.bitIndex % 32)) - 1) << this.bitIndex % 32)) >>> this.bitIndex % 32 + 1;
+        int bits = (this.buffers[this.bitIndex / 32] & (((1 << ((this.bitIndex % 32 + bitSize - leftover) - this.bitIndex % 32)) - 1) << this.bitIndex % 32)) >>> this.bitIndex % 32;
 
         // Some bits are leftover, take them
         if(leftover > 0) {

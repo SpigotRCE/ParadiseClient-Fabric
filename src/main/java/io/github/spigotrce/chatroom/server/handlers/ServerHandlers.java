@@ -1,5 +1,6 @@
 package io.github.spigotrce.chatroom.server.handlers;
 
+import io.github.spigotrce.chatroom.server.ServerShard;
 import io.github.spigotrce.chatroom.shared.PacketHandler;
 
 /**
@@ -9,9 +10,9 @@ public enum ServerHandlers {
 
     DISCONNECT(new DisconnectHandler());
 
-    public PacketHandler packetHandler;
+    public PacketHandler<ServerShard> packetHandler;
 
-    private ServerHandlers(PacketHandler packetHandler) {
+    private ServerHandlers(PacketHandler<ServerShard> packetHandler) {
         this.packetHandler = packetHandler;
     }
 

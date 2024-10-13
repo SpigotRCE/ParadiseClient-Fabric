@@ -50,6 +50,35 @@ public class BitBuffer {
             int leftIndex = newIndex % 32 - leftover;
             this.buffers[this.bitIndex / 32] += (bits & (((1 << (newIndex % 32) - leftIndex)) - 1) << leftIndex);
         }
+
+        this.bitIndex = newIndex;
+    }
+
+    public void addBits(byte bits, int amount) {
+        int leftover = (amount > 32 ? amount % 32 : 0);
+        int newIndex = this.bitIndex + amount;
+
+        // Grabs the bits from the given int and masks them into the buffer.
+        this.buffers[this.bitIndex / 32] = (bits & (((1 << ((this.bitIndex % 32 + amount - leftover) - this.bitIndex % 32)) - 1) << this.bitIndex % 32)) >>> this.bitIndex % 32 + 1;
+
+        // Some bits are left over, copy them.
+        if(leftover > 0) {
+            int leftIndex = newIndex % 32 - leftover;
+            this.buffers[this.bitIndex / 32] += (bits & (((1 << (newIndex % 32) - leftIndex)) - 1) << leftIndex);
+        }
+
+        this.bitIndex = newIndex;
+    }
+
+    public void writeInt(int i) {
+        this.addBits(i,32);
+    }
+
+    public void writeString(String s) {
+        this.writeInt(s.length());
+        for(byte b : s.getBytes()) {
+            this.addBits(b, 8);
+        }
     }
 
 }

@@ -31,4 +31,8 @@ public class DoubleSidedEnumRegistry<L extends Enum<?>, R> {
         return this.right[left.ordinal()];
     }
 
+    public L getLeft(int index) {
+        return this.left[index];
+    }
+
 }

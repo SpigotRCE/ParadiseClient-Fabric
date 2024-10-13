@@ -38,6 +38,30 @@ public class BitBuffer {
         return bits;
     }
 
+    /**
+     * <p>Reads the bits from the buffers.</p>
+     * <p>Currently only supports bitSize < 32</p>
+     * @param bitSize the bits you want to get must be < 32
+     * @return the bits as int.
+     */
+    public byte readBitsAsByte(int bitSize) {
+        int leftover = (this.bitIndex / 32 != (this.bitIndex + bitSize) / 32 ? (this.bitIndex + bitSize) % 32 : 0);
+        int newIndex = this.bitIndex + bitSize;
+
+        // Grabs the bits from the current buffer.
+        int bits = (this.buffers[this.bitIndex / 32] & (((1 << ((this.bitIndex % 32 + bitSize - leftover) - this.bitIndex % 32)) - 1) << this.bitIndex % 32)) >>> this.bitIndex % 32;
+
+        // Some bits are leftover, take them
+        if(leftover > 0) {
+            int leftIndex = newIndex % 32 - leftover;
+            bits += this.buffers[newIndex / 32] & (((1 << ((newIndex % 32) - leftIndex)) - 1) << leftIndex); // If bits are missing we take them from the next buffer.
+        }
+
+        this.bitIndex = newIndex;
+        return (byte) bits;
+    }
+
+
     public void addBits(int bits, int amount) {
         int leftover = (amount > 32 ? amount % 32 : 0);
         int newIndex = this.bitIndex + amount;
@@ -75,14 +99,23 @@ public class BitBuffer {
     }
 
     public void writeString(String s) {
-        this.writeInt(s.length());
+        this.writeInt(s.getBytes().length);
         for(byte b : s.getBytes()) {
-            this.addBits(b, 8);
+            this.addBits(b, 7);
         }
     }
 
     public int readInt() {
         return this.readBits(31);
+    }
+
+    public String readString() {
+        int byteSize = readInt();
+        byte[] bytes = new byte[byteSize];
+        for(int i = 0; i < byteSize; ++i) {
+            bytes[i] = readBitsAsByte(7);
+        }
+        return new String(bytes);
     }
 
 }

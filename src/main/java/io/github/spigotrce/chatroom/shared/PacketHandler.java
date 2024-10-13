@@ -5,8 +5,12 @@ package io.github.spigotrce.chatroom.shared;
  */
 public interface PacketHandler {
 
-    public void handle();
+    default void handle() {
+        throw new IllegalStateException("The handler for the current protocol direction doesn't handle reading packets!");
+    }
 
-    public void write();
+    default void write() {
+        throw new IllegalStateException("The handler for the current protocol direction doesn't handle writing packets!");
+    }
 
 }

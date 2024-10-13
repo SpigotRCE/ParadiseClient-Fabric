@@ -8,7 +8,7 @@ package io.github.spigotrce.chatroom.shared;
  * @since 1.0.0
  * @author Zffu
  */
-public class DoubleSidedEnumRegistry<L extends Enum<?>, R extends Enum<?>> {
+public class DoubleSidedEnumRegistry<L extends Enum<?>, R> {
 
     /**
      * <p>Caches the enum's valueOf() output as it generates a new array everytime.</p>
@@ -29,15 +29,6 @@ public class DoubleSidedEnumRegistry<L extends Enum<?>, R extends Enum<?>> {
      */
     public R getRight(L left) {
         return this.right[left.ordinal()];
-    }
-
-    /**
-     * <p>Gets the left registry value from the provided right.</p>
-     * @param right the right value.
-     * @return the left as L
-     */
-    public L getLeft(R right) {
-        return this.left[right.ordinal()];
     }
 
 }

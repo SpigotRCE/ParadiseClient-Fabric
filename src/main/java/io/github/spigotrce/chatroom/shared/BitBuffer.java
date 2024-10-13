@@ -81,4 +81,8 @@ public class BitBuffer {
         }
     }
 
+    public int readInt() {
+        return this.readBits(32);
+    }
+
 }

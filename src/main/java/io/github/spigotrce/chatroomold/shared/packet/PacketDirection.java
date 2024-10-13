@@ -1,4 +1,4 @@
-package io.github.spigotrce.chatroom.shared.packet;
+package io.github.spigotrce.chatroomold.shared.packet;
 
 public enum PacketDirection {
     SERVER, // sent from the server

@@ -1,4 +1,4 @@
-package io.github.spigotrce.chatroom.server;
+package io.github.spigotrce.chatroomold.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;

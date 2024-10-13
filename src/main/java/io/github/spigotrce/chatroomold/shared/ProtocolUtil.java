@@ -1,4 +1,4 @@
-package io.github.spigotrce.chatroom.shared;
+package io.github.spigotrce.chatroomold.shared;
 
 import java.util.ArrayList;
 import java.util.Arrays;

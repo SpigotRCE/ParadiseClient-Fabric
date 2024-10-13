@@ -1,10 +1,10 @@
-package io.github.spigotrce.chatroom.shared.packet.impl.common;
+package io.github.spigotrce.chatroomold.shared.packet.impl.common;
 
-import io.github.spigotrce.chatroom.shared.ProtocolUtil;
-import io.github.spigotrce.chatroom.shared.packet.PacketDirection;
-import io.github.spigotrce.chatroom.shared.packet.Packet;
-import io.github.spigotrce.chatroom.shared.packet.PacketManager;
-import io.github.spigotrce.chatroom.shared.packet.PacketType;
+import io.github.spigotrce.chatroomold.shared.ProtocolUtil;
+import io.github.spigotrce.chatroomold.shared.packet.PacketDirection;
+import io.github.spigotrce.chatroomold.shared.packet.Packet;
+import io.github.spigotrce.chatroomold.shared.packet.PacketManager;
+import io.github.spigotrce.chatroomold.shared.packet.PacketType;
 
 public class DisconnectPacket extends Packet {
 

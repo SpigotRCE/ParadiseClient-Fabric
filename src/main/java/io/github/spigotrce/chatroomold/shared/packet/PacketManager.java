@@ -1,8 +1,7 @@
-package io.github.spigotrce.chatroom.shared.packet;
+package io.github.spigotrce.chatroomold.shared.packet;
 
-import io.github.spigotrce.chatroom.server.ConnectionHandler;
-import io.github.spigotrce.chatroom.shared.ConnectionPhase;
-import io.github.spigotrce.chatroom.shared.packet.impl.common.DisconnectPacket;
+import io.github.spigotrce.chatroomold.server.ConnectionHandler;
+import io.github.spigotrce.chatroomold.shared.ConnectionPhase;
 
 import java.io.IOException;
 import java.io.PrintWriter;

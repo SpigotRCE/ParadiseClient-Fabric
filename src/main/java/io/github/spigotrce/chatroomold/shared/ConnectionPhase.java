@@ -1,4 +1,4 @@
-package io.github.spigotrce.chatroom.shared;
+package io.github.spigotrce.chatroomold.shared;
 
 public enum ConnectionPhase {
     LOGIN,

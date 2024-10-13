@@ -1,5 +1,6 @@
 package io.github.spigotrce.chatroom.client;
 
+import io.github.spigotrce.chatroom.client.handlers.ClientHandlers;
 import io.github.spigotrce.chatroom.server.ChatroomServer;
 import io.github.spigotrce.chatroom.shared.PacketProcessor;
 import io.github.spigotrce.chatroom.shared.PacketType;
@@ -12,7 +13,7 @@ import java.net.Socket;
 /**
  * <p>A chatroom client.</p>
  */
-public class ChatroomClient extends PacketProcessor {
+public class ChatroomClient extends PacketProcessor<ClientHandlers> {
 
     private Socket socket;
     private BufferedReader in;
@@ -36,7 +37,7 @@ public class ChatroomClient extends PacketProcessor {
             String[] cut = packet.split(";");
             PacketType type = this.registry.getLeft(Integer.parseInt(cut[0]));
 
-            this.registry.getRight(type).packetHandler.handle(this);
+            this.registry.getRight(type).handler.handle(this);
         }
     }
 

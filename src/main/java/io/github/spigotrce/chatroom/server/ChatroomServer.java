@@ -2,6 +2,7 @@ package io.github.spigotrce.chatroom.server;
 
 import io.github.spigotrce.chatroom.server.handlers.ServerHandlers;
 import io.github.spigotrce.chatroom.shared.PacketProcessor;
+import io.github.spigotrce.chatroomold.server.ConnectionHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -39,7 +40,22 @@ public class ChatroomServer extends PacketProcessor<ServerHandlers> implements R
                 pool.execute(serverShard);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            shutdown();
+        }
+    }
+
+    public void shutdown() {
+        System.out.println("Shutting down server");
+        done = true;
+        try {
+            if (!serverSocket.isClosed()) {
+                serverSocket.close();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        for (ServerShard serverShard : this.shards) {
+            //todo: spread
         }
     }
 }

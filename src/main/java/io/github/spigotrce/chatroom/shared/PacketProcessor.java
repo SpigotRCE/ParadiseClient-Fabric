@@ -5,7 +5,7 @@ package io.github.spigotrce.chatroom.shared;
  */
 public class PacketProcessor<K extends Enum<?>> {
 
-    private DoubleSidedEnumRegistry<PacketType, K> registry;
+    public DoubleSidedEnumRegistry<PacketType, K> registry;
 
     /**
      * <p>Creates a new packet processor.</p>

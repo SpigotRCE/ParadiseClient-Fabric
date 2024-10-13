@@ -5,10 +5,10 @@ import io.github.spigotrce.chatroom.shared.PacketHandler;
 /**
  * <p>The client handler for the disconnect packet.</p>
  */
-public class DisconnectHandler implements PacketHandler {
+public class DisconnectHandler implements PacketHandler<Object> {
 
     @Override
-    public void handle() {
+    public void handle(Object o) {
         System.out.println("Client disconnected!");
     }
 }

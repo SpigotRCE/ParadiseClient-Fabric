@@ -35,6 +35,7 @@ public class ChatroomServer extends PacketProcessor<ServerHandlers> implements R
             ExecutorService pool = Executors.newCachedThreadPool();
             while (!done) {
                 Socket client = this.serverSocket.accept();
+                System.out.println("new connection!");
                 ServerShard serverShard = new ServerShard(this, client);
                 this.shards.add(serverShard);
                 pool.execute(serverShard);

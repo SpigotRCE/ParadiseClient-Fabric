@@ -26,7 +26,7 @@ public class ChatroomClient extends PacketProcessor<ClientHandlers> {
      * @throws Exception
      */
     public ChatroomClient(String ip, int port) throws Exception {
-        super(null);
+        super(ClientHandlers.values());
         this.socket = new Socket(ip, port);
 
         this.out = new PrintWriter(this.socket.getOutputStream(), true);

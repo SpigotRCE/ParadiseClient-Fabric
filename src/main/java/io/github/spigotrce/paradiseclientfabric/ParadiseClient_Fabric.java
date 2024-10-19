@@ -62,7 +62,6 @@ public class ParadiseClient_Fabric implements ModInitializer {
     /**
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
-    private static final SoundMod soundMod = new SoundMod(MinecraftClient.getInstance());
     /**
      * The instance of {@link MotionBlurMod}, which manages the motion blur.
      */
@@ -150,13 +149,6 @@ public class ParadiseClient_Fabric implements ModInitializer {
     }
 
     /**
-     * Retrieves the instance of {@link SoundMod}.
-     *
-     * @return The instance of {@link SoundMod}.
-     */
-    public static SoundMod getSoundMod() {
-        return soundMod;
-    }
 
     /**
      * Retrieves the instance of {@link MotionBlurMod}.

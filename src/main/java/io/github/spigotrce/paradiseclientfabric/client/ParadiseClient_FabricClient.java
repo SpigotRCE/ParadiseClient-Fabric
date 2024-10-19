@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.client;
 
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.packet.AuthMeVelocityPayloadPacket;
 import io.github.spigotrce.paradiseclientfabric.packet.VelocityReportPayloadPacket;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -27,6 +28,7 @@ public class ParadiseClient_FabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         PayloadTypeRegistry.playC2S().register(VelocityReportPayloadPacket.ID, VelocityReportPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(AuthMeVelocityPayloadPacket.ID, AuthMeVelocityPayloadPacket.CODEC);
         ParadiseClient_Fabric.getMotionBlurMod().init();
     }
 }

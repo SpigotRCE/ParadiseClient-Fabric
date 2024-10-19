@@ -65,6 +65,7 @@ public class MinecraftClientMixin {
      *
      * @param info Callback information.
      */
+
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(CallbackInfo info) {
         new Thread(new RPC()).start();

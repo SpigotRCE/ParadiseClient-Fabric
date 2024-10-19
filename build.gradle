@@ -46,8 +46,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "io.github.ladysnake:satin:${satin_version}"
     include "org.ladysnake:satin:${satin_version}"
-    shadow(implementation 'com.github.JnCrMx:discord-game-sdk4j:v0.5.5')
-
+    implementation 'org.apiguardian:apiguardian-api:1.1.2'
+    implementation 'com.github.JnCrMx:discord-game-sdk4j:v0.5.5'
     shadow(implementation 'io.github.spigotrce.eventbus:EventBus:1.0-SNAPSHOT')
 }
 
@@ -55,12 +55,15 @@ processResources {
     inputs.property "version", project.version
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
+    inputs.property "yacl_version", project.yacl_version
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version,
                 "minecraft_version": project.minecraft_version,
-                "loader_version": project.loader_version
+                "loader_version": project.loader_version,
+                "yacl_version": project.yacl_version,
+                "satin_version": project.satin_version
     }
 }
 
@@ -90,7 +93,6 @@ jar {
 shadowJar {
     configurations = [project.configurations.shadow]
     archiveClassifier.set("dev")
-    relocate 'com.github.JnCrMx.discord', 'dev.wrrulos.mcpclient.shadow.com.github.JnCrMx.discord'
 }
 
 remapJar {

@@ -38,7 +38,7 @@ public class CommandManager implements Listener {
     /**
      * The command dispatcher prefix used to execute commands.
      */
-    public final String prefix = ".";
+    public final String prefix = ",";
 
 
     /**
@@ -58,7 +58,6 @@ public class CommandManager implements Listener {
         register(new ScreenShareCommand(minecraftClient));
         register(new SpamCommand(minecraftClient));
         register(new PlayersCommand(minecraftClient));
-        register(new SoundCommand(minecraftClient));
         register(new MotionBlurCommand(minecraftClient));
         register(new ToggleTABCommand(minecraftClient));
 
@@ -74,6 +73,7 @@ public class CommandManager implements Listener {
      */
     public void register(Command command) {
         this.commands.add(command);
+        DISPATCHER.register(command.build());
     }
 
     /**

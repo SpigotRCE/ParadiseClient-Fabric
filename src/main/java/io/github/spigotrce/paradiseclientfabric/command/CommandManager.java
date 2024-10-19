@@ -60,7 +60,7 @@ public class CommandManager implements Listener {
         register(new PlayersCommand(minecraftClient));
         register(new MotionBlurCommand(minecraftClient));
         register(new ToggleTABCommand(minecraftClient));
-        register(new PurpurExploitCommand(minecraftClient));
+        register(new AuthMeVelocityBypassCommand(minecraftClient));
 
         DISPATCHER.register(
                 new ParadiseCommand(minecraftClient).build()

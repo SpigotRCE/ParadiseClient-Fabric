@@ -6,7 +6,13 @@ import io.github.spigotrce.paradiseclientfabric.exploit.ExploitManager;
 import io.github.spigotrce.paradiseclientfabric.listener.PacketListener;
 import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import org.lwjgl.glfw.GLFW;
 
 /**
  * The main class for the ParadiseClient Fabric mod.
@@ -170,5 +176,18 @@ public class ParadiseClient_Fabric implements ModInitializer {
         getCommandManager().init();
         getEventManager().registerListener(new PacketListener());
         getEventManager().registerListener(getCommandManager());
+
+        KeyBinding paradiseCommandOpener =  KeyBindingHelper.registerKeyBinding(
+                new KeyBinding(
+                        "Open paradise command",
+                        InputUtil.Type.KEYSYM,
+                        GLFW.GLFW_KEY_COMMA,
+                        Constants.MOD_NAME
+                )
+        );
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (paradiseCommandOpener.wasPressed())
+                MinecraftClient.getInstance().setScreen(new ChatScreen(getCommandManager().prefix));
+        });
     }
 }

@@ -43,7 +43,6 @@ public class CommandManager implements Listener {
 
     /**
      * Constructs a new CommandManager instance and registers all commands.
-     *
      */
     public CommandManager(MinecraftClient minecraftClient) {
         this.minecraftClient = minecraftClient;
@@ -62,10 +61,6 @@ public class CommandManager implements Listener {
         register(new ToggleTABCommand(minecraftClient));
         register(new PurpurExploitCommand(minecraftClient));
         register(new AuthMeVelocityBypassCommand(minecraftClient));
-
-        DISPATCHER.register(
-                new ParadiseCommand(minecraftClient).build()
-        );
     }
 
     /**
@@ -76,6 +71,7 @@ public class CommandManager implements Listener {
     public void register(Command command) {
         this.commands.add(command);
         DISPATCHER.register(command.build());
+        Constants.LOGGER.info("Registered command: {}", command.getName());
     }
 
     /**
@@ -121,35 +117,5 @@ public class CommandManager implements Listener {
         }
 
         minecraftClient.inGameHud.getChatHud().addToMessageHistory(event.getMessage());
-    }
-
-    /**
-     * This class represents a command the root command to execute all sub commands.
-     * It extends the {@link Command} class and overrides the {@link #build()} method to define the command structure.
-     *
-     * @author SpigotRCE
-     * @since 2.28
-     */
-    private static class ParadiseCommand extends Command {
-        public ParadiseCommand(MinecraftClient minecraftClient) {
-            super("paradise", "The paradise command!", minecraftClient);
-        }
-
-        @Override
-        public LiteralArgumentBuilder<CommandSource> build() {
-            LiteralArgumentBuilder<CommandSource> node = literal(getName());
-            node.executes(context -> {
-                Helper.printChatMessage("Version information " + Constants.VERSION);
-                for (Command command : ParadiseClient_Fabric.getCommandManager().getCommands())
-                    Helper.printChatMessage(command.getName() + " " +command.getDescription());
-                return SINGLE_SUCCESS;
-            });
-
-            ParadiseClient_Fabric.getCommandManager().getCommands().forEach(c -> {
-                if (c != this) node.then(c.build());
-            });
-
-            return node;
-        }
     }
 }

@@ -60,9 +60,6 @@ public class ParadiseClient_Fabric implements ModInitializer {
      */
     private static final NetworkMod networkMod = new NetworkMod();
     /**
-     * The instance of {@link NetworkMod}, which manages network-related functionalities.
-     */
-    /**
      * The instance of {@link MotionBlurMod}, which manages the motion blur.
      */
     private static final MotionBlurMod motionBlurMod = new MotionBlurMod(false, 75);

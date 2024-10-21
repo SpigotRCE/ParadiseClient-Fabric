@@ -8,6 +8,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.widget.TextWidget;
 import net.minecraft.text.Text;
 
 import java.io.BufferedReader;
@@ -91,35 +92,42 @@ public class UUIDSpoofScreen extends Screen {
 
         this.currentHeight = this.height / 2 - 90;
 
-        this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20, Text.literal("Bungee Username"));
+        int tHeight = 0;
+        tHeight = getNewHeight();
+        this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("Username"));
         this.bungeeUsernameField.setMaxLength(128);
         this.bungeeUsernameField.setText(this.bungeeSpoofMod.getBungeeUsername());
         this.addSelectableChild(this.bungeeUsernameField);
         this.addDrawable(this.bungeeUsernameField);
+        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("Username") , this.textRenderer));
 
-        this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20, Text.literal("Bungee FakeUsername"));
+        tHeight = getNewHeight();
+        this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("FakeUsername"));
         this.bungeeFakeUsernameField.setMaxLength(128);
         this.bungeeFakeUsernameField.setText(this.bungeeSpoofMod.getBungeeFakeUsername());
         this.addSelectableChild(this.bungeeFakeUsernameField);
         this.addDrawable(this.bungeeFakeUsernameField);
+        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("FakeUsername") , this.textRenderer));
 
-        this.bungeeTokenField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20, Text.literal("Bungee Token"));
+        tHeight = getNewHeight();
+        this.bungeeTokenField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("BungeeGuard Token"));
         this.bungeeTokenField.setMaxLength(256);
         this.bungeeTokenField.setText(this.bungeeSpoofMod.getBungeeToken());
         this.addSelectableChild(this.bungeeTokenField);
         this.addDrawable(this.bungeeTokenField);
+        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("BungeeGuard Token") , this.textRenderer));
 
         premiumButton = this.addDrawableChild(ButtonWidget.builder(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"), button -> {
                     bungeeSpoofMod.setBungeeUUIDPremium(!bungeeSpoofMod.isBungeeUUIDPremium());
                     premiumButton.setMessage(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"));
                 })
-                .dimensions(this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, getNewHeight() - 10, widgetWidth, 20).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Spoof"), button -> spoof())
-                .dimensions(this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, getNewHeight() - 20, widgetWidth, 20).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Exit"), button -> close())
-                .dimensions(this.width / 2 - widgetXOffset, getNewHeight(), widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, getNewHeight() - 30, widgetWidth, 20).build());
     }
 
     @Override
@@ -197,7 +205,7 @@ public class UUIDSpoofScreen extends Screen {
     }
 
     private int getNewHeight() {
-        this.currentHeight += 25;
+        this.currentHeight += 35;
         return this.currentHeight;
     }
 }

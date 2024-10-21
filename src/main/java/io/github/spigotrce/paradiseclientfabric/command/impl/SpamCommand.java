@@ -3,10 +3,9 @@ package io.github.spigotrce.paradiseclientfabric.command.impl;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
 
@@ -79,7 +78,7 @@ public class SpamCommand extends Command {
                                                     try {
                                                         Thread.sleep(delay);
                                                     } catch (InterruptedException e) {
-                                                        e.printStackTrace();
+                                                        Constants.LOGGER.error("Unable to sleep for 1000ms", e);
                                                     }
                                                     assert getMinecraftClient().player != null;
                                                     getMinecraftClient().player.networkHandler.sendChatCommand(command);

@@ -1,7 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.mod;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
-import io.github.spigotrce.paradiseclientfabric.Helper;
 import net.minecraft.util.Identifier;
 import org.ladysnake.satin.api.event.ShaderEffectRenderCallback;
 import org.ladysnake.satin.api.managed.ManagedShaderEffect;

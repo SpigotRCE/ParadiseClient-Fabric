@@ -22,6 +22,7 @@ import java.util.Objects;
  * @author SpigotRCE
  * @since 2.17
  */
+@SuppressWarnings("BusyWait")
 public class RPC implements Runnable {
 
     @Override

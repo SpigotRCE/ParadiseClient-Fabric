@@ -1,7 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
-import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.mod.MiscMod;
 import io.github.spigotrce.paradiseclientfabric.mod.NetworkMod;

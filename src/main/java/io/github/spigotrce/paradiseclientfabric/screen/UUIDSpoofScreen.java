@@ -179,7 +179,7 @@ public class UUIDSpoofScreen extends Screen {
      */
     public String fetchUUID(String username) throws Exception {
         String urlString = "https://api.mojang.com/users/profiles/minecraft/" + username;
-        URL url = new URL(urlString);
+        @SuppressWarnings("deprecation") URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         int responseCode = connection.getResponseCode();

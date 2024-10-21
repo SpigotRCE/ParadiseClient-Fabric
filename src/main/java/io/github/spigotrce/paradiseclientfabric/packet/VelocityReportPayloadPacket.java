@@ -1,12 +1,9 @@
 package io.github.spigotrce.paradiseclientfabric.packet;
 
-import io.github.spigotrce.paradiseclientfabric.Helper;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
-
-import static io.github.spigotrce.paradiseclientfabric.Helper.*;
 
 public record VelocityReportPayloadPacket(String s) implements CustomPayload {
     public static final PacketCodec<PacketByteBuf, VelocityReportPayloadPacket> CODEC = CustomPayload.codecOf(VelocityReportPayloadPacket::write, VelocityReportPayloadPacket::new);

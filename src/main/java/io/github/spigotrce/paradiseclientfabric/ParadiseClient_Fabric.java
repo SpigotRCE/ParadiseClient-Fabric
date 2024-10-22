@@ -3,6 +3,7 @@ package io.github.spigotrce.paradiseclientfabric;
 import io.github.spigotrce.eventbus.event.EventManager;
 import io.github.spigotrce.paradiseclientfabric.command.CommandManager;
 import io.github.spigotrce.paradiseclientfabric.exploit.ExploitManager;
+import io.github.spigotrce.paradiseclientfabric.listener.ChannelListener;
 import io.github.spigotrce.paradiseclientfabric.listener.PacketListener;
 import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
@@ -176,6 +177,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
         getCommandManager().init();
         getEventManager().registerListener(new PacketListener());
         getEventManager().registerListener(getCommandManager());
+        getEventManager().registerListener(new ChannelListener());
 
         KeyBinding paradiseCommandOpener =  KeyBindingHelper.registerKeyBinding(
                 new KeyBinding(

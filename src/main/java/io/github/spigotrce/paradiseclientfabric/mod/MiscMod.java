@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.mod;
 
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ public class MiscMod {
     /**
      * Message which needs to be delayed before sending.
      */
-    public final ArrayList<String> delayedMessages = new ArrayList<>();
+    public final ArrayList<Text> delayedMessages = new ArrayList<>();
     /**
      * The last message sent or received.
      */

@@ -2,6 +2,7 @@ package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
 
 import io.github.spigotrce.eventbus.event.listener.Listener;
 import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.event.channel.ChannelRegisterEvent;
 import net.fabricmc.fabric.impl.networking.RegistrationPayload;
@@ -28,6 +29,6 @@ public class RegistrationPayloadMixin implements Listener {
         }
 
         if (event.isCancel()) ci.cancel();
-        ParadiseClient_Fabric.getMiscMod().delayedMessages.add(event.getMessage());
+        Helper.printChatMessage(event.getMessage());
     }
 }

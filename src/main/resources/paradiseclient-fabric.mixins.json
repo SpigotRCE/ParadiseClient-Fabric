@@ -4,10 +4,12 @@
   "package": "io.github.spigotrce.paradiseclientfabric.mixin.inject",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "network.DecoderHandlerMixin",
     "network.PayloadTypeRegistryImplMixin",
     "network.RegistrationPayloadMixin"
   ],
   "client": [
+    "ClientPlayerEntityMixin",
     "chat.ChatHudMixin",
     "chat.ChatInputSuggestorMixin",
     "chat.SuggestionWindowMixin",

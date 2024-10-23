@@ -39,10 +39,8 @@ public abstract class ClientPlayNetworkHandlerMixin {
         ParadiseClient_Fabric.getNetworkMod().isConnected = true;
         ParadiseClient_Fabric.getNetworkMod().serverIP = ((ClientPlayNetworkHandler) (Object) this).getConnection().getAddress().toString().split("/")[0];
 
-        for (String channel : ParadiseClient_Fabric.getMiscMod().delayedMessages) {
+        for (String channel : ParadiseClient_Fabric.getMiscMod().delayedMessages)
             Helper.printChatMessage(channel);
-            System.out.println(channel);
-        }
 
         ParadiseClient_Fabric.getMiscMod().delayedMessages.clear();
     }

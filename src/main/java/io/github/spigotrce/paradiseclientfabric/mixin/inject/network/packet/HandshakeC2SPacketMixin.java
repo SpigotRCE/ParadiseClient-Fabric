@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.network.packet;
 
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;
@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 1.0
  */
 @Mixin(HandshakeC2SPacket.class)
-public class HandshakeC2SMixin {
+public class HandshakeC2SPacketMixin {
 
     @Mutable
     @Shadow

@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui.widget;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

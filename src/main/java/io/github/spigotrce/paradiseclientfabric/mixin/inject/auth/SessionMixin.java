@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.auth;
 
 import io.github.spigotrce.paradiseclientfabric.mixin.accessor.SessionAccessor;
 import net.minecraft.client.session.Session;

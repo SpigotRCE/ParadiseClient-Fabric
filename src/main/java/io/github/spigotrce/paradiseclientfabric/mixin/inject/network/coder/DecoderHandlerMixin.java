@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.network.coder;
 
 import com.mojang.logging.LogUtils;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;

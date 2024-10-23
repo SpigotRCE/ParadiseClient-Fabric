@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.chat;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.chat.suggestor;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.brigadier.ParseResults;

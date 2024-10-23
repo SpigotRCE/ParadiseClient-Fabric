@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui.screen;
 
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;

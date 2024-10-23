@@ -2,15 +2,16 @@ package io.github.spigotrce.paradiseclientfabric.event.channel;
 
 import io.github.spigotrce.eventbus.event.Cancellable;
 import io.github.spigotrce.eventbus.event.Event;
+import net.minecraft.network.PacketByteBuf;
 
-public class ChannelRegisterEvent extends Event implements Cancellable {
+public class PluginMessageEvent extends Event implements Cancellable {
     private boolean isCancel = false;
     private String channel;
-    private String message;
+    private final PacketByteBuf buf;
 
-    public ChannelRegisterEvent(String channel, String message) {
+    public PluginMessageEvent(String channel, PacketByteBuf buf) {
         this.channel = channel;
-        this.message = message;
+        this.buf = buf;
     }
 
     public String getChannel() {
@@ -21,12 +22,8 @@ public class ChannelRegisterEvent extends Event implements Cancellable {
         this.channel = channel;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public PacketByteBuf getBuf() {
+        return buf;
     }
 
     @Override

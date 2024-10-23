@@ -1,8 +1,8 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
 
 import com.mojang.logging.LogUtils;
-import io.github.spigotrce.paradiseclientfabric.Constants;
-import io.github.spigotrce.paradiseclientfabric.Helper;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.event.channel.PluginMessageEvent;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.NetworkState;
@@ -15,9 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Objects;
 
 @Mixin(DecoderHandler.class)
 public class DecoderHandlerMixin <T extends PacketListener>{
@@ -30,25 +28,18 @@ public class DecoderHandlerMixin <T extends PacketListener>{
         this.state = state;
     }
 
-    @Inject(method = "decode", at = @At("HEAD"))
+    @Inject(method = "decode", at = @At("HEAD"), cancellable = true)
     public void decode(ChannelHandlerContext context, ByteBuf b, List<Object> objects, CallbackInfo ci) {
         PacketByteBuf buf = new PacketByteBuf(b.copy());
         if (buf.readVarInt() != 25) return;
-        processPayload(buf.readString(), buf);
-    }
-
-    @Unique
-    private void processPayload(String channelName, PacketByteBuf buf) {
+        PluginMessageEvent event = new PluginMessageEvent(buf.readString(), buf);
         try {
-            if (Objects.equals(channelName, "minecraft:register") || Objects.equals(channelName, "REGISTER")) // 1.13 channel or 1.8 channel
-                for(String splitted : buf.toString(Charset.defaultCharset()).split("\000")) {
-                    Helper.printChatMessage("&fChannel: &d" + splitted);
-                }
-            else
-                Helper.printChatMessage("&fChannel: &d" + channelName + " &fData: &d" + buf.toString(Charset.defaultCharset()));
+            ParadiseClient_Fabric.getEventManager().fireEvent(event);
         } catch (Exception e) {
-            Helper.printChatMessage("&4Error processing payload for channel: " + channelName + " " + e.getMessage());
-            Constants.LOGGER.error("&4Error processing payload for channel: {} {}", channelName, e);
+            LOGGER.error("Unable to fire PluginMessageEvent", e);
+            LOGGER.error("Not dropping the packet! (TODO: Change this in the future)");
+            return;
         }
+        if (event.isCancel()) ci.cancel();
     }
 }

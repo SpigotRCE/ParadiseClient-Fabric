@@ -1,13 +1,11 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.network.connection;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
-import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.event.chat.ChatPostEvent;
 import io.github.spigotrce.paradiseclientfabric.event.chat.ChatPreEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
-import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

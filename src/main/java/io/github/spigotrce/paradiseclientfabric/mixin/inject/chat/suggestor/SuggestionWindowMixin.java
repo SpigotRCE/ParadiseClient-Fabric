@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.chat;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.chat.suggestor;
 
 import com.mojang.brigadier.suggestion.Suggestion;
 import net.minecraft.client.MinecraftClient;

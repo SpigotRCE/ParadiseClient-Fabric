@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.spigotrce.paradiseclientfabric.Constants;

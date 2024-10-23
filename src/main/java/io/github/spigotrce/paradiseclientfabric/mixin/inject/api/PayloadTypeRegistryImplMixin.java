@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.network;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.api;
 
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import net.fabricmc.fabric.impl.networking.PayloadTypeRegistryImpl;

@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.etc;
 
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import net.minecraft.client.network.ClientPlayerEntity;

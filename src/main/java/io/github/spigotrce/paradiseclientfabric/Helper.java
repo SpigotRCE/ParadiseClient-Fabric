@@ -51,7 +51,7 @@ public class Helper {
 
     public static void printChatMessage(String message, boolean dropTitle) {
         assert MinecraftClient.getInstance().player != null;
-        MinecraftClient.getInstance().player.sendMessage(Text.of(parseColoredText((dropTitle ? "&aParadise&bClient " : "") + message)));
+        MinecraftClient.getInstance().player.sendMessage(Text.of(parseColoredText((dropTitle ? "&aParadise&bClient &r" : "") + message)));
     }
 
     /**

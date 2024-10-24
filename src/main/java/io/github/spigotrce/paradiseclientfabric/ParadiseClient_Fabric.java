@@ -29,7 +29,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
     /**
      * The Minecraft client instance.
      */
-    private static final MinecraftClient minecraftClient = MinecraftClient.getInstance();
+    private static MinecraftClient minecraftClient = MinecraftClient.getInstance();
     /**
      * The instance of {@link EventManager}, which handles the events being fired and listened.
      */
@@ -169,6 +169,8 @@ public class ParadiseClient_Fabric implements ModInitializer {
      * @return The instance of {@link MinecraftClient}.
      */
     public static MinecraftClient getMinecraft() {
+        if (minecraftClient == null)
+            minecraftClient = MinecraftClient.getInstance();
         return minecraftClient;
     }
 

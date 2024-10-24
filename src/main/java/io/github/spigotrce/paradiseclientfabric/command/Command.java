@@ -74,7 +74,13 @@ public abstract class Command {
         return LiteralArgumentBuilder.literal(name);
     }
 
-    // TODO: Add javadoc
+    /**
+     * Protected method to create an argument builder for Brigadier.
+     *
+     * @param name The name of the argument.
+     * @param type The type of the argument.
+     * @return A Brigadier literal argument builder.
+     */
     protected static <T> RequiredArgumentBuilder<CommandSource, T> argument(final String name, final ArgumentType<T> type) {
         return RequiredArgumentBuilder.argument(name, type);
     }

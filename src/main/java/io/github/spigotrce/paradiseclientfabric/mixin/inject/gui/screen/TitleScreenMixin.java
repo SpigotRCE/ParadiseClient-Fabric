@@ -34,11 +34,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
-    /**
-     * Message recommending the installation of "ViaFabricPlus".
-     */
-    @Unique
-    private final String VIAFABRICPLUS_REMINDER = "We recommend installing ViaFabricPlus";
 
     /**
      * The splash text renderer used to display splash texts on the Title Screen.
@@ -100,6 +95,7 @@ public abstract class TitleScreenMixin extends Screen {
     @Inject(method = "init", at = @At(value = "TAIL"))
     public void init(CallbackInfo ci) {
         if (!FabricLoader.getInstance().isModLoaded("viafabricplus")) {
+            String VIAFABRICPLUS_REMINDER = "We recommend installing ViaFabricPlus";
             this.addDrawableChild(ButtonWidget.builder(Text.literal(VIAFABRICPLUS_REMINDER),
                             onPress -> {
                                 Util.getOperatingSystem().open("https://modrinth.com/mod/viafabricplus/version/3.4.2");
@@ -169,14 +165,18 @@ public abstract class TitleScreenMixin extends Screen {
         if ((i & -67108864) != 0) {
             super.render(context, mouseX, mouseY, delta);
             this.logoDrawer.draw(context, this.width, f);
-            if (this.splashText != null && !(Boolean) this.client.options.getHideSplashTexts().getValue()) {
-                this.splashText.render(context, this.width, this.textRenderer, i);
+            if (this.splashText != null) {
+                assert this.client != null;
+                if (!(Boolean) this.client.options.getHideSplashTexts().getValue()) {
+                    this.splashText.render(context, this.width, this.textRenderer, i);
+                }
             }
 
             String string = "ParadiseClient [" + Constants.EDITION + "]" + Constants.VERSION + "/" + SharedConstants.getGameVersion().getName();
             context.drawTextWithShadow(this.textRenderer, string, 2, this.height - 10, 16777215 | i);
             if (this.isRealmsNotificationsGuiDisplayed() && f >= 1.0F) {
                 RenderSystem.enableDepthTest();
+                assert this.realmsNotificationGui != null;
                 this.realmsNotificationGui.render(context, mouseX, mouseY, delta);
             }
         }

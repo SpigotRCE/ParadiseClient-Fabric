@@ -2,8 +2,6 @@ package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
-import io.github.spigotrce.paradiseclientfabric.mod.MiscMod;
-import io.github.spigotrce.paradiseclientfabric.mod.NetworkMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -36,18 +34,6 @@ import static io.github.spigotrce.paradiseclientfabric.Helper.getChroma;
  */
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
-
-    /**
-     * Reference to the MiscMod instance for accessing mod data.
-     */
-    @Unique
-    MiscMod miscMod = ParadiseClient_Fabric.getMiscMod();
-
-    /**
-     * Reference to the MiscMod instance for accessing mod data.
-     */
-    @Unique
-    NetworkMod networkMod = ParadiseClient_Fabric.getNetworkMod();
 
     /**
      * The Minecraft client instance.
@@ -93,6 +79,7 @@ public abstract class InGameHudMixin {
 
         text.add("ParadiseClient [" + Constants.EDITION + "]");
         text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.getHudMod().showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
+        assert this.client.player != null;
         text.add("Engine " + (Objects.isNull(this.client.player.networkHandler) ? "" : this.client.player.networkHandler.getBrand()));
         text.add("FPS " + this.client.getCurrentFps());
         text.add("Players: " + this.client.player.networkHandler.getPlayerList().size());
@@ -125,9 +112,10 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "renderPlayerList", at = @At("HEAD"), cancellable = true)
     private void renderPlayerList(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+        assert this.client.world != null;
         Scoreboard scoreboard = this.client.world.getScoreboard();
         ScoreboardObjective scoreboardObjective = scoreboard.getObjectiveForSlot(ScoreboardDisplaySlot.LIST);
-        if (!this.client.options.playerListKey.isPressed() || this.client.isInSingleplayer() && this.client.player.networkHandler.getListedPlayerListEntries().size() <= 1 && scoreboardObjective == null) {
+        if (!this.client.options.playerListKey.isPressed() || this.client.isInSingleplayer() && Objects.requireNonNull(this.client.player).networkHandler.getListedPlayerListEntries().size() <= 1 && scoreboardObjective == null) {
             this.playerListHud.setVisible(false);
             if (ParadiseClient_Fabric.getHudMod().showPlayerList) {
                 this.renderTAB(context, context.getScaledWindowWidth(), scoreboard, scoreboardObjective);

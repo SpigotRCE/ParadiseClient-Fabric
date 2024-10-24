@@ -11,7 +11,6 @@ import net.minecraft.client.gui.screen.multiplayer.DirectConnectScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -32,9 +31,6 @@ public abstract class ScreenMixin {
     @Shadow
     public int width;
 
-    @Unique
-    private Screen screen;
-
     /**
      * Injects custom background rendering into the renderBackground method.
      * This method draws a custom texture for specific screens and cancels the original rendering.
@@ -47,7 +43,7 @@ public abstract class ScreenMixin {
      */
     @Inject(method = "renderBackground", at = @At(value = "HEAD"), cancellable = true)
     private void renderBackground(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        screen = MinecraftClient.getInstance().currentScreen;
+        Screen screen = MinecraftClient.getInstance().currentScreen;
         if (screen instanceof MultiplayerScreen || screen instanceof DisconnectedScreen || screen instanceof AddServerScreen
                 || screen instanceof DirectConnectScreen || screen instanceof ConnectScreen) {
             context.drawTexture(Constants.backgroundImage, 0, 0, this.width, this.height, 0.0F, 0.0F, this.width, this.height, this.width, this.height);

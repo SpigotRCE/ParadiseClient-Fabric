@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.spigotrce.paradiseclientfabric.Constants;
@@ -27,17 +27,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * This class modifies the Title Screen to include a custom button recommending
  * the installation of "ViaFabricPlus" and customizes the background fade effect.
  * It also displays additional information about the client and game version.
+ *
  * @author SpigotRCE
  * @since 2.9
  * </p>
  */
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
-    /**
-     * Message recommending the installation of "ViaFabricPlus".
-     */
-    @Unique
-    private final String VIAFABRICPLUS_REMINDER = "We recommend installing ViaFabricPlus";
 
     /**
      * The splash text renderer used to display splash texts on the Title Screen.
@@ -99,6 +95,7 @@ public abstract class TitleScreenMixin extends Screen {
     @Inject(method = "init", at = @At(value = "TAIL"))
     public void init(CallbackInfo ci) {
         if (!FabricLoader.getInstance().isModLoaded("viafabricplus")) {
+            String VIAFABRICPLUS_REMINDER = "We recommend installing ViaFabricPlus";
             this.addDrawableChild(ButtonWidget.builder(Text.literal(VIAFABRICPLUS_REMINDER),
                             onPress -> {
                                 Util.getOperatingSystem().open("https://modrinth.com/mod/viafabricplus/version/3.4.2");
@@ -150,7 +147,7 @@ public abstract class TitleScreenMixin extends Screen {
 
         float f = 1.0F;
         if (this.doBackgroundFade) {
-            float g = (float)(Util.getMeasuringTimeMs() - this.backgroundFadeStart) / 2000.0F;
+            float g = (float) (Util.getMeasuringTimeMs() - this.backgroundFadeStart) / 2000.0F;
             if (g > 1.0F) {
                 this.doBackgroundFade = false;
                 this.backgroundAlpha = 1.0F;
@@ -168,14 +165,18 @@ public abstract class TitleScreenMixin extends Screen {
         if ((i & -67108864) != 0) {
             super.render(context, mouseX, mouseY, delta);
             this.logoDrawer.draw(context, this.width, f);
-            if (this.splashText != null && !(Boolean)this.client.options.getHideSplashTexts().getValue()) {
-                this.splashText.render(context, this.width, this.textRenderer, i);
+            if (this.splashText != null) {
+                assert this.client != null;
+                if (!(Boolean) this.client.options.getHideSplashTexts().getValue()) {
+                    this.splashText.render(context, this.width, this.textRenderer, i);
+                }
             }
 
             String string = "ParadiseClient [" + Constants.EDITION + "]" + Constants.VERSION + "/" + SharedConstants.getGameVersion().getName();
             context.drawTextWithShadow(this.textRenderer, string, 2, this.height - 10, 16777215 | i);
             if (this.isRealmsNotificationsGuiDisplayed() && f >= 1.0F) {
                 RenderSystem.enableDepthTest();
+                assert this.realmsNotificationGui != null;
                 this.realmsNotificationGui.render(context, mouseX, mouseY, delta);
             }
         }

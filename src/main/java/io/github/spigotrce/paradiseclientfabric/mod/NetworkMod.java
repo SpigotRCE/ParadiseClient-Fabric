@@ -2,6 +2,8 @@ package io.github.spigotrce.paradiseclientfabric.mod;
 
 import net.minecraft.network.packet.Packet;
 
+import java.util.ArrayList;
+
 /**
  * Manages network connection state and server information.
  * <p>
@@ -33,11 +35,6 @@ public class NetworkMod {
     public long lastIncomingPacketTime = 0; // Disabled temporarily;
 
     /**
-     * The average delay of incoming network packets.
-     */
-    public long averageIncomingPacketDelay = 0; // Disabled temporarily
-
-    /**
      * The last outgoing network packet sent.
      */
     public Packet<?> lastOutgoingPacket;
@@ -48,7 +45,7 @@ public class NetworkMod {
     public long lastOutgoingPacketTime = 0; // Disabled temporarily;
 
     /**
-     * The average delay of outgoing network packets.
+     * The registered channels by their names.
      */
-    public long averageOutgoingPacketDelay = 0; // Disabled temporarily;
+    public ArrayList<String> registeredChannelsByName = new ArrayList<>();
 }

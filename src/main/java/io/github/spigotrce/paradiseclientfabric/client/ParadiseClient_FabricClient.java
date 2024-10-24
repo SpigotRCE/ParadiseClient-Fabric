@@ -1,6 +1,11 @@
 package io.github.spigotrce.paradiseclientfabric.client;
 
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.packet.AuthMeVelocityPayloadPacket;
+import io.github.spigotrce.paradiseclientfabric.packet.PurpurExploitPayloadPacket;
+import io.github.spigotrce.paradiseclientfabric.packet.VelocityReportPayloadPacket;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
 /**
  * This class is the entry point for the client-side functionality of the ParadiseClient mod.
@@ -21,8 +26,12 @@ public class ParadiseClient_FabricClient implements ClientModInitializer {
      *
      * <p>The return value is void, as there is no meaningful result to return from this method.
      */
+
     @Override
     public void onInitializeClient() {
-        // Add your client-side initialization logic here
+        PayloadTypeRegistry.playC2S().register(VelocityReportPayloadPacket.ID, VelocityReportPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(PurpurExploitPayloadPacket.ID, PurpurExploitPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(AuthMeVelocityPayloadPacket.ID, AuthMeVelocityPayloadPacket.CODEC);
+        ParadiseClient_Fabric.getMotionBlurMod().init();
     }
 }

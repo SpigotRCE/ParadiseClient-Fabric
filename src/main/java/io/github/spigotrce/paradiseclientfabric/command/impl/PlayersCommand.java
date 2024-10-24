@@ -1,11 +1,11 @@
 package io.github.spigotrce.paradiseclientfabric.command.impl;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
+import net.minecraft.text.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,12 +33,12 @@ public class PlayersCommand extends Command {
      * @return The built command.
      */
     @Override
-    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
+    public LiteralArgumentBuilder<CommandSource> build() {
         return literal(getName())
                 .executes((context) -> {
                     Map<String, PlayerData> playerDataMap = new HashMap<>();
 
-                    context.getSource().getPlayer().networkHandler.getPlayerList().forEach(playerInfo -> {
+                    getMinecraftClient().player.networkHandler.getPlayerList().forEach(playerInfo -> {
                         String playerName = playerInfo.getProfile().getName();
                         String playerUUID = playerInfo.getProfile().getId().toString();
                         String playerGamemode = playerInfo.getGameMode().getName();
@@ -48,9 +48,9 @@ public class PlayersCommand extends Command {
                     });
 
                     if (playerDataMap.isEmpty())
-                        context.getSource().getPlayer().sendMessage(Helper.parseColoredText("No players"), true);
+                        getMinecraftClient().player.sendMessage(Helper.parseColoredText("No players"), true);
 
-                    playerDataMap.forEach((name, playerData) -> context.getSource().getPlayer().sendMessage(playerData.getMessage(), false));
+                    playerDataMap.forEach((name, playerData) -> getMinecraftClient().player.sendMessage(playerData.getMessage(), false));
                     return SINGLE_SUCCESS;
                 });
     }
@@ -59,18 +59,18 @@ public class PlayersCommand extends Command {
      * Represents player data.
      */
     public static class PlayerData {
-        String name;
-        String uuid;
-        String gameMode;
-        int ping;
+        final String name;
+        final String uuid;
+        final String gameMode;
+        final int ping;
 
         /**
          * Constructs a new instance of PlayerData.
          *
-         * @param name      The player's name.
-         * @param uuid      The player's UUID.
-         * @param gameMode  The player's game mode.
-         * @param ping      The player's ping.
+         * @param name     The player's name.
+         * @param uuid     The player's UUID.
+         * @param gameMode The player's game mode.
+         * @param ping     The player's ping.
          */
         public PlayerData(String name, String uuid, String gameMode, int ping) {
             this.name = name;

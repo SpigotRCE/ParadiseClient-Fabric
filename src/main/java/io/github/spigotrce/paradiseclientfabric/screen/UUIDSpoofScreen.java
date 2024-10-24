@@ -1,14 +1,15 @@
 package io.github.spigotrce.paradiseclientfabric.screen;
 
 import com.google.gson.JsonParser;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.widget.TextWidget;
 import net.minecraft.text.Text;
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
-import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -61,9 +62,16 @@ public class UUIDSpoofScreen extends Screen {
     private TextFieldWidget bungeeFakeUsernameField;
 
     /**
+     * Text field for entering the Bungee token.
+     */
+    private TextFieldWidget bungeeTokenField;
+
+    /**
      * Button to toggle between premium and cracked UUIDs.
      */
     private ButtonWidget premiumButton;
+
+    private int currentHeight;
 
     /**
      * Creates a new UUIDSpoofScreen.
@@ -82,29 +90,44 @@ public class UUIDSpoofScreen extends Screen {
         int widgetWidth = 200;
         int widgetXOffset = widgetWidth / 2;
 
-        this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 - 35, widgetWidth, 20, Text.literal("Bungee Username"));
+        this.currentHeight = this.height / 2 - 90;
+
+        int tHeight;
+        tHeight = getNewHeight();
+        this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("Username"));
         this.bungeeUsernameField.setMaxLength(128);
         this.bungeeUsernameField.setText(this.bungeeSpoofMod.getBungeeUsername());
         this.addSelectableChild(this.bungeeUsernameField);
         this.addDrawable(this.bungeeUsernameField);
+        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("Username") , this.textRenderer));
 
-        this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, this.height / 2 - 10, widgetWidth, 20, Text.literal("Bungee FakeUsername"));
+        tHeight = getNewHeight();
+        this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("FakeUsername"));
         this.bungeeFakeUsernameField.setMaxLength(128);
         this.bungeeFakeUsernameField.setText(this.bungeeSpoofMod.getBungeeFakeUsername());
         this.addSelectableChild(this.bungeeFakeUsernameField);
         this.addDrawable(this.bungeeFakeUsernameField);
+        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("FakeUsername") , this.textRenderer));
+
+        tHeight = getNewHeight();
+        this.bungeeTokenField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("BungeeGuard Token"));
+        this.bungeeTokenField.setMaxLength(256);
+        this.bungeeTokenField.setText(this.bungeeSpoofMod.getBungeeToken());
+        this.addSelectableChild(this.bungeeTokenField);
+        this.addDrawable(this.bungeeTokenField);
+        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("BungeeGuard Token") , this.textRenderer));
 
         premiumButton = this.addDrawableChild(ButtonWidget.builder(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"), button -> {
                     bungeeSpoofMod.setBungeeUUIDPremium(!bungeeSpoofMod.isBungeeUUIDPremium());
                     premiumButton.setMessage(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"));
                 })
-                .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 15, widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, getNewHeight() - 10, widgetWidth, 20).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Spoof"), button -> spoof())
-                .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 40, widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, getNewHeight() - 20, widgetWidth, 20).build());
 
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Exit"), button -> close())
-                .dimensions(this.width / 2 - widgetXOffset, this.height / 2 + 65, widgetWidth, 20).build());
+                .dimensions(this.width / 2 - widgetXOffset, getNewHeight() - 30, widgetWidth, 20).build());
     }
 
     @Override
@@ -139,6 +162,7 @@ public class UUIDSpoofScreen extends Screen {
     private void spoof() {
         this.bungeeSpoofMod.setBungeeUsername(this.bungeeUsernameField.getText());
         this.bungeeSpoofMod.setBungeeFakeUsername(this.bungeeFakeUsernameField.getText());
+        this.bungeeSpoofMod.setBungeeToken(this.bungeeTokenField.getText());
         if (this.bungeeSpoofMod.isBungeeUUIDPremium()) {
             try {
                 this.bungeeSpoofMod.setBungeeUUID(fetchUUID(this.bungeeSpoofMod.getBungeeFakeUsername()));
@@ -163,7 +187,7 @@ public class UUIDSpoofScreen extends Screen {
      */
     public String fetchUUID(String username) throws Exception {
         String urlString = "https://api.mojang.com/users/profiles/minecraft/" + username;
-        URL url = new URL(urlString);
+        @SuppressWarnings("deprecation") URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         int responseCode = connection.getResponseCode();
@@ -178,5 +202,10 @@ public class UUIDSpoofScreen extends Screen {
             return JsonParser.parseString(response.toString()).getAsJsonObject().get("id").getAsString();
         }
         throw new Exception();
+    }
+
+    private int getNewHeight() {
+        this.currentHeight += 35;
+        return this.currentHeight;
     }
 }

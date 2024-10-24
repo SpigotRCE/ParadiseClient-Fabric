@@ -9,7 +9,6 @@
     "repo": "https://github.com/SpigotRCE/ParadiseClient-Fabric"
   },
   "license": "All-Rights-Reserved",
-  "icon": "assets/paradiseclient-fabric/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
@@ -23,7 +22,9 @@
     "paradiseclient-fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${loader_version}",
-    "minecraft": "${minecraft_version}"
+    "fabricloader": "${loader_version}",
+    "minecraft": "${minecraft_version}",
+    "yet_another_config_lib_v3": "${yacl_version}",
+    "satin": "${satin_version}"
   }
 }

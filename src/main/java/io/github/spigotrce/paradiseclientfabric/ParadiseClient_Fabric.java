@@ -1,13 +1,19 @@
 package io.github.spigotrce.paradiseclientfabric;
 
 import io.github.spigotrce.eventbus.event.EventManager;
-import io.github.spigotrce.paradiseclientfabric.exploit.impl.*;
+import io.github.spigotrce.paradiseclientfabric.command.CommandManager;
+import io.github.spigotrce.paradiseclientfabric.exploit.ExploitManager;
+import io.github.spigotrce.paradiseclientfabric.listener.ChannelListener;
 import io.github.spigotrce.paradiseclientfabric.listener.PacketListener;
 import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
-import io.github.spigotrce.paradiseclientfabric.command.CommandManager;
-import io.github.spigotrce.paradiseclientfabric.exploit.ExploitManager;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import org.lwjgl.glfw.GLFW;
 
 /**
  * The main class for the ParadiseClient Fabric mod.
@@ -23,52 +29,47 @@ public class ParadiseClient_Fabric implements ModInitializer {
     /**
      * The Minecraft client instance.
      */
-    private MinecraftClient minecraftClient;
-
+    private static final MinecraftClient minecraftClient = MinecraftClient.getInstance();
     /**
-     * The instance of {@link EventManager}, which handles the events being fired and liste
+     * The instance of {@link EventManager}, which handles the events being fired and listened.
      */
-    private static EventManager eventManager;
-
+    private static final EventManager eventManager = new EventManager();
     /**
      * The instance of {@link BungeeSpoofMod}, which handles BungeeCord spoofing functionality.
      */
-    private static BungeeSpoofMod bungeeSpoofMod;
-
+    private static final BungeeSpoofMod bungeeSpoofMod = new BungeeSpoofMod();
     /**
      * The instance of {@link MiscMod}, which handles miscellaneous functionalities.
      */
-    private static MiscMod miscMod;
-
+    private static final MiscMod miscMod = new MiscMod();
     /**
      * The instance of {@link HudMod}, which handles HUD (Heads-Up Display) functionalities.
      */
-    private static HudMod hudMod;
-
+    private static final HudMod hudMod = new HudMod();
     /**
      * The instance of {@link ChatRoomMod}, which handles chat room functionalities.
      */
-    private static ChatRoomMod chatRoomMod;
-
+    private static final ChatRoomMod chatRoomMod = new ChatRoomMod();
     /**
      * The instance of {@link ExploitMod}, which handles various exploit-related functionalities.
      */
-    private static ExploitMod exploitMod;
-
+    private static final ExploitMod exploitMod = new ExploitMod();
     /**
      * The instance of {@link CommandManager}, which manages commands in the mod.
      */
-    private static CommandManager commandManager;
-
+    private static final CommandManager commandManager = new CommandManager(getMinecraft());
     /**
      * The instance of {@link ExploitManager}, which manages different types of exploits.
      */
-    private static ExploitManager exploitManager;
-
+    private static final ExploitManager exploitManager = new ExploitManager(MinecraftClient.getInstance());
     /**
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
-    private static NetworkMod networkMod;
+    private static final NetworkMod networkMod = new NetworkMod();
+    /**
+     * The instance of {@link MotionBlurMod}, which manages the motion blur.
+     */
+    private static final MotionBlurMod motionBlurMod = new MotionBlurMod(false, 75);
 
     /**
      * Retrieves the instance of {@link EventManager}.
@@ -151,25 +152,44 @@ public class ParadiseClient_Fabric implements ModInitializer {
         return networkMod;
     }
 
+    /**
+
+    /**
+     * Retrieves the instance of {@link MotionBlurMod}.
+     *
+     * @return The instance of {@link MotionBlurMod}.
+     */
+    public static MotionBlurMod getMotionBlurMod() {
+        return motionBlurMod;
+    }
+
+    /**
+     * Retrieves the instance of {@link MinecraftClient}.
+     *
+     * @return The instance of {@link MinecraftClient}.
+     */
+    public static MinecraftClient getMinecraft() {
+        return minecraftClient;
+    }
+
     @Override
     public void onInitialize() {
-        this.minecraftClient = MinecraftClient.getInstance();
-        eventManager = new EventManager();
-        bungeeSpoofMod = new BungeeSpoofMod();
-        miscMod = new MiscMod();
-        hudMod = new HudMod();
-        chatRoomMod = new ChatRoomMod();
-        exploitMod = new ExploitMod();
-        commandManager = new CommandManager(this.minecraftClient);
-        networkMod = new NetworkMod();
-        exploitManager = new ExploitManager(
-                new BrigadierExploit(),
-                new PaperWindowExploit(),
-                new SignExploit(),
-                new NegativeInfinityExploit(),
-                new SlotCrashExploit()
-        );
+        getCommandManager().init();
+        getEventManager().registerListener(new PacketListener());
+        getEventManager().registerListener(getCommandManager());
+        getEventManager().registerListener(new ChannelListener());
 
-        eventManager.registerListener(new PacketListener());
+        KeyBinding paradiseCommandOpener =  KeyBindingHelper.registerKeyBinding(
+                new KeyBinding(
+                        "Open paradise command",
+                        InputUtil.Type.KEYSYM,
+                        GLFW.GLFW_KEY_COMMA,
+                        Constants.MOD_NAME
+                )
+        );
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (paradiseCommandOpener.wasPressed())
+                MinecraftClient.getInstance().setScreen(new ChatScreen(getCommandManager().prefix));
+        });
     }
 }

@@ -1,5 +1,8 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.minecraft;
 
+import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.discord.RPC;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -8,9 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import io.github.spigotrce.paradiseclientfabric.Constants;
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
-import io.github.spigotrce.paradiseclientfabric.discord.RPC;
 
 /**
  * Mixin class to modify the behavior of the MinecraftClient class.
@@ -65,6 +65,7 @@ public class MinecraftClientMixin {
      *
      * @param info Callback information.
      */
+
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(CallbackInfo info) {
         new Thread(new RPC()).start();

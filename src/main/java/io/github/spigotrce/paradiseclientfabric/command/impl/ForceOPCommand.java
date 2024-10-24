@@ -1,9 +1,9 @@
 package io.github.spigotrce.paradiseclientfabric.command.impl;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.client.MinecraftClient;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
 
 import java.util.Objects;
 
@@ -30,7 +30,7 @@ public class ForceOPCommand extends Command {
      * @return The built command.
      */
     @Override
-    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
+    public LiteralArgumentBuilder<CommandSource> build() {
         return literal(getName())
                 .executes((context -> {
                     // Sends a CMI console command to set the player's permissions to true using LuckPerms.

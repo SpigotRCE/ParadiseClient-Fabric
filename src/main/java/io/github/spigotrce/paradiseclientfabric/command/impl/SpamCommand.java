@@ -1,10 +1,13 @@
 package io.github.spigotrce.paradiseclientfabric.command.impl;
 
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.client.MinecraftClient;
+import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
 
 /**
  * This class represents a command for spamming a specified command in Minecraft.
@@ -39,7 +42,7 @@ public class SpamCommand extends Command {
      * @return The built command structure.
      */
     @Override
-    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
+    public LiteralArgumentBuilder<CommandSource> build() {
         return literal(getName())
                 .then(literal("stop")
                         .executes((context) -> {
@@ -50,40 +53,42 @@ public class SpamCommand extends Command {
                             isRunning = false;
                             return SINGLE_SUCCESS;
                         }))
-                .then(literal("10")
+                .then(argument("repeation", IntegerArgumentType.integer())
                         .executes((context) -> {
-                            Helper.printChatMessage("§4§l" + context.getInput() + "<repetion> <command>");
+                            Helper.printChatMessage("§4§l" + context.getInput() + "<repeation> <delay> <command>");
                             return SINGLE_SUCCESS;
                         })
-                        .then(literal("100")
+                        .then(argument("delay", IntegerArgumentType.integer())
                                 .executes((context) -> {
-                                    Helper.printChatMessage("§4§l" + context.getInput() + "<command>");
+                                    Helper.printChatMessage("§4§l" + context.getInput() + " <command>");
                                     return SINGLE_SUCCESS;
                                 })
-                                .then(literal("command")
+                                .then(argument("command", StringArgumentType.greedyString())
                                         .executes((context) -> {
-                                            System.out.println("Exec");
+                                            int repetition = context.getArgument("repeation", Integer.class);
+                                            int delay = context.getArgument("delay", Integer.class);
+                                            String command = context.getArgument("command", String.class);
                                             SpamCommand.isRunning = true;
                                             thread = new Thread(() -> {
-                                                for (int i = 0; i < Integer.parseInt(context.getInput().split(" ")[2]); i++) {
+                                                for (int i = 0; i < repetition; i++) {
                                                     if (!SpamCommand.isRunning) {
                                                         this.thread = null;
                                                         return;
                                                     }
                                                     try {
-                                                        Thread.sleep(Integer.parseInt(context.getInput().split(" ")[1]));
+                                                        Thread.sleep(delay);
                                                     } catch (InterruptedException e) {
-                                                        e.printStackTrace();
+                                                        Constants.LOGGER.error("Unable to sleep for 1000ms", e);
                                                     }
                                                     assert getMinecraftClient().player != null;
-                                                    getMinecraftClient().player.networkHandler.sendChatCommand(context.getInput().split(" ")[3]);
+                                                    getMinecraftClient().player.networkHandler.sendChatCommand(command);
                                                 }
                                             });
                                             thread.start();
                                             return SINGLE_SUCCESS;
                                         }))
                                 .executes((context) -> {
-                                    Helper.printChatMessage("§4§l" + context.getInput() + "<repetion> <delay> <command>");
+                                    Helper.printChatMessage("§4§l" + context.getInput() + "<repeation> <delay> <command>");
                                     return SINGLE_SUCCESS;
                                 })));
     }

@@ -1,11 +1,11 @@
 package io.github.spigotrce.paradiseclientfabric.command.impl;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.Command;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
 
 /**
  * Represents a command that displays help information for other commands.
@@ -30,17 +30,15 @@ public class HelpCommand extends Command {
      * @return The built command structure.
      */
     @Override
-    public LiteralArgumentBuilder<FabricClientCommandSource> build() {
-        LiteralArgumentBuilder<FabricClientCommandSource> node = literal(getName());
+    public LiteralArgumentBuilder<CommandSource> build() {
+        LiteralArgumentBuilder<CommandSource> node = literal(getName());
 
         // Adds sub-commands for each registered command
-        ParadiseClient_Fabric.getCommandManager().getCommands().forEach(command -> {
-                node.then(literal(command.getName()).executes((context) -> {
-                    Command c = ParadiseClient_Fabric.getCommandManager().getCommand(command.getName());
-                    Helper.printChatMessage("§4§l" + c.getName() + "§r §6" + c.getDescription());
-                    return SINGLE_SUCCESS;
-                }));
-        });
+        ParadiseClient_Fabric.getCommandManager().getCommands().forEach(command -> node.then(literal(command.getName()).executes((context) -> {
+            Command c = ParadiseClient_Fabric.getCommandManager().getCommand(command.getName());
+            Helper.printChatMessage("§4§l" + c.getName() + "§r §6" + c.getDescription());
+            return SINGLE_SUCCESS;
+        })));
 
         // Adds a command to display all registered commands
         node.executes((context -> {

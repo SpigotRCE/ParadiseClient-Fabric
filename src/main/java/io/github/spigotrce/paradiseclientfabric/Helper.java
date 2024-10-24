@@ -1,5 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.text.ClickEvent;
@@ -11,6 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Utility class providing various helper methods for Minecraft client operations.
@@ -26,7 +29,7 @@ public class Helper {
     /**
      * Generates a chroma color based on the current time and given delay.
      *
-     * @param delay The delay in milliseconds to affect the color shift.
+     * @param delay      The delay in milliseconds to affect the color shift.
      * @param saturation The saturation of the color.
      * @param brightness The brightness of the color.
      * @return The generated {@link Color} object.
@@ -43,8 +46,19 @@ public class Helper {
      * @param message The message to be sent.
      */
     public static void printChatMessage(String message) {
-        assert MinecraftClient.getInstance().player != null;
-        MinecraftClient.getInstance().player.sendMessage(Text.of(message));
+        printChatMessage(message, true);
+    }
+
+    public static void printChatMessage(String message, boolean dropTitle) {
+        printChatMessage(Text.of(parseColoredText(dropTitle ? appendPrefix(message) : message)));
+    }
+
+    public static void printChatMessage(Text message) {
+        ParadiseClient_Fabric.getMiscMod().delayedMessages.add(message);
+    }
+
+    public static String appendPrefix(String text) {
+        return "&aParadise&bClient &r" + text;
     }
 
     /**
@@ -53,6 +67,7 @@ public class Helper {
      * @param s The string to check.
      * @return {@code true} if the string is a valid number, {@code false} otherwise.
      */
+    @SuppressWarnings("unused")
     public static boolean isNumber(String s) {
         try {
             Double.parseDouble(s);
@@ -67,7 +82,7 @@ public class Helper {
      *
      * @param packet The packet to be sent.
      */
-    public static void sendPacket(Packet packet) {
+    public static void sendPacket(Packet<?> packet) {
         Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendPacket(packet);
     }
 
@@ -84,7 +99,7 @@ public class Helper {
     /**
      * Parses a string message into a colored {@link Text} object with an optional click-to-copy action.
      *
-     * @param message The message to be parsed.
+     * @param message     The message to be parsed.
      * @param copyMessage The message to copy to the clipboard when clicked, or {@code null} for no action.
      * @return The formatted {@link Text} object.
      */
@@ -165,5 +180,42 @@ public class Helper {
             return str;
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * Generates a random string.
+     *
+     * @param length     The length of the created string.
+     * @param characters The charset the generator will use.
+     * @param random     The {@link Random} instance the generator will use.
+     * @return The random string generated.
+     */
+    public static String generateRandomString(int length, String characters, Random random) {
+        StringBuilder result = new StringBuilder(length);
+        for (int i = 0; i < length; i++)
+            result.append(characters.charAt(random.nextInt(characters.length())));
+        return result.toString();
+    }
+
+    @SuppressWarnings("unused")
+    public static class ByteArrayOutput {
+        private final ByteArrayDataOutput out;
+
+        public ByteArrayOutput() {
+            this.out = ByteStreams.newDataOutput();
+        }
+
+        public ByteArrayOutput(byte[] bytes) {
+            this.out = ByteStreams.newDataOutput();
+            out.write(bytes);
+        }
+
+        public ByteArrayDataOutput getBuf() {
+            return out;
+        }
+
+        public byte[] toByteArray() {
+            return out.toByteArray();
+        }
     }
 }

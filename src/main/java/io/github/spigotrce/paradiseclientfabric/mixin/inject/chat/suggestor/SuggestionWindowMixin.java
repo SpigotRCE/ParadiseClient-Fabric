@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.chat;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.chat.suggestor;
 
 import com.mojang.brigadier.suggestion.Suggestion;
 import net.minecraft.client.MinecraftClient;
@@ -21,38 +21,53 @@ import java.util.List;
 /**
  * Mixin for the SuggestionWindow class within ChatInputSuggestor to inject custom behavior.
  * This mixin is used to modify the rendering and scrolling behavior of the suggestion window in Minecraft's chat input.
+ *
  * @author SpigotRCE
  * @since 2.15
  */
 @Mixin(ChatInputSuggestor.SuggestionWindow.class)
 public class SuggestionWindowMixin {
 
-    /** Stores the DrawContext for later use in rendering operations. */
+    /**
+     * Stores the DrawContext for later use in rendering operations.
+     */
     @Unique
     DrawContext savedContext;
 
-    /** Stores the index before scrolling to keep track of the previous position. */
+    /**
+     * Stores the index before scrolling to keep track of the previous position.
+     */
     @Unique
     int indexBefore;
 
-    /** Offset for pixel scrolling, allowing for smooth scrolling of suggestions. */
+    /**
+     * Offset for pixel scrolling, allowing for smooth scrolling of suggestions.
+     */
     @Unique
     float scrollPixelOffset;
 
-    /** Target index for scrolling, determining where the window should scroll to. */
+    /**
+     * Target index for scrolling, determining where the window should scroll to.
+     */
     @Unique
     int targetIndex;
 
-    /** Shadow field representing the index within the window. */
+    /**
+     * Shadow field representing the index within the window.
+     */
     @Shadow
     private int inWindowIndex;
 
-    /** Shadow field representing the list of suggestions displayed in the window. */
+    /**
+     * Shadow field representing the list of suggestions displayed in the window.
+     */
     @Final
     @Shadow
     private List<Suggestion> suggestions;
 
-    /** Shadow field representing the rectangular area of the suggestion window. */
+    /**
+     * Shadow field representing the rectangular area of the suggestion window.
+     */
     @Final
     @Shadow
     private Rect2i area;
@@ -166,13 +181,17 @@ public class SuggestionWindowMixin {
         commonST();
     }
 
-    /** Saves the current index before scrolling. */
+    /**
+     * Saves the current index before scrolling.
+     */
     @Unique
     private void commonSH() {
         indexBefore = inWindowIndex;
     }
 
-    /** Updates the scrolling state after scrolling. */
+    /**
+     * Updates the scrolling state after scrolling.
+     */
     @Unique
     private void commonST() {
         scrollPixelOffset += (inWindowIndex - indexBefore) * 12;

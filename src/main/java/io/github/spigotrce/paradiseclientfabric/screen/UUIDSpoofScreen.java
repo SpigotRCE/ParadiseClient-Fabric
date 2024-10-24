@@ -92,7 +92,7 @@ public class UUIDSpoofScreen extends Screen {
 
         this.currentHeight = this.height / 2 - 90;
 
-        int tHeight = 0;
+        int tHeight;
         tHeight = getNewHeight();
         this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("Username"));
         this.bungeeUsernameField.setMaxLength(128);

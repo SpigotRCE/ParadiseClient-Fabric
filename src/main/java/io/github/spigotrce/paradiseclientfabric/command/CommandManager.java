@@ -6,6 +6,7 @@ import io.github.spigotrce.eventbus.event.EventHandler;
 import io.github.spigotrce.eventbus.event.listener.Listener;
 import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.Helper;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.command.impl.*;
 import io.github.spigotrce.paradiseclientfabric.event.chat.ChatPreEvent;
 import net.minecraft.client.MinecraftClient;
@@ -31,7 +32,7 @@ public class CommandManager implements Listener {
     /**
      * The {@link MinecraftClient} instance.
      */
-    private final MinecraftClient minecraftClient;
+    private MinecraftClient minecraftClient;
 
     /**
      * The command dispatcher prefix used to execute commands.
@@ -101,6 +102,7 @@ public class CommandManager implements Listener {
      * @param message The input message.
      */
     public void dispatch(String message) throws CommandSyntaxException {
+        if (minecraftClient == null) minecraftClient = ParadiseClient_Fabric.getMinecraft();
         DISPATCHER.execute(message, minecraftClient.getNetworkHandler().getCommandSource());
     }
 

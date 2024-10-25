@@ -6,6 +6,7 @@ import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.event.packet.incoming.PacketIncomingPostEvent;
 import io.github.spigotrce.paradiseclientfabric.event.packet.outgoing.PacketOutgoingPostEvent;
 
+@SuppressWarnings("unused")
 public class PacketListener implements Listener {
     @EventHandler
     public void onIncomingPacketReceive(PacketIncomingPostEvent event) {

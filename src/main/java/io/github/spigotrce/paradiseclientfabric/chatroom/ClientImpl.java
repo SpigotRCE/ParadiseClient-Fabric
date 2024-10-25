@@ -77,6 +77,7 @@ public class ClientImpl implements Runnable {
         ParadiseClient_Fabric.getChatRoomMod().isConnected = false;
     }
 
+    @SuppressWarnings("unused")
     public void sendMessage(String message) {
         out.println(message);
     }

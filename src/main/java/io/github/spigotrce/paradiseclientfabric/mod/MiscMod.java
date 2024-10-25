@@ -20,10 +20,6 @@ public class MiscMod {
      */
     public final ArrayList<Text> delayedMessages = new ArrayList<>();
     /**
-     * The last message sent or received.
-     */
-    public String lastMessage;
-    /**
      * The current screen being displayed in the client.
      */
     public Screen currentScreen;

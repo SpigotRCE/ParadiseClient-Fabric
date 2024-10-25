@@ -4,6 +4,7 @@ import io.github.spigotrce.eventbus.event.Cancellable;
 import io.github.spigotrce.eventbus.event.Event;
 import net.minecraft.network.packet.Packet;
 
+@SuppressWarnings("unused")
 public class PacketIncomingPreEvent extends Event implements Cancellable {
     private boolean isCancel = false;
     private Packet<?> packet;

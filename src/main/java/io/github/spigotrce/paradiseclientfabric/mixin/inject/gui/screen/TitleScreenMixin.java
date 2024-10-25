@@ -32,6 +32,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 2.9
  * </p>
  */
+@SuppressWarnings("unused")
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
 

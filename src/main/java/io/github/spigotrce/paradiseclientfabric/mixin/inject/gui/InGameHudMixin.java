@@ -99,6 +99,7 @@ public abstract class InGameHudMixin {
      * @param x  The x-coordinate for the text.
      * @param y  The y-coordinate for the text.
      */
+    @SuppressWarnings("SameParameterValue")
     @Unique
     private void renderTextWithChroma(DrawContext ct, String s, int x, int y) {
         char[] chars = s.toCharArray();

@@ -33,7 +33,5 @@ public class ParadiseClient_FabricClient implements ClientModInitializer {
         PayloadTypeRegistry.playC2S().register(PurpurExploitPayloadPacket.ID, PurpurExploitPayloadPacket.CODEC);
         PayloadTypeRegistry.playC2S().register(AuthMeVelocityPayloadPacket.ID, AuthMeVelocityPayloadPacket.CODEC);
         ParadiseClient_Fabric.getMotionBlurMod().init();
-
-        ParadiseClient_Fabric.onClientInitialize();
     }
 }

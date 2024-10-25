@@ -33,43 +33,43 @@ public class ParadiseClient_Fabric implements ModInitializer {
     /**
      * The instance of {@link EventManager}, which handles the events being fired and listened.
      */
-    private static EventManager eventManager;
+    private static final EventManager eventManager = new EventManager();
     /**
      * The instance of {@link BungeeSpoofMod}, which handles BungeeCord spoofing functionality.
      */
-    private static BungeeSpoofMod bungeeSpoofMod;
+    private static final BungeeSpoofMod bungeeSpoofMod = new BungeeSpoofMod();
     /**
      * The instance of {@link MiscMod}, which handles miscellaneous functionalities.
      */
-    private static MiscMod miscMod;
+    private static final MiscMod miscMod = new MiscMod();
     /**
      * The instance of {@link HudMod}, which handles HUD (Heads-Up Display) functionalities.
      */
-    private static HudMod hudMod;
+    private static final HudMod hudMod = new HudMod();
     /**
      * The instance of {@link ChatRoomMod}, which handles chat room functionalities.
      */
-    private static ChatRoomMod chatRoomMod;
+    private static final ChatRoomMod chatRoomMod = new ChatRoomMod();
     /**
      * The instance of {@link ExploitMod}, which handles various exploit-related functionalities.
      */
-    private static ExploitMod exploitMod;
+    private static final ExploitMod exploitMod = new ExploitMod();
     /**
      * The instance of {@link CommandManager}, which manages commands in the mod.
      */
-    private static CommandManager commandManager;
+    private static final CommandManager commandManager = new CommandManager(getMinecraft());
     /**
      * The instance of {@link ExploitManager}, which manages different types of exploits.
      */
-    private static ExploitManager exploitManager;
+    private static final ExploitManager exploitManager = new ExploitManager(MinecraftClient.getInstance());
     /**
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
-    private static NetworkMod networkMod;
+    private static final NetworkMod networkMod = new NetworkMod();
     /**
      * The instance of {@link MotionBlurMod}, which manages the motion blur.
      */
-    private static MotionBlurMod motionBlurMod;
+    private static final MotionBlurMod motionBlurMod = new MotionBlurMod(false, 75);
 
     /**
      * Retrieves the instance of {@link EventManager}.
@@ -174,6 +174,11 @@ public class ParadiseClient_Fabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        getCommandManager().init();
+        getEventManager().registerListener(new PacketListener());
+        getEventManager().registerListener(getCommandManager());
+        getEventManager().registerListener(new ChannelListener());
+
         KeyBinding paradiseCommandOpener =  KeyBindingHelper.registerKeyBinding(
                 new KeyBinding(
                         "Open paradise command",
@@ -186,35 +191,5 @@ public class ParadiseClient_Fabric implements ModInitializer {
             while (paradiseCommandOpener.wasPressed())
                 MinecraftClient.getInstance().setScreen(new ChatScreen(getCommandManager().prefix));
         });
-    }
-
-    public static void onClientInitialize() {
-        initializeMods();
-        initializeManagers();
-        initializeListeners();
-    }
-
-    private static void initializeMods() {
-        bungeeSpoofMod = new BungeeSpoofMod();
-        miscMod = new MiscMod();
-        hudMod = new HudMod();
-        chatRoomMod = new ChatRoomMod();
-        exploitMod = new ExploitMod();
-        networkMod = new NetworkMod();
-        motionBlurMod = new MotionBlurMod(false, 4);
-    }
-
-    private static void initializeManagers() {
-        eventManager = new EventManager();
-        commandManager = new CommandManager(getMinecraft());
-        getCommandManager().init();
-        exploitManager = new ExploitManager(getMinecraft());
-        getExploitManager().init();
-    }
-
-    private static void initializeListeners() {
-        getEventManager().registerListener(new PacketListener());
-        getEventManager().registerListener(getCommandManager());
-        getEventManager().registerListener(new ChannelListener());
     }
 }

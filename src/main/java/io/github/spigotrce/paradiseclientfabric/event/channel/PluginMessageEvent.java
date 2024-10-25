@@ -6,7 +6,7 @@ import net.minecraft.network.PacketByteBuf;
 
 public class PluginMessageEvent extends Event implements Cancellable {
     private boolean isCancel = false;
-    private String channel;
+    private final String channel;
     private final PacketByteBuf buf;
 
     public PluginMessageEvent(String channel, PacketByteBuf buf) {
@@ -16,10 +16,6 @@ public class PluginMessageEvent extends Event implements Cancellable {
 
     public String getChannel() {
         return channel;
-    }
-
-    public void setChannel(String channel) {
-        this.channel = channel;
     }
 
     public PacketByteBuf getBuf() {

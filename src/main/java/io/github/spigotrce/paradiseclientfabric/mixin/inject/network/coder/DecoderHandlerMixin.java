@@ -32,6 +32,7 @@ public class DecoderHandlerMixin <T extends PacketListener> {
     @Shadow
     private final NetworkState<T> state;
 
+    @SuppressWarnings("unused")
     public DecoderHandlerMixin(NetworkState<T> state) {
         this.state = state;
     }

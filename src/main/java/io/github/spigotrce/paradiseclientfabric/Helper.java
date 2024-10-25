@@ -67,6 +67,7 @@ public class Helper {
      * @param s The string to check.
      * @return {@code true} if the string is a valid number, {@code false} otherwise.
      */
+    @SuppressWarnings("unused")
     public static boolean isNumber(String s) {
         try {
             Double.parseDouble(s);
@@ -196,6 +197,7 @@ public class Helper {
         return result.toString();
     }
 
+    @SuppressWarnings("unused")
     public static class ByteArrayOutput {
         private final ByteArrayDataOutput out;
 

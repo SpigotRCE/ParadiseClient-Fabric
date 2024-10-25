@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author SpigotRCE
  * @since 2.17
  */
+@SuppressWarnings("unused")
 public class NetworkMod {
     /**
      * Indicates whether the client is currently connected to a server.
@@ -35,11 +36,6 @@ public class NetworkMod {
     public long lastIncomingPacketTime = 0; // Disabled temporarily;
 
     /**
-     * The average delay of incoming network packets.
-     */
-    public long averageIncomingPacketDelay = 0; // Disabled temporarily
-
-    /**
      * The last outgoing network packet sent.
      */
     public Packet<?> lastOutgoingPacket;
@@ -50,12 +46,7 @@ public class NetworkMod {
     public long lastOutgoingPacketTime = 0; // Disabled temporarily;
 
     /**
-     * The average delay of outgoing network packets.
-     */
-    public long averageOutgoingPacketDelay = 0; // Disabled temporarily;
-
-    /**
      * The registered channels by their names.
      */
-    public ArrayList<String> registeredChannelsByName = new ArrayList<>();
+    public final ArrayList<String> registeredChannelsByName = new ArrayList<>();
 }

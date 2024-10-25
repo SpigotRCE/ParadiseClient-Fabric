@@ -1,5 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.mod;
 
+import io.github.spigotrce.paradiseclientfabric.mixin.accessor.PayloadTypeRegistryImplAccessor;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.network.packet.Packet;
 
 import java.util.ArrayList;
@@ -48,5 +50,7 @@ public class NetworkMod {
     /**
      * The registered channels by their names.
      */
-    public final ArrayList<String> registeredChannelsByName = new ArrayList<>();
+    public ArrayList<String> getRegisteredChannelsByName() {
+        return ((PayloadTypeRegistryImplAccessor) PayloadTypeRegistry.playC2S()).paradiseClient_Fabric$getRegisteredChannelsByName();
+    }
 }

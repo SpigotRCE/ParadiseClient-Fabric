@@ -90,6 +90,8 @@ public class SpamCommand extends Command {
                                 .executes((context) -> {
                                     Helper.printChatMessage("§4§l" + context.getInput() + "<repeation> <delay> <command>");
                                     return SINGLE_SUCCESS;
-                                })));
+                                })
+                        )
+                );
     }
 }

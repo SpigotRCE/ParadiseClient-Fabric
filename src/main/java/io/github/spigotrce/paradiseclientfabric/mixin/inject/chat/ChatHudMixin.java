@@ -304,4 +304,3 @@ public class ChatHudMixin {
         return MinecraftClient.getInstance().getRenderTickCounter().getLastFrameDuration();
     }
 }
-

@@ -206,10 +206,10 @@ public class ParadiseClient_Fabric implements ModInitializer {
 
     private static void initializeManagers() {
         eventManager = new EventManager();
-        commandManager = new CommandManager(getMinecraft());
-        getCommandManager().init();
         exploitManager = new ExploitManager(getMinecraft());
         getExploitManager().init();
+        commandManager = new CommandManager(getMinecraft());
+        getCommandManager().init();
     }
 
     private static void initializeListeners() {

@@ -5,6 +5,7 @@ import io.github.spigotrce.paradiseclientfabric.command.Command;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
 
+@SuppressWarnings("unused")
 public class ChatRoomCommand extends Command {
     public ChatRoomCommand(MinecraftClient minecraftClient) {
         super("chatroom", "Connects you to a chatroom", minecraftClient);

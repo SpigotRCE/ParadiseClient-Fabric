@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
  * @author SpigotRCE
  * @since 1.0
  */
+@SuppressWarnings("unused")
 @Mixin(Session.class)
 public class SessionMixin implements SessionAccessor {
 

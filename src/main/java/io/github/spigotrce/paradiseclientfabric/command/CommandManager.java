@@ -104,6 +104,7 @@ public class CommandManager implements Listener {
         DISPATCHER.execute(message, minecraftClient.getNetworkHandler().getCommandSource());
     }
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void onClientCommand(ChatPreEvent event) {
         if (!event.getMessage().startsWith(prefix)) return;

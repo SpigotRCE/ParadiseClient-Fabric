@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 import java.util.Objects;
 
 public class ChannelListener implements Listener {
+    @SuppressWarnings("unused")
     @EventHandler
     public void onChannelRegister(PluginMessageEvent event) {
         String channelName = event.getChannel();

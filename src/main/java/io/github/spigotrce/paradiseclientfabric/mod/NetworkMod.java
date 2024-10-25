@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author SpigotRCE
  * @since 2.17
  */
+@SuppressWarnings("unused")
 public class NetworkMod {
     /**
      * Indicates whether the client is currently connected to a server.
@@ -47,5 +48,5 @@ public class NetworkMod {
     /**
      * The registered channels by their names.
      */
-    public ArrayList<String> registeredChannelsByName = new ArrayList<>();
+    public final ArrayList<String> registeredChannelsByName = new ArrayList<>();
 }

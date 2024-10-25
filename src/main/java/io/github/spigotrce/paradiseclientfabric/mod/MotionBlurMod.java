@@ -15,6 +15,7 @@ public class MotionBlurMod {
     public MotionBlurMod(boolean disabled, int blurAmount) {
         this.disabled = disabled;
         this.blurAmount = blurAmount;
+        init();
     }
 
     public void init() {

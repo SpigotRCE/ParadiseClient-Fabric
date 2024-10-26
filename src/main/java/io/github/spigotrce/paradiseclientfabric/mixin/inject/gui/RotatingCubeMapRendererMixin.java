@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
 
 import io.github.spigotrce.paradiseclientfabric.Helper;
+import io.github.spigotrce.paradiseclientfabric.WallPaper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.RotatingCubeMapRenderer;
@@ -23,15 +24,7 @@ public class RotatingCubeMapRendererMixin {
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(DrawContext context, int width, int height, float alpha, float tickDelta, CallbackInfo ci) {
-        context.fillGradient(0, 0, width, height, 0xCC000000, 0xCC000000);
-        for (int i = 0; i < drops.length; i++) {
-            String text = String.valueOf(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
-            context.drawText(this.client.textRenderer, text, i * 10, drops[i] * 10, 0x00FF00, false);
-
-            if (drops[i] * 10 > height && random.nextDouble() > 0.975)
-                drops[i] = 0;
-            drops[i]++;
-        }
+        WallPaper.renderMatrix(context, width, height);
         ci.cancel();
     }
 }

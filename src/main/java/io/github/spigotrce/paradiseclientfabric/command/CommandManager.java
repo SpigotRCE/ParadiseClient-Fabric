@@ -55,7 +55,6 @@ public class CommandManager implements Listener {
         register(new ScreenShareCommand(minecraftClient));
         register(new SpamCommand(minecraftClient));
         register(new PlayersCommand(minecraftClient));
-        register(new MotionBlurCommand(minecraftClient));
         register(new ToggleTABCommand(minecraftClient));
         register(new PurpurExploitCommand(minecraftClient));
         register(new AuthMeVelocityBypassCommand(minecraftClient));

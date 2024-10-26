@@ -11,6 +11,8 @@ import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 public class Constants {
     /**
      * The version of the mod.
@@ -32,11 +34,7 @@ public class Constants {
      */
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
-    /**
-     * The identifier for the background image.
-     */
-    public static final Identifier backgroundImage = Identifier.of(Constants.MOD_ID, "wallpaper.png");
-
+    public static final ArrayList<Identifier> backgroundImages = new ArrayList<>();
     /**
      * The edition of the mod.
      */

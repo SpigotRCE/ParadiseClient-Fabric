@@ -6,6 +6,7 @@ import io.github.spigotrce.paradiseclientfabric.discord.RPC;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -69,6 +70,8 @@ public class MinecraftClientMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(CallbackInfo info) {
         new Thread(new RPC()).start();
+        for (int i = 1; i < 10; i++)
+            Constants.backgroundImages.add(Identifier.of(Constants.MOD_ID, i + ".png"));
     }
 
     /**

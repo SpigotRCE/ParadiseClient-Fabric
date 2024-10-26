@@ -1,40 +1,37 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui;
 
-import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.Helper;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.RotatingCubeMapRenderer;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * Mixin for the RotatingCubeMapRenderer class to customize the rendering.
- * This mixin replaces the default rendering with a custom background image.
- *
- * @author SpigotRCE
- * @since 2.20
- */
+import java.util.Random;
+
 @Mixin(RotatingCubeMapRenderer.class)
 public class RotatingCubeMapRendererMixin {
+    @Shadow @Final private MinecraftClient client;
+    @Unique private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    @Unique private final int[] drops = new int[300];
+    @Unique private final Random random = new Random();
 
-    /**
-     * Injects custom rendering logic into the render method of RotatingCubeMapRenderer.
-     * This method draws a custom background image and cancels the original render process.
-     *
-     * @param context   The draw context used for rendering.
-     * @param width     The width of the rendering area.
-     * @param height    The height of the rendering area.
-     * @param alpha     Alpha transparency value (not used here).
-     * @param tickDelta Delta time since the last tick (not used here).
-     * @param ci        Callback information for the method.
-     */
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(DrawContext context, int width, int height, float alpha, float tickDelta, CallbackInfo ci) {
-        // Draw the custom texture over the entire screen
-        context.drawTexture(Constants.backgroundImage, 0, 0, width, height, 0.0F, 0.0F, width, height, width, height);
+        context.fillGradient(0, 0, width, height, 0xCC000000, 0xCC000000);
+        for (int i = 0; i < drops.length; i++) {
+            String text = String.valueOf(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
+            context.drawText(this.client.textRenderer, text, i * 10, drops[i] * 10, 0x00FF00, false);
 
-        // Cancel the original rendering logic
+            if (drops[i] * 10 > height && random.nextDouble() > 0.975)
+                drops[i] = 0;
+            drops[i]++;
+        }
         ci.cancel();
     }
 }

@@ -59,6 +59,7 @@ public class CommandManager implements Listener {
         register(new ToggleTABCommand(minecraftClient));
         register(new PurpurExploitCommand(minecraftClient));
         register(new AuthMeVelocityBypassCommand(minecraftClient));
+//        register(new BackgroundCommand(minecraftClient));
     }
 
     /**

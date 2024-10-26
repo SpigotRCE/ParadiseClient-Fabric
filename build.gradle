@@ -34,6 +34,21 @@ repositories {
             includeGroupByRegex 'dev\\.onyxstudios.*'
         }
     }
+
+    maven {
+        name = "ViaVersion"
+        url = "https://repo.viaversion.com"
+    }
+
+    maven {
+        name = "Lenni0451"
+        url = "https://maven.lenni0451.net/everything"
+    }
+
+    maven {
+        name = "OpenCollab Snapshots"
+        url = "https://repo.opencollab.dev/maven-snapshots/"
+    }
 }
 
 dependencies {
@@ -45,6 +60,7 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "io.github.ladysnake:satin:${satin_version}"
+    modImplementation("de.florianmichael:ViaFabricPlus:3.4.8")
     include "org.ladysnake:satin:${satin_version}"
     implementation 'org.apiguardian:apiguardian-api:1.1.2'
     implementation 'com.github.JnCrMx:discord-game-sdk4j:v0.5.5'
@@ -63,7 +79,8 @@ processResources {
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version,
                 "yacl_version": project.yacl_version,
-                "satin_version": project.satin_version
+                "satin_version": project.satin_version,
+                "viafabricplus": project.viafabricplus
     }
 }
 

@@ -66,10 +66,6 @@ public class ParadiseClient_Fabric implements ModInitializer {
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
     private static NetworkMod networkMod;
-    /**
-     * The instance of {@link MotionBlurMod}, which manages the motion blur.
-     */
-    private static MotionBlurMod motionBlurMod;
 
     /**
      * Retrieves the instance of {@link EventManager}.
@@ -153,17 +149,6 @@ public class ParadiseClient_Fabric implements ModInitializer {
     }
 
     /**
-
-    /**
-     * Retrieves the instance of {@link MotionBlurMod}.
-     *
-     * @return The instance of {@link MotionBlurMod}.
-     */
-    public static MotionBlurMod getMotionBlurMod() {
-        return motionBlurMod;
-    }
-
-    /**
      * Retrieves the instance of {@link MinecraftClient}.
      *
      * @return The instance of {@link MinecraftClient}.
@@ -201,7 +186,6 @@ public class ParadiseClient_Fabric implements ModInitializer {
         chatRoomMod = new ChatRoomMod();
         exploitMod = new ExploitMod();
         networkMod = new NetworkMod();
-        motionBlurMod = new MotionBlurMod(false, 4);
     }
 
     private static void initializeManagers() {

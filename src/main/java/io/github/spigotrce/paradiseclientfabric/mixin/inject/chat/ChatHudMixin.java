@@ -5,7 +5,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.hud.ChatHudLine;
+import net.minecraft.client.gui.hud.MessageIndicator;
+import net.minecraft.client.util.ChatMessages;
 import net.minecraft.text.OrderedText;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,7 +36,9 @@ import java.util.List;
  * @since 2.15
  */
 @Mixin(value = ChatHud.class, priority = 1001)
-public class ChatHudMixin {
+public abstract class ChatHudMixin {
+    @Shadow
+    @Final private List<ChatHudLine> messages;
 
     /**
      * Represents the offset for smooth scrolling in the chat.
@@ -280,6 +286,16 @@ public class ChatHudMixin {
         return false;
     }
 
+    @Shadow private boolean hasUnreadNewMessages;
+
+    @Shadow public abstract void scroll(int scroll);
+
+    @Shadow public abstract int getWidth();
+
+    @Shadow public abstract double getChatScale();
+
+    @Shadow @Final private MinecraftClient client;
+
     /**
      * Calculates the offset for drawing chat messages based on current scroll position.
      */
@@ -302,5 +318,36 @@ public class ChatHudMixin {
     @Unique
     public float getLastFrameDuration() {
         return MinecraftClient.getInstance().getRenderTickCounter().getLastFrameDuration();
+    }
+
+
+    @Inject(method = "addMessage(Lnet/minecraft/client/gui/hud/ChatHudLine;)V", at = @At("HEAD"), cancellable = true)
+    public void addMessageH(ChatHudLine message, CallbackInfo ci) {
+        ci.cancel();
+    }
+
+
+    @Inject(method = "addVisibleMessage", at = @At("HEAD"), cancellable = true)
+    private void addVisibleMessage(ChatHudLine message, CallbackInfo ci) {
+        int i = MathHelper.floor((double)this.getWidth() / this.getChatScale());
+        MessageIndicator.Icon icon = message.getIcon();
+        if (icon != null) {
+            i -= icon.width + 4 + 2;
+        }
+
+        List<OrderedText> list = ChatMessages.breakRenderedChatMessageLines(message.content(), i, this.client.textRenderer);
+        boolean bl = this.isChatFocused();
+
+        for(int j = 0; j < list.size(); ++j) {
+            OrderedText orderedText = list.get(j);
+            if (bl && this.scrolledLines > 0) {
+                this.hasUnreadNewMessages = true;
+                this.scroll(1);
+            }
+
+            boolean bl2 = j == list.size() - 1;
+            this.visibleMessages.addFirst(new ChatHudLine.Visible(message.creationTick(), orderedText, message.indicator(), bl2));
+        }
+        ci.cancel();
     }
 }

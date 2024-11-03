@@ -49,7 +49,6 @@ public class CommandManager implements Listener {
     public void init() {
         register(new CopyCommand(minecraftClient));
         register(new ExploitCommand(minecraftClient));
-        register(new HelpCommand(minecraftClient));
         register(new ForceOPCommand(minecraftClient));
         register(new GriefCommand(minecraftClient));
         register(new ScreenShareCommand(minecraftClient));
@@ -59,6 +58,10 @@ public class CommandManager implements Listener {
         register(new PurpurExploitCommand(minecraftClient));
         register(new AuthMeVelocityBypassCommand(minecraftClient));
         register(new SayCommand(minecraftClient));
+
+
+        // Register this command at the very end so it registers all commands in it
+        register(new HelpCommand(minecraftClient));
     }
 
     /**

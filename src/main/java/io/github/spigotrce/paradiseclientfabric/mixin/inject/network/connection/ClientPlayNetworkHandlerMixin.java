@@ -1,15 +1,26 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.network.connection;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.event.chat.ChatPostEvent;
 import io.github.spigotrce.paradiseclientfabric.event.chat.ChatPreEvent;
+import io.github.spigotrce.paradiseclientfabric.mixin.accessor.ClientPlayNetworkHandlerAccessor;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.network.encryption.NetworkEncryptionUtils;
+import net.minecraft.network.message.LastSeenMessagesCollector;
+import net.minecraft.network.message.MessageBody;
+import net.minecraft.network.message.MessageChain;
+import net.minecraft.network.message.MessageSignatureData;
+import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.s2c.play.GameJoinS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.time.Instant;
 
 /**
  * Mixin class to modify the behavior of the ClientPlayNetworkHandler class.
@@ -21,7 +32,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 2.17
  */
 @Mixin(ClientPlayNetworkHandler.class)
-public abstract class ClientPlayNetworkHandlerMixin {
+public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetworkHandlerAccessor {
+
+    @Shadow private LastSeenMessagesCollector lastSeenMessagesCollector;
+
+    @Shadow private MessageChain.Packer messagePacker;
 
     /**
      * Injects code at the end of the onGameJoin method to update connection status and server IP.
@@ -68,5 +83,14 @@ public abstract class ClientPlayNetworkHandlerMixin {
         } catch (Exception e) {
             Constants.LOGGER.error("Failed to fire ChatPreEvent", e);
         }
+    }
+
+    @Override
+    public void paradiseClient_Fabric$sendChatMessage(String message) {
+        Instant instant = Instant.now();
+        long l = NetworkEncryptionUtils.SecureRandomUtil.nextLong();
+        LastSeenMessagesCollector.LastSeenMessages lastSeenMessages = this.lastSeenMessagesCollector.collect();
+        MessageSignatureData messageSignatureData = this.messagePacker.pack(new MessageBody(message, instant, l, lastSeenMessages.lastSeen()));
+        Helper.sendPacket(new ChatMessageC2SPacket(message, instant, l, messageSignatureData, lastSeenMessages.update()));
     }
 }

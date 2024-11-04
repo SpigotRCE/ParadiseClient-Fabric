@@ -1,8 +1,8 @@
 package io.github.spigotrce.paradiseclientfabric.discord;
 
-import de.jcm.discordgamesdk.Core;
-import de.jcm.discordgamesdk.CreateParams;
-import de.jcm.discordgamesdk.activity.Activity;
+//import de.jcm.discordgamesdk.Core;
+//import de.jcm.discordgamesdk.CreateParams;
+//import de.jcm.discordgamesdk.activity.Activity;
 import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import net.minecraft.client.MinecraftClient;
@@ -28,49 +28,49 @@ public class RPC implements Runnable {
     @Override
     public void run() {
         this.loadDiscordRPC();
-
-        try {
-            Core.init(new File(MinecraftClient.getInstance().runDirectory.getAbsolutePath() + File.separator + "paradise" + File.separator + "discord" + File.separator + "discord_game_sdk.dll"));
-        } catch (Exception e) {
-            Constants.LOGGER.error("Failed to initialize Discord SDK: {}", e.getMessage());
-            return;
-        }
-
-        try (CreateParams params = new CreateParams()) {
-            params.setClientID(1164104022265974784L);
-            params.setFlags(CreateParams.getDefaultFlags());
-
-            try (Core core = new Core(params)) {
-                try (Activity activity = new Activity()) {
-                    activity.setDetails("In Menu");
-                    activity.timestamps().setStart(Instant.now());
-
-                    core.activityManager().updateActivity(activity);
-
-                    while (true) {
-                        try {
-                            core.runCallbacks();
-
-                            if (ParadiseClient_Fabric.getNetworkMod().isConnected) {
-                                activity.setDetails("Playing on a server");
-                                activity.setState(Objects.isNull(MinecraftClient.getInstance().getCurrentServerEntry()) ? "Hidden" : MinecraftClient.getInstance().getCurrentServerEntry().address);
-                            } else {
-                                activity.setDetails("In Menu");
-                                activity.setState("");
-                            }
-
-                            core.activityManager().updateActivity(activity);
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            Constants.LOGGER.error("Interrupted Discord RPC thread: {}", e.getMessage());
-                            break;
-                        } catch (Exception e) {
-                            Constants.LOGGER.error("Error while updating Discord activity: {}", e.getMessage());
-                        }
-                    }
-                }
-            }
-        }
+//
+//        try {
+//            Core.init(new File(MinecraftClient.getInstance().runDirectory.getAbsolutePath() + File.separator + "paradise" + File.separator + "discord" + File.separator + "discord_game_sdk.dll"));
+//        } catch (Exception e) {
+//            Constants.LOGGER.error("Failed to initialize Discord SDK: {}", e.getMessage());
+//            return;
+//        }
+//
+//        try (CreateParams params = new CreateParams()) {
+//            params.setClientID(1164104022265974784L);
+//            params.setFlags(CreateParams.getDefaultFlags());
+//
+//            try (Core core = new Core(params)) {
+//                try (Activity activity = new Activity()) {
+//                    activity.setDetails("In Menu");
+//                    activity.timestamps().setStart(Instant.now());
+//
+//                    core.activityManager().updateActivity(activity);
+//
+//                    while (true) {
+//                        try {
+//                            core.runCallbacks();
+//
+//                            if (ParadiseClient_Fabric.getNetworkMod().isConnected) {
+//                                activity.setDetails("Playing on a server");
+//                                activity.setState(Objects.isNull(MinecraftClient.getInstance().getCurrentServerEntry()) ? "Hidden" : MinecraftClient.getInstance().getCurrentServerEntry().address);
+//                            } else {
+//                                activity.setDetails("In Menu");
+//                                activity.setState("");
+//                            }
+//
+//                            core.activityManager().updateActivity(activity);
+//                            Thread.sleep(1000);
+//                        } catch (InterruptedException e) {
+//                            Constants.LOGGER.error("Interrupted Discord RPC thread: {}", e.getMessage());
+//                            break;
+//                        } catch (Exception e) {
+//                            Constants.LOGGER.error("Error while updating Discord activity: {}", e.getMessage());
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**

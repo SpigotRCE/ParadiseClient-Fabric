@@ -14,6 +14,35 @@ base {
 repositories {
     maven {
         url 'https://jitpack.io'
+
+        content {
+            includeGroup "com.github.Oryxel"
+        }
+    }
+
+    maven {
+        name = 'ViaVersion'
+        url = 'https://repo.viaversion.com/'
+    }
+
+    maven {
+        name = "modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
+
+    maven {
+        name = "Lenni0451"
+        url = "https://maven.lenni0451.net/everything"
+    }
+
+    maven {
+        name = "OpenCollab Releases"
+        url = "https://repo.opencollab.dev/maven-releases"
+    }
+
+    maven {
+        name = "OpenCollab Snapshots"
+        url = "https://repo.opencollab.dev/maven-snapshots"
     }
 
     flatDir {
@@ -29,8 +58,14 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation 'org.apiguardian:apiguardian-api:1.1.2'
-    implementation 'com.github.JnCrMx:discord-game-sdk4j:v0.5.5'
+//    implementation 'com.github.JnCrMx:discord-game-sdk4j:v0.5.5'
     shadow(implementation 'io.github.spigotrce.eventbus:EventBus:1.0-SNAPSHOT')
+
+    include("org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT") {
+        exclude group: "io.netty"
+    }
+
+    modImplementation "de.florianmichael:ViaFabricPlus:${project.viafabricplus_version}"
 }
 
 processResources {

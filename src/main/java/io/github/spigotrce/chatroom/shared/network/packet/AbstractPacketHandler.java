@@ -9,7 +9,7 @@ public abstract class AbstractPacketHandler {
         throw new IllegalStateException("Use of raw packet apply");
     }
 
-    public abstract void handle(DisconnectPacket packet);
-    public abstract void handle(HandshakePacket packet);
-    public abstract void handle(MessagePacket packet);
+    public abstract void handle(DisconnectPacket packet) throws Exception;
+    public abstract void handle(HandshakePacket packet) throws Exception;
+    public abstract void handle(MessagePacket packet) throws Exception;
 }

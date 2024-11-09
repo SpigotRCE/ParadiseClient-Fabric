@@ -1,4 +1,4 @@
-package io.github.spigotrce.chatroom.shared.network.env;
+package io.github.spigotrce.chatroom.shared.env;
 
 import io.github.spigotrce.chatroom.shared.network.connection.AbstractClientConnection;
 

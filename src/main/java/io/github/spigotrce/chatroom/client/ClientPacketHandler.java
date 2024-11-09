@@ -1,5 +1,6 @@
 package io.github.spigotrce.chatroom.client;
 
+import io.github.spigotrce.chatroom.shared.network.exception.IllegalPacketDirectionException;
 import io.github.spigotrce.chatroom.shared.network.packet.AbstractPacketHandler;
 import io.github.spigotrce.chatroom.shared.network.packet.impl.DisconnectPacket;
 import io.github.spigotrce.chatroom.shared.network.packet.impl.HandshakePacket;
@@ -13,7 +14,7 @@ public class ClientPacketHandler extends AbstractPacketHandler {
 
     @Override
     public void handle(HandshakePacket packet) throws Exception {
-        throw new IllegalStateException("Handshake packet is only c2s and not s2c");
+        throw new IllegalPacketDirectionException("Handshake packet is only c2s and not s2c");
     }
 
     @Override

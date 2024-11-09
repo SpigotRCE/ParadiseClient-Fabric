@@ -2,6 +2,7 @@ package io.github.spigotrce.chatroom.shared.network.packet;
 
 import io.github.spigotrce.chatroom.shared.network.packet.impl.DisconnectPacket;
 import io.github.spigotrce.chatroom.shared.network.packet.impl.HandshakePacket;
+import io.github.spigotrce.chatroom.shared.network.packet.impl.MessagePacket;
 
 public abstract class AbstractPacketHandler {
     public void handle(Packet packet) {
@@ -9,6 +10,6 @@ public abstract class AbstractPacketHandler {
     }
 
     public abstract void handle(DisconnectPacket packet);
-
     public abstract void handle(HandshakePacket packet);
+    public abstract void handle(MessagePacket packet);
 }

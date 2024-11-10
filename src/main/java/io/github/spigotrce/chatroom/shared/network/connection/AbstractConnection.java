@@ -15,7 +15,7 @@ public abstract class AbstractConnection {
     public abstract void disconnect();
     public abstract void message(String message);
     public abstract void sendPacket(Class<? extends Packet> packet);
-    public abstract void receivePacket(byte[] data);
+    public abstract void receiveData(byte[] data);
     public abstract void close();
     public abstract boolean isConnected();
 }

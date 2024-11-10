@@ -1,7 +1,13 @@
 package io.github.spigotrce.chatroom.client;
 
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import io.github.spigotrce.chatroom.shared.network.connection.AbstractClientConnection;
 import io.github.spigotrce.chatroom.shared.network.packet.Packet;
+import io.github.spigotrce.chatroom.shared.network.packet.impl.HandshakePacket;
+
+import java.nio.charset.Charset;
 
 public class ClientConnection extends AbstractClientConnection {
     @Override
@@ -25,13 +31,31 @@ public class ClientConnection extends AbstractClientConnection {
     }
 
     @Override
-    public void sendPacket(Class<? extends Packet> packet) {
+    public void sendPacket(Packet packet) {
+        packet.encode();
 
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(packet.getId());
+        out.writeUTF(new String(packet.buf, Charset.defaultCharset()));
+        out.toByteArray(); // Send this
     }
 
     @Override
     public void receiveData(byte[] data) {
+        ByteArrayDataInput in = ByteStreams.newDataInput(data);
+        String packetID = in.readUTF();
+        byte[] buf = in.readUTF().getBytes(Charset.defaultCharset());
 
+        // TODO: Switch this to a CODEC system
+        switch (packetID) {
+            case "handshake": {
+                HandshakePacket handshakePacket = new HandshakePacket();
+                handshakePacket.buf = buf;
+                handshakePacket.decode();
+                handshakePacket.apply();
+            }
+            // handle other packets like that
+        }
     }
 
     @Override

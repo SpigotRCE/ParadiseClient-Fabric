@@ -1,5 +1,6 @@
 package io.github.spigotrce.chatroom.shared.network.packet.impl;
 
+import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import io.github.spigotrce.chatroom.shared.network.packet.Packet;
@@ -9,6 +10,11 @@ public class DisconnectPacket extends Packet {
     public DisconnectPacket(String reason) {
         super("disconnect");
         this.reason = reason;
+    }
+
+    public DisconnectPacket(byte[] data) {
+        super("disconnect");
+        reason = ByteStreams.newDataInput(data).readUTF();
     }
 
     public DisconnectPacket() {

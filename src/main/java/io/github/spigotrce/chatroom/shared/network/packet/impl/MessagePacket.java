@@ -11,6 +11,11 @@ public class MessagePacket extends Packet {
         this.message = message;
     }
 
+    public MessagePacket(byte[] data) {
+        super("message");
+        message = ByteStreams.newDataInput(data).readUTF();
+    }
+
     public MessagePacket() {
         super("message");
     }

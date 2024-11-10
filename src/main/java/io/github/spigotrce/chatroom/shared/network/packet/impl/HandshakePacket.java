@@ -17,6 +17,14 @@ public class HandshakePacket extends Packet {
         this.version = version;
     }
 
+    public HandshakePacket(byte[] data) {
+        super("handshake");
+        ByteArrayDataInput in = ByteStreams.newDataInput(data);
+        username = in.readUTF();
+        password = in.readUTF();
+        version = in.readUTF();
+    }
+
     public HandshakePacket() {
         super("handshake");
     }

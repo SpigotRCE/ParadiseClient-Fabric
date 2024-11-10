@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class PacketFactory {
-    public static final Map<String, Supplier<Packet>> packetMap = new HashMap<>();
+    private static final Map<String, Supplier<Packet>> packetMap = new HashMap<>();
 
     public static void registerPacket(String id, Supplier<Packet> supplier) {
         packetMap.put(id, supplier);

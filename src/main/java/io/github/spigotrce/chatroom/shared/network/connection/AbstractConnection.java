@@ -1,11 +1,13 @@
 package io.github.spigotrce.chatroom.shared.network.connection;
 
+import io.github.spigotrce.chatroom.shared.network.NetworkState;
 import io.github.spigotrce.chatroom.shared.network.packet.Packet;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 
 public abstract class AbstractConnection {
+    public NetworkState state;
     public String username;
     public String version;
     public PrintWriter out;

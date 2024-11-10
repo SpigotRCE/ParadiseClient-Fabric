@@ -30,7 +30,7 @@ public class ClientConnection extends AbstractClientConnection {
     }
 
     @Override
-    public void receivePacket(byte[] data) {
+    public void receiveData(byte[] data) {
 
     }
 

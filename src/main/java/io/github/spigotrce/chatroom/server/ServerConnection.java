@@ -30,7 +30,7 @@ public class ServerConnection extends AbstractServerConnection {
     }
 
     @Override
-    public void receivePacket(byte[] data) {
+    public void receiveData(byte[] data) {
 
     }
 

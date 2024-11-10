@@ -10,4 +10,6 @@ public abstract class AbstractServerImpl extends AbstractEnvironment {
     public boolean isRunning;
     public ServerSocket serverSocket;
     public final ArrayList<Class<? extends AbstractServerConnection>> connections = new ArrayList<>();
+
+    public abstract void onNewConnection(Class<? extends AbstractServerConnection> connection);
 }

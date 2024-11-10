@@ -4,4 +4,6 @@ import io.github.spigotrce.chatroom.shared.network.connection.AbstractClientConn
 
 public abstract class AbstractClientImpl extends AbstractEnvironment {
     public Class<? extends AbstractClientConnection> connection;
+
+    public abstract void onConnect(Class<? extends AbstractClientConnection> connection);
 }

@@ -5,6 +5,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import io.github.spigotrce.chatroom.shared.network.connection.AbstractServerConnection;
 import io.github.spigotrce.chatroom.shared.network.packet.Packet;
+import io.github.spigotrce.chatroom.shared.network.packet.PacketFactory;
 import io.github.spigotrce.chatroom.shared.network.packet.impl.HandshakePacket;
 
 import java.nio.charset.Charset;
@@ -43,19 +44,7 @@ public class ServerConnection extends AbstractServerConnection {
     @Override
     public void receiveData(byte[] data) {
         ByteArrayDataInput in = ByteStreams.newDataInput(data);
-        String packetID = in.readUTF();
-        byte[] buf = in.readUTF().getBytes(Charset.defaultCharset());
-
-        // TODO: Switch this to a CODEC system
-        switch (packetID) {
-            case "handshake": {
-                HandshakePacket handshakePacket = new HandshakePacket();
-                handshakePacket.buf = buf;
-                handshakePacket.decode();
-                handshakePacket.apply();
-            }
-            // handle other packets like that
-        }
+        PacketFactory.decodeAndApply(in.readUTF(), in.readUTF().getBytes(Charset.defaultCharset()));
     }
 
     @Override

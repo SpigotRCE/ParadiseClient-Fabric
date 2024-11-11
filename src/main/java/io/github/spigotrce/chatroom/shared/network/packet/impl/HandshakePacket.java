@@ -65,9 +65,9 @@ public class HandshakePacket extends Packet {
     @Override
     public void decode() {
         ByteArrayDataInput in = ByteStreams.newDataInput(buf);
-        in.readUTF();
-        in.readUTF();
-        in.readUTF();
+        username = in.readUTF();
+        password = in.readUTF();
+        version = in.readUTF();
     }
 
     public HandshakePacket createPacket() {

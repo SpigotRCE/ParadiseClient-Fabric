@@ -13,10 +13,9 @@ public class HandshakeResponsePacket extends Packet {
         this.success = username;
     }
 
-    public HandshakeResponsePacket(byte[] data) {
+    public HandshakeResponsePacket(byte[] buf) {
         super("handshake_response");
-        ByteArrayDataInput in = ByteStreams.newDataInput(data);
-        success = in.readBoolean();
+        this.buf = buf;
     }
 
     public HandshakeResponsePacket() {

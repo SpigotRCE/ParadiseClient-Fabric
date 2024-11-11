@@ -11,9 +11,9 @@ public class MessagePacket extends Packet {
         this.message = message;
     }
 
-    public MessagePacket(byte[] data) {
+    public MessagePacket(byte[] buf) {
         super("message");
-        message = ByteStreams.newDataInput(data).readUTF();
+        this.buf = buf;
     }
 
     public MessagePacket() {

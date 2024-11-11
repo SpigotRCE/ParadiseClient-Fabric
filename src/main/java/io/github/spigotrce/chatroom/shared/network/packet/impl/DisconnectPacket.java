@@ -12,9 +12,9 @@ public class DisconnectPacket extends Packet {
         this.reason = reason;
     }
 
-    public DisconnectPacket(byte[] data) {
+    public DisconnectPacket(byte[] buf) {
         super("disconnect");
-        reason = ByteStreams.newDataInput(data).readUTF();
+        this.buf = buf;
     }
 
     public DisconnectPacket() {

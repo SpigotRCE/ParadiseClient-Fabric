@@ -9,6 +9,9 @@ import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.md_5.bungee.BungeeCord;
+import net.md_5.bungee.BungeeCordLauncher;
+import net.md_5.bungee.api.ProxyServer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.option.KeyBinding;
@@ -171,6 +174,16 @@ public class ParadiseClient_Fabric implements ModInitializer {
             while (paradiseCommandOpener.wasPressed())
                 MinecraftClient.getInstance().setScreen(new ChatScreen(getCommandManager().prefix));
         });
+
+        MinecraftClient.getInstance().execute(new Thread(() -> {
+            try {
+                BungeeCordLauncher.main(new String[]{});
+                BridgeMod.instance = (BungeeCord) ProxyServer.getInstance();
+            } catch (Exception e) {
+                Constants.LOGGER.error("Unable to boot proxy server - init", e);
+                BridgeMod.instance = null;
+            }
+        }));
     }
 
     public static void onClientInitialize() {

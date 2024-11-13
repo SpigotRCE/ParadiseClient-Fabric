@@ -4,26 +4,29 @@
   "package": "io.github.spigotrce.paradiseclientfabric.mixin.inject",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "network.coder.DecoderHandlerMixin",
-    "api.PayloadTypeRegistryImplMixin"
+    "api.PayloadTypeRegistryImplMixin",
+    "bungee.BungeeCordMixin",
+    "bungee.DownstreamBridgeMixin",
+    "network.coder.DecoderHandlerMixin"
   ],
   "client": [
-    "etc.ClientPlayerEntityMixin",
+    "auth.SessionMixin",
     "chat.ChatHudMixin",
     "chat.suggestor.ChatInputSuggestorMixin",
     "chat.suggestor.SuggestionWindowMixin",
-    "gui.widget.EntryListWidgetMixin",
+    "etc.ClientPlayerEntityMixin",
     "gui.InGameHudMixin",
-    "gui.screen.MultiplayerScreenMixin",
     "gui.RotatingCubeMapRendererMixin",
+    "gui.screen.ConnectScreenMixin",
+    "gui.screen.MultiplayerScreenMixin",
     "gui.screen.ScreenMixin",
     "gui.screen.TitleScreenMixin",
+    "gui.widget.EntryListWidgetMixin",
     "minecraft.MainMixin",
     "minecraft.MinecraftClientMixin",
     "network.connection.ClientConnectionMixin",
     "network.connection.ClientPlayNetworkHandlerMixin",
-    "network.packet.HandshakeC2SPacketMixin",
-    "auth.SessionMixin"
+    "network.packet.HandshakeC2SPacketMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,8 +1,13 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.minecraft;
 
+import com.mojang.datafixers.types.Type;
 import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.discord.RPC;
+import io.github.spigotrce.paradiseclientfabric.mod.BridgeMod;
+import net.md_5.bungee.BungeeCord;
+import net.md_5.bungee.BungeeCordLauncher;
+import net.md_5.bungee.api.ProxyServer;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;

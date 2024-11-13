@@ -17,12 +17,15 @@ public abstract class ConnectScreenMixin {
     @Shadow protected abstract void connect(MinecraftClient client, ServerAddress address, ServerInfo info, @Nullable CookieStorage cookieStorage);
 
     @Inject(method = "connect(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/network/ServerAddress;Lnet/minecraft/client/network/ServerInfo;Lnet/minecraft/client/network/CookieStorage;)V"
-    , at = @At("HEAD"))
+    , at = @At("HEAD"), cancellable = true)
     private void c(MinecraftClient client, ServerAddress address, ServerInfo info, CookieStorage cookieStorage, CallbackInfo ci) {
         if (!address.equals(new ServerAddress("localhost", 25577))) {
+            if (BungeeCord.getInstance().getConfig().isOnlineMode()) return; // Temporarily, I will make it disabled by default
             ((BungeeCordAccessor) BungeeCord.getInstance()).paradiseClient_Fabric$setTargetServer(address.getAddress(), address.getPort());
 
             this.connect(client, new ServerAddress("localhost", 25577), info, cookieStorage);
+
+            ci.cancel();
         }
     }
 }

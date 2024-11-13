@@ -39,20 +39,6 @@ public class DecoderHandlerMixin <T extends PacketListener> {
 
     @Inject(method = "decode", at = @At("HEAD"), cancellable = true)
     public void decode(ChannelHandlerContext context, ByteBuf buf, List<Object> objects, CallbackInfo ci) {
-        PacketByteBuf b = new PacketByteBuf(buf.copy());
-        if (b.readVarInt() == 25) {
-            PluginMessageEvent event = new PluginMessageEvent(b.readString(), b);
-            try {
-                ParadiseClient_Fabric.getEventManager().fireEvent(event);
-            } catch (Exception e) {
-                LOGGER.error("Unable to fire PluginMessageEvent", e);
-                LOGGER.error("Not dropping the packet! (TODO: Change this in the future)");
-                return;
-            }
-
-            if (event.isCancel()) return;
-        }
-
         int i = buf.readableBytes();
         if (i != 0) {
             Packet<? super T> packet = this.state.codec().decode(buf);

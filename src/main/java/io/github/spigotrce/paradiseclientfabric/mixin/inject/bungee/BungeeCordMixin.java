@@ -57,12 +57,12 @@ public abstract class BungeeCordMixin implements BungeeCordAccessor {
 
     @Inject(method = "start", at = @At("HEAD"), remap = false)
     public void startH(CallbackInfo ci) {
-        try {
-            construct();
-        } catch (IOException e) {
-            Constants.LOGGER.error("Unable to boot BungeeCord proxy - start", e);
-            BridgeMod.instance = null;
-        }
+//        try {
+//            construct();
+//        } catch (IOException e) {
+//            Constants.LOGGER.error("Unable to boot BungeeCord proxy - start", e);
+//            BridgeMod.instance = null;
+//        }
     }
 
     @Inject(method = "start", at = @At("TAIL"), remap = false)

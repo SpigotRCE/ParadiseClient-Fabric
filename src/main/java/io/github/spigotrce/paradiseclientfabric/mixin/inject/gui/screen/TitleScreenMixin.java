@@ -99,7 +99,7 @@ public abstract class TitleScreenMixin extends Screen {
             String VIAFABRICPLUS_REMINDER = "We recommend installing ViaFabricPlus";
             this.addDrawableChild(ButtonWidget.builder(Text.literal(VIAFABRICPLUS_REMINDER),
                             onPress -> {
-                                Util.getOperatingSystem().open("https://modrinth.com/mod/viafabricplus/version/3.4.2");
+                                Util.getOperatingSystem().open("https://modrinth.com/mod/viafabricplus/versions");
                                 MinecraftClient.getInstance().setScreen(new TitleScreen());
                             })
                     .width(this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5)

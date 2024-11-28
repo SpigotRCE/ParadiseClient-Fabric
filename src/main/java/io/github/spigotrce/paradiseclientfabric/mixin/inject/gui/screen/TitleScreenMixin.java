@@ -2,6 +2,8 @@ package io.github.spigotrce.paradiseclientfabric.mixin.inject.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.spigotrce.paradiseclientfabric.Constants;
+import io.github.spigotrce.paradiseclientfabric.Helper;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
@@ -10,7 +12,9 @@ import net.minecraft.client.gui.LogoDrawer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.SplashTextRenderer;
 import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.gui.screen.option.CreditsAndAttributionScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.PressableTextWidget;
 import net.minecraft.client.realms.gui.screen.RealmsNotificationsScreen;
 import net.minecraft.text.Text;
 import net.minecraft.util.Util;
@@ -106,6 +110,15 @@ public abstract class TitleScreenMixin extends Screen {
                     .position((this.width / 2) - ((this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5) / 2), this.height / 4 + 48 + 72 + 12 + 35)
                     .build()
             );
+        }
+
+//        Text updateMessage = Helper.parseColoredText("&cYou are using an outdated version of &aParadiseClient");
+        Text updateMessage1 = Helper.parseColoredText("&2Current version: &1" + Constants.VERSION + " &2Latetst version: &1" + ParadiseClient_Fabric.getMiscMod().latestVersion + " &fClick to download");
+        if (ParadiseClient_Fabric.getMiscMod().isClientOutdated) {
+            this.addDrawableChild(new PressableTextWidget(this.width - this.textRenderer.getWidth(updateMessage1) - 2, this.height - 20, this.textRenderer.getWidth(updateMessage1), 10, updateMessage1, (button) -> {
+                Util.getOperatingSystem().open("https://github.com/SpigotRCE/ParadiseClient-Fabric/releases/tag/" + ParadiseClient_Fabric.getMiscMod().latestVersion );
+                MinecraftClient.getInstance().setScreen(new TitleScreen());
+            }, this.textRenderer));
         }
     }
 

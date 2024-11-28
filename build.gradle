@@ -61,11 +61,11 @@ dependencies {
 //    implementation 'com.github.JnCrMx:discord-game-sdk4j:v0.5.5'
     shadow(implementation 'io.github.spigotrce.eventbus:EventBus:1.0-SNAPSHOT')
 
-    include("org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT") {
-        exclude group: "io.netty"
-    }
-
-    modImplementation "de.florianmichael:ViaFabricPlus:${project.viafabricplus_version}"
+//    include("org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT") {
+//        exclude group: "io.netty"
+//    }
+//
+//    modImplementation "de.florianmichael:ViaFabricPlus:${project.viafabricplus_version}"
 }
 
 processResources {

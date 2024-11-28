@@ -30,6 +30,12 @@ public class Constants {
     public static final String MOD_NAME = "ParadiseClient-Fabric";
 
     /**
+     * Window title
+     * Not final because MiscMod#isClientOutdated is dynamic
+     */
+    public static String WINDOW_TITLE = MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION;
+
+    /**
      * The logger for the mod.
      */
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);

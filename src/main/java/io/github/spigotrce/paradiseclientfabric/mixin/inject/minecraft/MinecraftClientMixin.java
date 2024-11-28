@@ -42,8 +42,7 @@ public class MinecraftClientMixin {
             ordinal = 1),
             cancellable = true)
     private void getClientTitle(CallbackInfoReturnable<String> callback) {
-        callback.setReturnValue("ParadiseClient [" + Constants.EDITION + "] " + Constants.VERSION + "/" + SharedConstants.getGameVersion().getName() +
-                (ParadiseClient_Fabric.getMiscMod().isClientOutdated ? "Outdated" : ""));
+        callback.setReturnValue(Constants.WINDOW_TITLE);
     }
 
     /**

@@ -188,6 +188,12 @@ public class ParadiseClient_Fabric implements ModInitializer {
             while (paradiseCommandOpener.wasPressed())
                 MinecraftClient.getInstance().setScreen(new ChatScreen(getCommandManager().prefix));
         });
+    }
+
+    public static void onClientInitialize() {
+        initializeMods();
+        initializeManagers();
+        initializeListeners();
 
         updateCheckerThread = new Thread(() -> {
             try {
@@ -196,17 +202,14 @@ public class ParadiseClient_Fabric implements ModInitializer {
                 getMiscMod().latestVersion = Helper.getLatestReleaseTag();
                 if (!Objects.equals(getMiscMod().latestVersion, Constants.VERSION))
                     getMiscMod().isClientOutdated = true;
+
+                Constants.WINDOW_TITLE = Constants.MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION  + " " +
+                (ParadiseClient_Fabric.getMiscMod().isClientOutdated ? "Outdated" : "");
             } catch (IOException e) {
                 Constants.LOGGER.error("Error getting latest release tag", e);
             }
         });
         updateCheckerThread.start();
-    }
-
-    public static void onClientInitialize() {
-        initializeMods();
-        initializeManagers();
-        initializeListeners();
     }
 
     private static void initializeMods() {

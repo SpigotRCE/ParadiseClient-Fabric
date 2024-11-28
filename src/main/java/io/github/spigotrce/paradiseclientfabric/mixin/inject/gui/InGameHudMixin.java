@@ -77,14 +77,12 @@ public abstract class InGameHudMixin {
 
         ArrayList<String> text = new ArrayList<>();
 
-        text.add("ParadiseClient [" + Constants.EDITION + "]");
+        text.add(Constants.WINDOW_TITLE);
         text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.getHudMod().showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
         assert this.client.player != null;
         text.add("Engine " + (Objects.isNull(this.client.player.networkHandler) ? "" : this.client.player.networkHandler.getBrand()));
         text.add("FPS " + this.client.getCurrentFps());
         text.add("Players: " + this.client.player.networkHandler.getPlayerList().size());
-        if (ParadiseClient_Fabric.getMiscMod().isClientOutdated)
-            text.add("Client is outdated!");
 
         int i = 0;
         for (String s : text) {

@@ -23,4 +23,14 @@ public class MiscMod {
      * The current screen being displayed in the client.
      */
     public Screen currentScreen;
+
+    /**
+     * Weather the client is outdated or not.
+     */
+    public boolean isClientOutdated = false;
+
+    /**
+     * Latest version retrieved from the API.
+     */
+    public String latestVersion;
 }

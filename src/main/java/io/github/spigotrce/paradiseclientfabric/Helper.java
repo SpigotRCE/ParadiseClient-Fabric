@@ -2,6 +2,8 @@ package io.github.spigotrce.paradiseclientfabric;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.text.ClickEvent;
@@ -10,6 +12,12 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -195,6 +203,32 @@ public class Helper {
         for (int i = 0; i < length; i++)
             result.append(characters.charAt(random.nextInt(characters.length())));
         return result.toString();
+    }
+
+    public static String getLatestReleaseTag() throws IOException {
+        String apiUrl = "https://api.github.com/repos/SpigotRCE/ParadiseClient-Fabric/releases/latest";
+            // Open connection to the API URL
+            HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
+            connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+            connection.setRequestMethod("GET");
+
+            // Check for a successful response
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                // Read the response
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+
+                // Parse the JSON response with Gson
+                JsonObject jsonResponse = JsonParser.parseString(response.toString()).getAsJsonObject();
+                return jsonResponse.get("tag_name").getAsString();
+            } else {
+                return null;
+            }
     }
 
     @SuppressWarnings("unused")

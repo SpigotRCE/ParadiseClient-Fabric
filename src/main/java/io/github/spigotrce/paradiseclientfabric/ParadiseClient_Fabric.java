@@ -15,6 +15,9 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
+import java.io.IOException;
+import java.util.Objects;
+
 /**
  * The main class for the ParadiseClient Fabric mod.
  * <p>
@@ -66,6 +69,11 @@ public class ParadiseClient_Fabric implements ModInitializer {
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
     private static NetworkMod networkMod;
+
+    /**
+     * The instance of {@link Thread}, for update checking
+     */
+    private static Thread updateCheckerThread;
 
     /**
      * Retrieves the instance of {@link EventManager}.
@@ -122,6 +130,15 @@ public class ParadiseClient_Fabric implements ModInitializer {
     }
 
     /**
+     * Retrieves the instance of {@link Thread}.
+     *
+     * @return The instance of {@link Thread}.
+     */
+    public static Thread getUpdateCheckerThread() {
+        return updateCheckerThread;
+    }
+
+    /**
      * Retrieves the instance of {@link CommandManager}.
      *
      * @return The instance of {@link CommandManager}.
@@ -171,6 +188,19 @@ public class ParadiseClient_Fabric implements ModInitializer {
             while (paradiseCommandOpener.wasPressed())
                 MinecraftClient.getInstance().setScreen(new ChatScreen(getCommandManager().prefix));
         });
+
+        updateCheckerThread = new Thread(() -> {
+            try {
+                String latestVersion = Helper.getLatestReleaseTag();
+                if (latestVersion == null) return;
+                getMiscMod().latestVersion = Helper.getLatestReleaseTag();
+                if (!Objects.equals(getMiscMod().latestVersion, Constants.VERSION))
+                    getMiscMod().isClientOutdated = true;
+            } catch (IOException e) {
+                Constants.LOGGER.error("Error getting latest release tag", e);
+            }
+        });
+        updateCheckerThread.start();
     }
 
     public static void onClientInitialize() {

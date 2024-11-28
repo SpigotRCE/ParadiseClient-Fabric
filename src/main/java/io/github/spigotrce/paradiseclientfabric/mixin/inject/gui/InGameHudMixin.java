@@ -83,6 +83,8 @@ public abstract class InGameHudMixin {
         text.add("Engine " + (Objects.isNull(this.client.player.networkHandler) ? "" : this.client.player.networkHandler.getBrand()));
         text.add("FPS " + this.client.getCurrentFps());
         text.add("Players: " + this.client.player.networkHandler.getPlayerList().size());
+        if (ParadiseClient_Fabric.getMiscMod().isClientOutdated)
+            text.add("Client is outdated!");
 
         int i = 0;
         for (String s : text) {

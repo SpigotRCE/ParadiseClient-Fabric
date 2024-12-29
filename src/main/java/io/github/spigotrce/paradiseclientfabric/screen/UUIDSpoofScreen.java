@@ -96,7 +96,7 @@ public class UUIDSpoofScreen extends Screen {
         tHeight = getNewHeight();
         this.bungeeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("Username"));
         this.bungeeUsernameField.setMaxLength(128);
-        this.bungeeUsernameField.setText(this.bungeeSpoofMod.getBungeeUsername());
+        this.bungeeUsernameField.setText(this.bungeeSpoofMod.usernameReal);
         this.addSelectableChild(this.bungeeUsernameField);
         this.addDrawable(this.bungeeUsernameField);
         this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("Username"), this.textRenderer));
@@ -104,7 +104,7 @@ public class UUIDSpoofScreen extends Screen {
         tHeight = getNewHeight();
         this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("FakeUsername"));
         this.bungeeFakeUsernameField.setMaxLength(128);
-        this.bungeeFakeUsernameField.setText(this.bungeeSpoofMod.getBungeeFakeUsername());
+        this.bungeeFakeUsernameField.setText(this.bungeeSpoofMod.usernameFake);
         this.addSelectableChild(this.bungeeFakeUsernameField);
         this.addDrawable(this.bungeeFakeUsernameField);
         this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("FakeUsername"), this.textRenderer));
@@ -112,14 +112,14 @@ public class UUIDSpoofScreen extends Screen {
         tHeight = getNewHeight();
         this.bungeeTokenField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("BungeeGuard Token"));
         this.bungeeTokenField.setMaxLength(256);
-        this.bungeeTokenField.setText(this.bungeeSpoofMod.getBungeeToken());
+        this.bungeeTokenField.setText(this.bungeeSpoofMod.token);
         this.addSelectableChild(this.bungeeTokenField);
         this.addDrawable(this.bungeeTokenField);
         this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("BungeeGuard Token"), this.textRenderer));
 
-        premiumButton = this.addDrawableChild(ButtonWidget.builder(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"), button -> {
-                    bungeeSpoofMod.setBungeeUUIDPremium(!bungeeSpoofMod.isBungeeUUIDPremium());
-                    premiumButton.setMessage(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"));
+        premiumButton = this.addDrawableChild(ButtonWidget.builder(Text.literal(bungeeSpoofMod.isUUIDOnline ? "Premium" : "Cracked"), button -> {
+                    bungeeSpoofMod.isUUIDOnline =! bungeeSpoofMod.isUUIDOnline;
+                    premiumButton.setMessage(Text.literal(bungeeSpoofMod.isUUIDOnline ? "Premium" : "Cracked"));
                 })
                 .dimensions(this.width / 2 - widgetXOffset, getNewHeight() - 10, widgetWidth, 20).build());
 
@@ -160,22 +160,23 @@ public class UUIDSpoofScreen extends Screen {
      * </p>
      */
     private void spoof() {
-        this.bungeeSpoofMod.setBungeeUsername(this.bungeeUsernameField.getText());
-        this.bungeeSpoofMod.setBungeeFakeUsername(this.bungeeFakeUsernameField.getText());
-        this.bungeeSpoofMod.setBungeeToken(this.bungeeTokenField.getText());
-        if (this.bungeeSpoofMod.isBungeeUUIDPremium()) {
+        this.bungeeSpoofMod.usernameReal = this.bungeeUsernameField.getText();
+        this.bungeeSpoofMod.sessionAccessor.paradiseClient_Fabric$setUsername(this.bungeeSpoofMod.usernameReal);
+        this.bungeeSpoofMod.usernameFake = this.bungeeFakeUsernameField.getText();
+        this.bungeeSpoofMod.token = this.bungeeTokenField.getText();
+        if (this.bungeeSpoofMod.isUUIDOnline) {
             try {
-                this.bungeeSpoofMod.setBungeeUUID(fetchUUID(this.bungeeSpoofMod.getBungeeFakeUsername()));
-                this.status = "Successfully spoofed premium UUID of \"" + this.bungeeSpoofMod.getBungeeFakeUsername() + "\".";
+                this.bungeeSpoofMod.uuid = fetchUUID(this.bungeeSpoofMod.usernameFake);
+                this.status = "Successfully spoofed premium UUID of \"" + this.bungeeSpoofMod.usernameFake + "\".";
             } catch (Exception e) {
-                this.status = "Error fetching UUID, \"" + this.bungeeSpoofMod.getBungeeFakeUsername() + "\" may not be premium.";
+                this.status = "Error fetching UUID, \"" + this.bungeeSpoofMod.usernameFake + "\" may not be premium.";
                 LOGGER.error(Arrays.toString(e.getStackTrace()));
             }
             return;
         }
         this.status = "Generating cracked UUID";
-        this.bungeeSpoofMod.setBungeeUUID(UUID.nameUUIDFromBytes(("OfflinePlayer:" + bungeeSpoofMod.getBungeeFakeUsername()).getBytes()).toString().replace("-", ""));
-        this.status = "Successfully spoofed cracked UUID of \"" + this.bungeeSpoofMod.getBungeeFakeUsername() + "\".";
+        this.bungeeSpoofMod.uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + bungeeSpoofMod.usernameFake).getBytes()).toString().replace("-", "");
+        this.status = "Successfully spoofed cracked UUID of \"" + this.bungeeSpoofMod.usernameFake + "\".";
     }
 
     /**

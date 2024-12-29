@@ -41,6 +41,9 @@ public abstract class InGameHudMixin {
     @Final
     @Shadow
     private MinecraftClient client;
+    @Shadow
+    @Final
+    private PlayerListHud playerListHud;
 
     /**
      * Gets the TextRenderer instance used for rendering text.
@@ -49,8 +52,6 @@ public abstract class InGameHudMixin {
      */
     @Shadow
     public abstract TextRenderer getTextRenderer();
-
-    @Shadow @Final private PlayerListHud playerListHud;
 
     /**
      * Injects behavior at the end of the InGameHud constructor.

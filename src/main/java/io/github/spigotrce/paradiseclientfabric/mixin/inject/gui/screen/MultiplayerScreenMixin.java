@@ -33,9 +33,44 @@ import org.spongepowered.asm.mixin.*;
 public abstract class MultiplayerScreenMixin extends Screen {
 
     @Shadow
-    private boolean initialized;
+    @Final
+    private static Logger LOGGER;
+    /**
+     * Reference to the BungeeSpoofMod instance for accessing mod data.
+     */
+    @Unique
+    final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
     @Shadow
     protected MultiplayerServerListWidget serverListWidget;
+    @Unique
+    ButtonWidget uuidSpoofButton;
+    /**
+     * Button for toggling BungeeCord spoofing.
+     */
+    @Unique
+    ButtonWidget bungeeToggleButton;
+    /**
+     * Text field for inputting BungeeCord IP.
+     */
+    @Unique
+    TextFieldWidget bungeeClientIPField;
+    /**
+     * Button for toggling BungeeCord target hostname spoofing.
+     */
+    @Unique
+    ButtonWidget bungeeHostnameToggle;
+    /**
+     * Text field for inputting BungeeCord target hostname.
+     */
+    @Unique
+    TextFieldWidget bungeeHostnameField;
+    /**
+     * Renderer for displaying text.
+     */
+    @Unique
+    TextRenderer textRenderer;
+    @Shadow
+    private boolean initialized;
     @Shadow
     private ServerList serverList;
     @Shadow
@@ -44,12 +79,22 @@ public abstract class MultiplayerScreenMixin extends Screen {
     @Nullable
     private LanServerQueryManager.LanServerDetector lanServerDetector;
     @Shadow
-    @Final
-    private static Logger LOGGER;
-    @Shadow
     private ButtonWidget buttonJoin;
     @Shadow
     private ServerInfo selectedEntry;
+    @Shadow
+    private ButtonWidget buttonEdit;
+    @Shadow
+    private ButtonWidget buttonDelete;
+
+    /**
+     * Constructor for MultiplayerScreenMixin.
+     *
+     * @param title The title of the screen.
+     */
+    protected MultiplayerScreenMixin(Text title) {
+        super(title);
+    }
 
     @Shadow
     protected abstract void directConnect(boolean confirmedAction);
@@ -61,13 +106,7 @@ public abstract class MultiplayerScreenMixin extends Screen {
     protected abstract void addEntry(boolean confirmedAction);
 
     @Shadow
-    private ButtonWidget buttonEdit;
-
-    @Shadow
     protected abstract void editEntry(boolean confirmedAction);
-
-    @Shadow
-    private ButtonWidget buttonDelete;
 
     @Shadow
     protected abstract void removeEntry(boolean confirmedAction);
@@ -77,54 +116,6 @@ public abstract class MultiplayerScreenMixin extends Screen {
 
     @Shadow
     protected abstract void refresh();
-
-    /**
-     * Reference to the BungeeSpoofMod instance for accessing mod data.
-     */
-    @Unique
-    final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
-
-    @Unique
-    ButtonWidget uuidSpoofButton;
-
-    /**
-     * Button for toggling BungeeCord spoofing.
-     */
-    @Unique
-    ButtonWidget bungeeToggleButton;
-
-    /**
-     * Text field for inputting BungeeCord IP.
-     */
-    @Unique
-    TextFieldWidget bungeeClientIPField;
-
-    /**
-     * Button for toggling BungeeCord target hostname spoofing.
-     */
-    @Unique
-    ButtonWidget bungeeHostnameToggle;
-
-    /**
-     * Text field for inputting BungeeCord target hostname.
-     */
-    @Unique
-    TextFieldWidget bungeeHostnameField;
-
-    /**
-     * Renderer for displaying text.
-     */
-    @Unique
-    TextRenderer textRenderer;
-
-    /**
-     * Constructor for MultiplayerScreenMixin.
-     *
-     * @param title The title of the screen.
-     */
-    protected MultiplayerScreenMixin(Text title) {
-        super(title);
-    }
 
     /**
      * @author a

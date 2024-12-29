@@ -34,9 +34,11 @@ import java.time.Instant;
 @Mixin(ClientPlayNetworkHandler.class)
 public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetworkHandlerAccessor {
 
-    @Shadow private LastSeenMessagesCollector lastSeenMessagesCollector;
+    @Shadow
+    private LastSeenMessagesCollector lastSeenMessagesCollector;
 
-    @Shadow private MessageChain.Packer messagePacker;
+    @Shadow
+    private MessageChain.Packer messagePacker;
 
     /**
      * Injects code at the end of the onGameJoin method to update connection status and server IP.
@@ -58,6 +60,7 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
 
     /**
      * This method fires the {@link ChatPreEvent}.
+     *
      * @param content The content entered by the player.
      * @param ci      The callback information.
      */
@@ -74,6 +77,7 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
 
     /**
      * This method fires the {@link ChatPostEvent}.
+     *
      * @param content The content entered by the player.
      * @param ci      The callback information.
      */

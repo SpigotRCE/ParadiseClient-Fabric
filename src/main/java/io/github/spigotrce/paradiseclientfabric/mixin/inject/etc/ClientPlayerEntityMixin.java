@@ -12,7 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin {
-    @Shadow public abstract void sendMessage(Text message, boolean overlay);
+    @Shadow
+    public abstract void sendMessage(Text message, boolean overlay);
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void tick(CallbackInfo ci) {

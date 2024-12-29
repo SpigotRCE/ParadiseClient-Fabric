@@ -4,6 +4,9 @@ import io.github.spigotrce.eventbus.event.Cancellable;
 import io.github.spigotrce.eventbus.event.Event;
 import net.minecraft.network.PacketByteBuf;
 
+/**
+ * Event for a plugin message received from the server.
+ */
 public class PluginMessageEvent extends Event implements Cancellable {
     private final String channel;
     private final PacketByteBuf buf;

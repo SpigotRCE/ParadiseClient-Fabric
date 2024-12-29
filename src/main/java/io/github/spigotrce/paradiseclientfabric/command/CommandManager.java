@@ -104,6 +104,11 @@ public class CommandManager implements Listener {
         DISPATCHER.execute(message, minecraftClient.getNetworkHandler().getCommandSource());
     }
 
+    /**
+     * Event handler for client chat messages.
+     *
+     * @param event the {@link ChatPreEvent} instance.
+     */
     @SuppressWarnings("unused")
     @EventHandler
     public void onClientCommand(ChatPreEvent event) {

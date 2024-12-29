@@ -74,7 +74,6 @@ public class BungeeSpoofMod {
      * </p>
      */
     public BungeeSpoofMod() {
-        LOGGER.info("BungeeSpoofMod initializing");
         MinecraftClient minecraft = MinecraftClient.getInstance();
         Session minecraftSession = minecraft.getSession();
         this.sessionAccessor = (SessionAccessor) minecraftSession;
@@ -86,7 +85,6 @@ public class BungeeSpoofMod {
         this.targetIP = "0.0.0.0";
         this.bungeeToken = "";
         this.bungeeEnabled = false;
-        LOGGER.info("BungeeSpoofMod initialized");
     }
 
     /**

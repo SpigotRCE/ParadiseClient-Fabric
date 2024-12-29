@@ -28,15 +28,17 @@ public class Constants {
      * The name of the mod.
      */
     public static final String MOD_NAME = "ParadiseClient-Fabric";
+
     /**
      * The logger for the mod.
      */
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
-    public static final ArrayList<Identifier> backgroundImages = new ArrayList<>();
+
     /**
      * The edition of the mod.
      */
     public static String EDITION = "PUBLIC"; // For API
+
     /**
      * Window title
      * Not final because MiscMod#isClientOutdated is dynamic

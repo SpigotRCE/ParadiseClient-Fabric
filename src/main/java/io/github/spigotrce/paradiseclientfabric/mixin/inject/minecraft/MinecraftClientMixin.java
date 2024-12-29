@@ -69,8 +69,6 @@ public class MinecraftClientMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(CallbackInfo info) {
         new Thread(new RPC()).start();
-        for (int i = 1; i < 10; i++)
-            Constants.backgroundImages.add(Identifier.of(Constants.MOD_ID, i + ".png"));
     }
 
     /**

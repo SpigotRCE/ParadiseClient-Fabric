@@ -52,7 +52,8 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo info) {
         ParadiseClient_Fabric.getNetworkMod().isConnected = true;
         ParadiseClient_Fabric.getNetworkMod().serverIP = ((ClientPlayNetworkHandler) (Object) this).getConnection().getAddress().toString().split("/")[0];
-        Helper.printChatMessage("&4Client is outdated! Latest version: &2" + ParadiseClient_Fabric.getMiscMod().latestVersion);
+        if (ParadiseClient_Fabric.getMiscMod().isClientOutdated)
+            Helper.printChatMessage("&4Client is outdated! Latest version: &2" + ParadiseClient_Fabric.getMiscMod().latestVersion);
     }
 
     /**

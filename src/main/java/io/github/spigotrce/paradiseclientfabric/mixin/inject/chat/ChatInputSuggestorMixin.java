@@ -22,12 +22,12 @@ import java.util.concurrent.CompletableFuture;
 @Mixin(ChatInputSuggestor.class)
 public abstract class ChatInputSuggestorMixin {
     @Shadow
-    private ParseResults<CommandSource> parse;
-    @Shadow
     @Final
     TextFieldWidget textField;
     @Shadow
     boolean completingSuggestions;
+    @Shadow
+    private ParseResults<CommandSource> parse;
     @Shadow
     private CompletableFuture<Suggestions> pendingSuggestions;
     @Shadow

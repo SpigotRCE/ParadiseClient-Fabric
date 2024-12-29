@@ -174,22 +174,6 @@ public class ParadiseClient_Fabric implements ModInitializer {
         return minecraftClient;
     }
 
-    @Override
-    public void onInitialize() {
-        KeyBinding paradiseCommandOpener =  KeyBindingHelper.registerKeyBinding(
-                new KeyBinding(
-                        "Open paradise command",
-                        InputUtil.Type.KEYSYM,
-                        GLFW.GLFW_KEY_COMMA,
-                        Constants.MOD_NAME
-                )
-        );
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (paradiseCommandOpener.wasPressed())
-                MinecraftClient.getInstance().setScreen(new ChatScreen(getCommandManager().prefix));
-        });
-    }
-
     public static void onClientInitialize() {
         initializeMods();
         initializeManagers();
@@ -203,8 +187,8 @@ public class ParadiseClient_Fabric implements ModInitializer {
                 if (!Objects.equals(getMiscMod().latestVersion, Constants.VERSION))
                     getMiscMod().isClientOutdated = true;
 
-                Constants.WINDOW_TITLE = Constants.MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION  + " " +
-                (ParadiseClient_Fabric.getMiscMod().isClientOutdated ? "Outdated" : "");
+                Constants.WINDOW_TITLE = Constants.MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION + " " +
+                        (ParadiseClient_Fabric.getMiscMod().isClientOutdated ? "Outdated" : "");
             } catch (IOException e) {
                 Constants.LOGGER.error("Error getting latest release tag", e);
             }
@@ -233,5 +217,21 @@ public class ParadiseClient_Fabric implements ModInitializer {
         getEventManager().registerListener(new PacketListener());
         getEventManager().registerListener(getCommandManager());
         getEventManager().registerListener(new ChannelListener());
+    }
+
+    @Override
+    public void onInitialize() {
+        KeyBinding paradiseCommandOpener = KeyBindingHelper.registerKeyBinding(
+                new KeyBinding(
+                        "Open paradise command",
+                        InputUtil.Type.KEYSYM,
+                        GLFW.GLFW_KEY_COMMA,
+                        Constants.MOD_NAME
+                )
+        );
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (paradiseCommandOpener.wasPressed())
+                MinecraftClient.getInstance().setScreen(new ChatScreen(getCommandManager().prefix));
+        });
     }
 }

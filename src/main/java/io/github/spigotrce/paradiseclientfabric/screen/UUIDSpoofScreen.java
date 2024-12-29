@@ -99,7 +99,7 @@ public class UUIDSpoofScreen extends Screen {
         this.bungeeUsernameField.setText(this.bungeeSpoofMod.getBungeeUsername());
         this.addSelectableChild(this.bungeeUsernameField);
         this.addDrawable(this.bungeeUsernameField);
-        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("Username") , this.textRenderer));
+        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("Username"), this.textRenderer));
 
         tHeight = getNewHeight();
         this.bungeeFakeUsernameField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("FakeUsername"));
@@ -107,7 +107,7 @@ public class UUIDSpoofScreen extends Screen {
         this.bungeeFakeUsernameField.setText(this.bungeeSpoofMod.getBungeeFakeUsername());
         this.addSelectableChild(this.bungeeFakeUsernameField);
         this.addDrawable(this.bungeeFakeUsernameField);
-        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("FakeUsername") , this.textRenderer));
+        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("FakeUsername"), this.textRenderer));
 
         tHeight = getNewHeight();
         this.bungeeTokenField = new TextFieldWidget(this.textRenderer, this.width / 2 - widgetXOffset, tHeight, widgetWidth, 20, Text.literal("BungeeGuard Token"));
@@ -115,7 +115,7 @@ public class UUIDSpoofScreen extends Screen {
         this.bungeeTokenField.setText(this.bungeeSpoofMod.getBungeeToken());
         this.addSelectableChild(this.bungeeTokenField);
         this.addDrawable(this.bungeeTokenField);
-        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("BungeeGuard Token") , this.textRenderer));
+        this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal("BungeeGuard Token"), this.textRenderer));
 
         premiumButton = this.addDrawableChild(ButtonWidget.builder(Text.literal(bungeeSpoofMod.isBungeeUUIDPremium() ? "Premium" : "Cracked"), button -> {
                     bungeeSpoofMod.setBungeeUUIDPremium(!bungeeSpoofMod.isBungeeUUIDPremium());

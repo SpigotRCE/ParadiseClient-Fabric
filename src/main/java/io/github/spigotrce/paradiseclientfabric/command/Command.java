@@ -31,6 +31,27 @@ public abstract class Command {
     }
 
     /**
+     * Protected method to create a literal argument builder for Brigadier.
+     *
+     * @param name The name of the literal argument.
+     * @return A Brigadier literal argument builder.
+     */
+    protected static LiteralArgumentBuilder<CommandSource> literal(final String name) {
+        return LiteralArgumentBuilder.literal(name);
+    }
+
+    /**
+     * Protected method to create an argument builder for Brigadier.
+     *
+     * @param name The name of the argument.
+     * @param type The type of the argument.
+     * @return A Brigadier literal argument builder.
+     */
+    protected static <T> RequiredArgumentBuilder<CommandSource, T> argument(final String name, final ArgumentType<T> type) {
+        return RequiredArgumentBuilder.argument(name, type);
+    }
+
+    /**
      * Abstract method to build the command using Brigadier's argument builder.
      *
      * @return A Brigadier literal argument builder for the command.
@@ -62,26 +83,5 @@ public abstract class Command {
      */
     public MinecraftClient getMinecraftClient() {
         return minecraftClient;
-    }
-
-    /**
-     * Protected method to create a literal argument builder for Brigadier.
-     *
-     * @param name The name of the literal argument.
-     * @return A Brigadier literal argument builder.
-     */
-    protected static LiteralArgumentBuilder<CommandSource> literal(final String name) {
-        return LiteralArgumentBuilder.literal(name);
-    }
-
-    /**
-     * Protected method to create an argument builder for Brigadier.
-     *
-     * @param name The name of the argument.
-     * @param type The type of the argument.
-     * @return A Brigadier literal argument builder.
-     */
-    protected static <T> RequiredArgumentBuilder<CommandSource, T> argument(final String name, final ArgumentType<T> type) {
-        return RequiredArgumentBuilder.argument(name, type);
     }
 }

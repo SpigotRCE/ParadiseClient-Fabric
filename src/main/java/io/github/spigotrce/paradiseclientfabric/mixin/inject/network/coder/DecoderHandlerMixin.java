@@ -46,7 +46,7 @@ public class DecoderHandlerMixin<T extends PacketListener> {
         if (b.readVarInt() == 25) {
             PluginMessageEvent event = new PluginMessageEvent(b.readString(), b);
             try {
-                ParadiseClient_Fabric.getEventManager().fireEvent(event);
+                ParadiseClient_Fabric.eventManager.fireEvent(event);
             } catch (Exception e) {
                 LOGGER.error("Unable to fire PluginMessageEvent", e);
                 LOGGER.error("Not dropping the packet! (TODO: Change this in the future)");

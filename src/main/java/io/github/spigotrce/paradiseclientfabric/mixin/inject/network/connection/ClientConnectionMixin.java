@@ -44,7 +44,7 @@ public class ClientConnectionMixin {
         PacketIncomingPreEvent event = new PacketIncomingPreEvent(packet);
 
         try {
-            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+            ParadiseClient_Fabric.eventManager.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Unable to fire PacketIncomingPreEvent", e);
             return;
@@ -69,7 +69,7 @@ public class ClientConnectionMixin {
         PacketIncomingPostEvent event = new PacketIncomingPostEvent(packet);
 
         try {
-            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+            ParadiseClient_Fabric.eventManager.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Unable to fire PacketIncomingPostEvent", e);
         }
@@ -91,7 +91,7 @@ public class ClientConnectionMixin {
         PacketOutgoingPreEvent event = new PacketOutgoingPreEvent(packet);
 
         try {
-            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+            ParadiseClient_Fabric.eventManager.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Unable to fire PacketOutgoingPreEvent", e);
             return;
@@ -117,7 +117,7 @@ public class ClientConnectionMixin {
         PacketOutgoingPostEvent event = new PacketOutgoingPostEvent(packet);
 
         try {
-            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+            ParadiseClient_Fabric.eventManager.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Unable to fire PacketOutgoingPostEvent", e);
         }
@@ -134,6 +134,6 @@ public class ClientConnectionMixin {
      */
     @Inject(method = "disconnect(Lnet/minecraft/network/DisconnectionInfo;)V", at = @At("HEAD"))
     public void disconnectHead(DisconnectionInfo disconnectionInfo, CallbackInfo ci) {
-        ParadiseClient_Fabric.getNetworkMod().isConnected = false;
+        ParadiseClient_Fabric.networkMod.isConnected = false;
     }
 }

@@ -39,7 +39,7 @@ public abstract class MultiplayerScreenMixin extends Screen {
      * Reference to the BungeeSpoofMod instance for accessing mod data.
      */
     @Unique
-    final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
+    final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.bungeeSpoofMod;
     @Shadow
     protected MultiplayerServerListWidget serverListWidget;
     @Unique

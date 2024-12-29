@@ -34,7 +34,7 @@ public class UUIDSpoofScreen extends Screen {
     /**
      * The BungeeSpoofMod instance used to manage Bungee spoofing settings.
      */
-    private final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
+    private final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.bungeeSpoofMod;
 
     /**
      * The parent screen to return to when this screen is closed.

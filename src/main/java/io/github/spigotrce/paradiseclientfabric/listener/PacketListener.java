@@ -19,7 +19,7 @@ public class PacketListener implements Listener {
 
     @EventHandler
     public void onOutgoingPacketReceive(PacketOutgoingPostEvent event) {
-        ParadiseClient_Fabric.getNetworkMod().lastOutgoingPacket = event.getPacket();
-        ParadiseClient_Fabric.getNetworkMod().lastOutgoingPacketTime = System.currentTimeMillis();
+        ParadiseClient_Fabric.networkMod.lastOutgoingPacket = event.getPacket();
+        ParadiseClient_Fabric.networkMod.lastOutgoingPacketTime = System.currentTimeMillis();
     }
 }

@@ -47,7 +47,7 @@ public class HandshakeC2SPacketMixin {
      */
     @Inject(method = "<init>(ILjava/lang/String;ILnet/minecraft/network/packet/c2s/handshake/ConnectionIntent;)V", at = @At("RETURN"))
     private void HandshakeC2SPacket(int i, String string, int j, ConnectionIntent connectionIntent, CallbackInfo ci) {
-        BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
+        BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.bungeeSpoofMod;
 
         if (bungeeSpoofMod.isBungeeTargetEnabled()) {
             this.address = bungeeSpoofMod.getBungeeTargetIP();
@@ -57,7 +57,7 @@ public class HandshakeC2SPacketMixin {
                     bungeeSpoofMod.getBungeeIP() +
                     "\000" + bungeeSpoofMod.getBungeeUUID() +
                     "\000" +
-                    "[{\"name\": \"bungeeguard-token\", \"value\": \"" + ParadiseClient_Fabric.getBungeeSpoofMod().getBungeeToken() + "\"}]";
+                    "[{\"name\": \"bungeeguard-token\", \"value\": \"" + ParadiseClient_Fabric.bungeeSpoofMod.getBungeeToken() + "\"}]";
         }
     }
 }

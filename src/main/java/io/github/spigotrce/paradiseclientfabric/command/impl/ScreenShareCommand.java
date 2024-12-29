@@ -32,8 +32,8 @@ public class ScreenShareCommand extends Command {
     @Override
     public LiteralArgumentBuilder<CommandSource> build() {
         return literal(getName()).executes((context -> {
-            ParadiseClient_Fabric.getHudMod().showServerIP = !ParadiseClient_Fabric.getHudMod().showServerIP;
-            Helper.printChatMessage(ParadiseClient_Fabric.getHudMod().showServerIP ? "Server IP shown" : "Server IP hidden");
+            ParadiseClient_Fabric.hudMod.showServerIP = !ParadiseClient_Fabric.hudMod.showServerIP;
+            Helper.printChatMessage(ParadiseClient_Fabric.hudMod.showServerIP ? "Server IP shown" : "Server IP hidden");
             return SINGLE_SUCCESS;
         }));
     }

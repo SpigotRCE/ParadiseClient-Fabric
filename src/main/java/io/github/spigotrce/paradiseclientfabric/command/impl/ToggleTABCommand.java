@@ -32,8 +32,8 @@ public class ToggleTABCommand extends Command {
     @Override
     public LiteralArgumentBuilder<CommandSource> build() {
         return literal(getName()).executes((context -> {
-            ParadiseClient_Fabric.getHudMod().showPlayerList = !ParadiseClient_Fabric.getHudMod().showPlayerList;
-            Helper.printChatMessage(ParadiseClient_Fabric.getHudMod().showPlayerList ? "TAB shown" : "TAB hidden");
+            ParadiseClient_Fabric.hudMod.showPlayerList = !ParadiseClient_Fabric.hudMod.showPlayerList;
+            Helper.printChatMessage(ParadiseClient_Fabric.hudMod.showPlayerList ? "TAB shown" : "TAB hidden");
             return SINGLE_SUCCESS;
         }));
     }

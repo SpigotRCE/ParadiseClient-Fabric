@@ -49,7 +49,7 @@ public class RPC implements Runnable {
 //                        try {
 //                            core.runCallbacks();
 //
-//                            if (ParadiseClient_Fabric.getNetworkMod().isConnected) {
+//                            if (ParadiseClient_Fabric.networkMod.isConnected) {
 //                                activity.setDetails("Playing on a server");
 //                                activity.setState(Objects.isNull(MinecraftClient.getInstance().getCurrentServerEntry()) ? "Hidden" : MinecraftClient.getInstance().getCurrentServerEntry().address);
 //                            } else {

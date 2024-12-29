@@ -56,7 +56,7 @@ public class DecoderHandlerMixin <T extends PacketListener> {
         int i = buf.readableBytes();
         if (i != 0) {
             Packet<? super T> packet = this.state.codec().decode(buf);
-            PacketType<? extends Packet<? super T>> packetType = packet.getPacketId();
+            PacketType<? extends Packet<? super T>> packetType = packet.getPacketType();
             FlightProfiler.INSTANCE.onPacketReceived(this.state.id(), packetType, context.channel().remoteAddress(), i);
             if (buf.readableBytes() > 0) {
                 String var10002 = this.state.id().getId();

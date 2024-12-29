@@ -91,6 +91,10 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
         }
     }
 
+    /**
+     * Accessor method to send chat message internally without firing the chat events.
+     * @param message The message to be sent.
+     */
     @Override
     public void paradiseClient_Fabric$sendChatMessage(String message) {
         Instant instant = Instant.now();

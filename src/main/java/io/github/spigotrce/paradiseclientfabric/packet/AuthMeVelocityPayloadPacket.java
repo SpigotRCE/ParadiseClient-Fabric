@@ -1,5 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.packet;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -15,10 +17,10 @@ public record AuthMeVelocityPayloadPacket() implements CustomPayload {
     }
 
     private void write(PacketByteBuf buf) {
-        buf.writeByte(0);
-        buf.writeString("LOGIN");
-        buf.writeByte(0);
-        buf.writeString(MinecraftClient.getInstance().getGameProfile().getName());
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("LOGIN");
+        out.writeUTF(MinecraftClient.getInstance().getGameProfile().getName());
+        buf.writeBytes(out.toByteArray());
     }
 
     public CustomPayload.Id<AuthMeVelocityPayloadPacket> getId() {

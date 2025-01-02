@@ -1,5 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.packet;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
@@ -18,13 +20,15 @@ public record VelocityReportPayloadPacket(String s) implements CustomPayload {
     }
 
     private void write(PacketByteBuf buf) {
-        String r = "{\"reporter\": \"{a}\", \"reported\":\"{b}\", \"server\":\"{c}\", \"reason\":\"{d}\", \"type\":\"NewReport\"}"
-                .replace("{a}", s)
-                .replace("{b}", s)
-                .replace("{c}", s)
-                .replace("{d}", s);
-        buf.writeByte(0);
-        buf.writeString(r);
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(
+                "{\"reporter\": \"{a}\", \"reported\":\"{b}\", \"server\":\"{c}\", \"reason\":\"{d}\", \"type\":\"NewReport\"}"
+                        .replace("{a}", s)
+                        .replace("{b}", s)
+                        .replace("{c}", s)
+                        .replace("{d}", s)
+        );
+        buf.writeBytes(out.toByteArray());
     }
 
     public Id<VelocityReportPayloadPacket> getId() {

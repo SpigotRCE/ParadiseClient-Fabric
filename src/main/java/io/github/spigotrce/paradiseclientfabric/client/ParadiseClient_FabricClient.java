@@ -1,9 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.client;
 
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
-import io.github.spigotrce.paradiseclientfabric.packet.AuthMeVelocityPayloadPacket;
-import io.github.spigotrce.paradiseclientfabric.packet.PurpurExploitPayloadPacket;
-import io.github.spigotrce.paradiseclientfabric.packet.VelocityReportPayloadPacket;
+import io.github.spigotrce.paradiseclientfabric.packet.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
@@ -33,5 +31,8 @@ public class ParadiseClient_FabricClient implements ClientModInitializer {
         PayloadTypeRegistry.playC2S().register(VelocityReportPayloadPacket.ID, VelocityReportPayloadPacket.CODEC);
         PayloadTypeRegistry.playC2S().register(PurpurExploitPayloadPacket.ID, PurpurExploitPayloadPacket.CODEC);
         PayloadTypeRegistry.playC2S().register(AuthMeVelocityPayloadPacket.ID, AuthMeVelocityPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(ChatSentryPayloadPacket.ID, ChatSentryPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(ECBPayloadPacket.ID, ECBPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(SignedVelocityPayloadPacket.ID, SignedVelocityPayloadPacket.CODEC);
     }
 }

@@ -55,6 +55,9 @@ public class CommandManager implements Listener {
         register(new PurpurExploitCommand(minecraftClient));
         register(new AuthMeVelocityBypassCommand(minecraftClient));
         register(new SayCommand(minecraftClient));
+        register(new ChatSentryCommand(minecraftClient));
+        register(new ECBCommand(minecraftClient));
+        register(new SignedVelocityCommand(minecraftClient));
 
 
         // Register this command at the very end so it registers all commands in it

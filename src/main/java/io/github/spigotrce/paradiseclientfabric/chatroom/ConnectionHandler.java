@@ -41,7 +41,7 @@ public class ConnectionHandler implements Runnable {
             } catch (IOException ex) {
                 Constants.LOGGER.error("An exception raised while shutting closing reader and writer", e);
                 Helper.printChatMessage("[ChatRoom] An exception raised while shutting closing reader and writer, see logs");
-                ParadiseClient_Fabric.getChatRoomMod().isConnected = false;
+                ParadiseClient_Fabric.chatRoomMod.isConnected = false;
             }
         }
     }

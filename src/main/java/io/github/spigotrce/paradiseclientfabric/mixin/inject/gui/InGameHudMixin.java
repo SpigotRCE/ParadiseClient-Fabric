@@ -41,6 +41,9 @@ public abstract class InGameHudMixin {
     @Final
     @Shadow
     private MinecraftClient client;
+    @Shadow
+    @Final
+    private PlayerListHud playerListHud;
 
     /**
      * Gets the TextRenderer instance used for rendering text.
@@ -49,8 +52,6 @@ public abstract class InGameHudMixin {
      */
     @Shadow
     public abstract TextRenderer getTextRenderer();
-
-    @Shadow @Final private PlayerListHud playerListHud;
 
     /**
      * Injects behavior at the end of the InGameHud constructor.
@@ -78,7 +79,7 @@ public abstract class InGameHudMixin {
         ArrayList<String> text = new ArrayList<>();
 
         text.add(Constants.WINDOW_TITLE);
-        text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.getHudMod().showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
+        text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.hudMod.showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
         assert this.client.player != null;
         text.add("Engine " + (Objects.isNull(this.client.player.networkHandler) ? "" : this.client.player.networkHandler.getBrand()));
         text.add("FPS " + this.client.getCurrentFps());
@@ -118,7 +119,7 @@ public abstract class InGameHudMixin {
         ScoreboardObjective scoreboardObjective = scoreboard.getObjectiveForSlot(ScoreboardDisplaySlot.LIST);
         if (!this.client.options.playerListKey.isPressed() || this.client.isInSingleplayer() && Objects.requireNonNull(this.client.player).networkHandler.getListedPlayerListEntries().size() <= 1 && scoreboardObjective == null) {
             this.playerListHud.setVisible(false);
-            if (ParadiseClient_Fabric.getHudMod().showPlayerList) {
+            if (ParadiseClient_Fabric.hudMod.showPlayerList) {
                 this.renderTAB(context, context.getScaledWindowWidth(), scoreboard, scoreboardObjective);
             }
         } else {

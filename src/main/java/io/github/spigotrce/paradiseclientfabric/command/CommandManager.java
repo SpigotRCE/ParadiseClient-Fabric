@@ -22,21 +22,18 @@ public class CommandManager implements Listener {
      * The command dispatcher used to register commands.
      */
     public final CommandDispatcher<CommandSource> DISPATCHER = new CommandDispatcher<>();
-
-    /**
-     * A list of all registered commands.
-     */
-    private final ArrayList<Command> commands = new ArrayList<>();
-
-    /**
-     * The {@link MinecraftClient} instance.
-     */
-    private final MinecraftClient minecraftClient;
-
     /**
      * The command dispatcher prefix used to execute commands.
      */
     public final String prefix = ",";
+    /**
+     * A list of all registered commands.
+     */
+    private final ArrayList<Command> commands = new ArrayList<>();
+    /**
+     * The {@link MinecraftClient} instance.
+     */
+    private final MinecraftClient minecraftClient;
 
 
     /**
@@ -107,6 +104,11 @@ public class CommandManager implements Listener {
         DISPATCHER.execute(message, minecraftClient.getNetworkHandler().getCommandSource());
     }
 
+    /**
+     * Event handler for client chat messages.
+     *
+     * @param event the {@link ChatPreEvent} instance.
+     */
     @SuppressWarnings("unused")
     @EventHandler
     public void onClientCommand(ChatPreEvent event) {

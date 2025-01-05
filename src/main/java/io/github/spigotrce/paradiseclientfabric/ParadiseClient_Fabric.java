@@ -32,163 +32,48 @@ public class ParadiseClient_Fabric implements ModInitializer {
     /**
      * The Minecraft client instance.
      */
-    private static final MinecraftClient minecraftClient = MinecraftClient.getInstance();
+    public static final MinecraftClient minecraftClient = MinecraftClient.getInstance();
     /**
      * The instance of {@link EventManager}, which handles the events being fired and listened.
      */
-    private static EventManager eventManager;
+    public static EventManager eventManager;
     /**
      * The instance of {@link BungeeSpoofMod}, which handles BungeeCord spoofing functionality.
      */
-    private static BungeeSpoofMod bungeeSpoofMod;
+    public static BungeeSpoofMod bungeeSpoofMod;
     /**
      * The instance of {@link MiscMod}, which handles miscellaneous functionalities.
      */
-    private static MiscMod miscMod;
+    public static MiscMod miscMod;
     /**
      * The instance of {@link HudMod}, which handles HUD (Heads-Up Display) functionalities.
      */
-    private static HudMod hudMod;
+    public static HudMod hudMod;
     /**
      * The instance of {@link ChatRoomMod}, which handles chat room functionalities.
      */
-    private static ChatRoomMod chatRoomMod;
+    public static ChatRoomMod chatRoomMod;
     /**
      * The instance of {@link ExploitMod}, which handles various exploit-related functionalities.
      */
-    private static ExploitMod exploitMod;
+    public static ExploitMod exploitMod;
     /**
      * The instance of {@link CommandManager}, which manages commands in the mod.
      */
-    private static CommandManager commandManager;
+    public static CommandManager commandManager;
     /**
      * The instance of {@link ExploitManager}, which manages different types of exploits.
      */
-    private static ExploitManager exploitManager;
+    public static ExploitManager exploitManager;
     /**
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
-    private static NetworkMod networkMod;
+    public static NetworkMod networkMod;
 
     /**
      * The instance of {@link Thread}, for update checking
      */
-    private static Thread updateCheckerThread;
-
-    /**
-     * Retrieves the instance of {@link EventManager}.
-     *
-     * @return The instance of {@link EventManager}.
-     */
-    public static EventManager getEventManager() {
-        return eventManager;
-    }
-
-    /**
-     * Retrieves the instance of {@link BungeeSpoofMod}.
-     *
-     * @return The instance of {@link BungeeSpoofMod}.
-     */
-    public static BungeeSpoofMod getBungeeSpoofMod() {
-        return bungeeSpoofMod;
-    }
-
-    /**
-     * Retrieves the instance of {@link MiscMod}.
-     *
-     * @return The instance of {@link MiscMod}.
-     */
-    public static MiscMod getMiscMod() {
-        return miscMod;
-    }
-
-    /**
-     * Retrieves the instance of {@link HudMod}.
-     *
-     * @return The instance of {@link HudMod}.
-     */
-    public static HudMod getHudMod() {
-        return hudMod;
-    }
-
-    /**
-     * Retrieves the instance of {@link ChatRoomMod}.
-     *
-     * @return The instance of {@link ChatRoomMod}.
-     */
-    public static ChatRoomMod getChatRoomMod() {
-        return chatRoomMod;
-    }
-
-    /**
-     * Retrieves the instance of {@link ExploitMod}.
-     *
-     * @return The instance of {@link ExploitMod}.
-     */
-    public static ExploitMod getExploitMod() {
-        return exploitMod;
-    }
-
-    /**
-     * Retrieves the instance of {@link Thread}.
-     *
-     * @return The instance of {@link Thread}.
-     */
-    public static Thread getUpdateCheckerThread() {
-        return updateCheckerThread;
-    }
-
-    /**
-     * Retrieves the instance of {@link CommandManager}.
-     *
-     * @return The instance of {@link CommandManager}.
-     */
-    public static CommandManager getCommandManager() {
-        return commandManager;
-    }
-
-    /**
-     * Retrieves the instance of {@link ExploitManager}.
-     *
-     * @return The instance of {@link ExploitManager}.
-     */
-    public static ExploitManager getExploitManager() {
-        return exploitManager;
-    }
-
-    /**
-     * Retrieves the instance of {@link NetworkMod}.
-     *
-     * @return The instance of {@link NetworkMod}.
-     */
-    public static NetworkMod getNetworkMod() {
-        return networkMod;
-    }
-
-    /**
-     * Retrieves the instance of {@link MinecraftClient}.
-     *
-     * @return The instance of {@link MinecraftClient}.
-     */
-    public static MinecraftClient getMinecraft() {
-        return minecraftClient;
-    }
-
-    @Override
-    public void onInitialize() {
-        KeyBinding paradiseCommandOpener =  KeyBindingHelper.registerKeyBinding(
-                new KeyBinding(
-                        "Open paradise command",
-                        InputUtil.Type.KEYSYM,
-                        GLFW.GLFW_KEY_COMMA,
-                        Constants.MOD_NAME
-                )
-        );
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (paradiseCommandOpener.wasPressed())
-                MinecraftClient.getInstance().setScreen(new ChatScreen(getCommandManager().prefix));
-        });
-    }
+    public static Thread updateCheckerThread;
 
     public static void onClientInitialize() {
         initializeMods();
@@ -199,12 +84,12 @@ public class ParadiseClient_Fabric implements ModInitializer {
             try {
                 String latestVersion = Helper.getLatestReleaseTag();
                 if (latestVersion == null) return;
-                getMiscMod().latestVersion = Helper.getLatestReleaseTag();
-                if (!Objects.equals(getMiscMod().latestVersion, Constants.VERSION))
-                    getMiscMod().isClientOutdated = true;
+                ParadiseClient_Fabric.miscMod.latestVersion = Helper.getLatestReleaseTag();
+                if (!Objects.equals(ParadiseClient_Fabric.miscMod.latestVersion, Constants.VERSION))
+                    ParadiseClient_Fabric.miscMod.isClientOutdated = true;
 
-                Constants.WINDOW_TITLE = Constants.MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION  + " " +
-                (ParadiseClient_Fabric.getMiscMod().isClientOutdated ? "Outdated" : "");
+                Constants.WINDOW_TITLE = Constants.MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION + " " +
+                        (ParadiseClient_Fabric.miscMod.isClientOutdated ? "Outdated" : "");
             } catch (IOException e) {
                 Constants.LOGGER.error("Error getting latest release tag", e);
             }
@@ -212,7 +97,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
         updateCheckerThread.start();
     }
 
-    private static void initializeMods() {
+    public static void initializeMods() {
         bungeeSpoofMod = new BungeeSpoofMod();
         miscMod = new MiscMod();
         hudMod = new HudMod();
@@ -221,17 +106,33 @@ public class ParadiseClient_Fabric implements ModInitializer {
         networkMod = new NetworkMod();
     }
 
-    private static void initializeManagers() {
+    public static void initializeManagers() {
         eventManager = new EventManager();
-        exploitManager = new ExploitManager(getMinecraft());
-        getExploitManager().init();
-        commandManager = new CommandManager(getMinecraft());
-        getCommandManager().init();
+        exploitManager = new ExploitManager(ParadiseClient_Fabric.minecraftClient);
+        ParadiseClient_Fabric.exploitManager.init();
+        commandManager = new CommandManager(ParadiseClient_Fabric.minecraftClient);
+        ParadiseClient_Fabric.commandManager.init();
     }
 
-    private static void initializeListeners() {
-        getEventManager().registerListener(new PacketListener());
-        getEventManager().registerListener(getCommandManager());
-        getEventManager().registerListener(new ChannelListener());
+    public static void initializeListeners() {
+        ParadiseClient_Fabric.eventManager.registerListener(new PacketListener());
+        ParadiseClient_Fabric.eventManager.registerListener(ParadiseClient_Fabric.commandManager);
+        ParadiseClient_Fabric.eventManager.registerListener(new ChannelListener());
+    }
+
+    @Override
+    public void onInitialize() {
+        KeyBinding paradiseCommandOpener = KeyBindingHelper.registerKeyBinding(
+                new KeyBinding(
+                        "Open paradise command",
+                        InputUtil.Type.KEYSYM,
+                        GLFW.GLFW_KEY_COMMA,
+                        Constants.MOD_NAME
+                )
+        );
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (paradiseCommandOpener.wasPressed())
+                MinecraftClient.getInstance().setScreen(new ChatScreen(ParadiseClient_Fabric.commandManager.prefix));
+        });
     }
 }

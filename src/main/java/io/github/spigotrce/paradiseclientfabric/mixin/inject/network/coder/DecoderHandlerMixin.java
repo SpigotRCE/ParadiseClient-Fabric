@@ -16,7 +16,10 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.PacketType;
 import net.minecraft.util.profiling.jfr.FlightProfiler;
 import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(DecoderHandler.class)
-public class DecoderHandlerMixin <T extends PacketListener> {
+public class DecoderHandlerMixin<T extends PacketListener> {
     @Shadow
     private static final Logger LOGGER = LogUtils.getLogger();
     @Mutable
@@ -43,7 +46,7 @@ public class DecoderHandlerMixin <T extends PacketListener> {
         if (b.readVarInt() == 25) {
             PluginMessageEvent event = new PluginMessageEvent(b.readString(), b);
             try {
-                ParadiseClient_Fabric.getEventManager().fireEvent(event);
+                ParadiseClient_Fabric.eventManager.fireEvent(event);
             } catch (Exception e) {
                 LOGGER.error("Unable to fire PluginMessageEvent", e);
                 LOGGER.error("Not dropping the packet! (TODO: Change this in the future)");

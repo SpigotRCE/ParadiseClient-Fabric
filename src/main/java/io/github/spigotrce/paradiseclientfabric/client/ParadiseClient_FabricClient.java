@@ -26,7 +26,6 @@ public class ParadiseClient_FabricClient implements ClientModInitializer {
      *
      * <p>The return value is void, as there is no meaningful result to return from this method.
      */
-
     @Override
     public void onInitializeClient() {
         ParadiseClient_Fabric.onClientInitialize();

@@ -34,9 +34,11 @@ import java.time.Instant;
 @Mixin(ClientPlayNetworkHandler.class)
 public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetworkHandlerAccessor {
 
-    @Shadow private LastSeenMessagesCollector lastSeenMessagesCollector;
+    @Shadow
+    private LastSeenMessagesCollector lastSeenMessagesCollector;
 
-    @Shadow private MessageChain.Packer messagePacker;
+    @Shadow
+    private MessageChain.Packer messagePacker;
 
     /**
      * Injects code at the end of the onGameJoin method to update connection status and server IP.
@@ -50,14 +52,15 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
      */
     @Inject(method = "onGameJoin", at = @At("TAIL"))
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo info) {
-        ParadiseClient_Fabric.getNetworkMod().isConnected = true;
-        ParadiseClient_Fabric.getNetworkMod().serverIP = ((ClientPlayNetworkHandler) (Object) this).getConnection().getAddress().toString().split("/")[0];
-        if (ParadiseClient_Fabric.getMiscMod().isClientOutdated)
-            Helper.printChatMessage("&4Client is outdated! Latest version: &2" + ParadiseClient_Fabric.getMiscMod().latestVersion);
+        ParadiseClient_Fabric.networkMod.isConnected = true;
+        ParadiseClient_Fabric.networkMod.serverIP = ((ClientPlayNetworkHandler) (Object) this).getConnection().getAddress().toString().split("/")[0];
+        if (ParadiseClient_Fabric.miscMod.isClientOutdated)
+            Helper.printChatMessage("&4Client is outdated! Latest version: &2" + ParadiseClient_Fabric.miscMod.latestVersion);
     }
 
     /**
      * This method fires the {@link ChatPreEvent}.
+     *
      * @param content The content entered by the player.
      * @param ci      The callback information.
      */
@@ -65,7 +68,7 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
     private void onSendChatMessageH(String content, CallbackInfo ci) {
         ChatPreEvent event = new ChatPreEvent(content);
         try {
-            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+            ParadiseClient_Fabric.eventManager.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Failed to fire ChatPreEvent", e);
         }
@@ -74,6 +77,7 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
 
     /**
      * This method fires the {@link ChatPostEvent}.
+     *
      * @param content The content entered by the player.
      * @param ci      The callback information.
      */
@@ -81,12 +85,16 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
     private void onSendChatMessageT(String content, CallbackInfo ci) {
         ChatPostEvent event = new ChatPostEvent(content);
         try {
-            ParadiseClient_Fabric.getEventManager().fireEvent(event);
+            ParadiseClient_Fabric.eventManager.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Failed to fire ChatPreEvent", e);
         }
     }
 
+    /**
+     * Accessor method to send chat message internally without firing the chat events.
+     * @param message The message to be sent.
+     */
     @Override
     public void paradiseClient_Fabric$sendChatMessage(String message) {
         Instant instant = Instant.now();

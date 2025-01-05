@@ -3,6 +3,9 @@ package io.github.spigotrce.paradiseclientfabric.event.chat;
 import io.github.spigotrce.eventbus.event.Cancellable;
 import io.github.spigotrce.eventbus.event.Event;
 
+/**
+ * Event before the chat message has been sent.
+ */
 @SuppressWarnings("unused")
 public class ChatPreEvent extends Event implements Cancellable {
     private boolean isCancel = false;

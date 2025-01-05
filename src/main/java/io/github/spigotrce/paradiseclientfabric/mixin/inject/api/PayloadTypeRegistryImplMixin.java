@@ -18,8 +18,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Mixin(PayloadTypeRegistryImpl.class)
-public abstract class PayloadTypeRegistryImplMixin <B extends PacketByteBuf> implements PayloadTypeRegistryImplAccessor {
-    @Shadow(remap = false) @Final private Map<Identifier, CustomPayload.Type<B, ? extends CustomPayload>> packetTypes;
+public abstract class PayloadTypeRegistryImplMixin<B extends PacketByteBuf> implements PayloadTypeRegistryImplAccessor {
+    @Shadow(remap = false)
+    @Final
+    private Map<Identifier, CustomPayload.Type<B, ? extends CustomPayload>> packetTypes;
 
     @Inject(method = "register", at = @At(value = "RETURN"))
     public <T extends CustomPayload> void register(CustomPayload.Id<T> id, PacketCodec<? super B, T> codec, CallbackInfoReturnable<CustomPayload.Type<? super B, T>> cir) {

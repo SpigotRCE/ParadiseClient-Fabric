@@ -33,9 +33,44 @@ import org.spongepowered.asm.mixin.*;
 public abstract class MultiplayerScreenMixin extends Screen {
 
     @Shadow
-    private boolean initialized;
+    @Final
+    private static Logger LOGGER;
+    /**
+     * Reference to the BungeeSpoofMod instance for accessing mod data.
+     */
+    @Unique
+    final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.bungeeSpoofMod;
     @Shadow
     protected MultiplayerServerListWidget serverListWidget;
+    @Unique
+    ButtonWidget uuidSpoofButton;
+    /**
+     * Button for toggling BungeeCord spoofing.
+     */
+    @Unique
+    ButtonWidget bungeeToggleButton;
+    /**
+     * Text field for inputting BungeeCord IP.
+     */
+    @Unique
+    TextFieldWidget bungeeClientIPField;
+    /**
+     * Button for toggling BungeeCord target hostname spoofing.
+     */
+    @Unique
+    ButtonWidget bungeeHostnameToggle;
+    /**
+     * Text field for inputting BungeeCord target hostname.
+     */
+    @Unique
+    TextFieldWidget bungeeHostnameField;
+    /**
+     * Renderer for displaying text.
+     */
+    @Unique
+    TextRenderer textRenderer;
+    @Shadow
+    private boolean initialized;
     @Shadow
     private ServerList serverList;
     @Shadow
@@ -44,12 +79,22 @@ public abstract class MultiplayerScreenMixin extends Screen {
     @Nullable
     private LanServerQueryManager.LanServerDetector lanServerDetector;
     @Shadow
-    @Final
-    private static Logger LOGGER;
-    @Shadow
     private ButtonWidget buttonJoin;
     @Shadow
     private ServerInfo selectedEntry;
+    @Shadow
+    private ButtonWidget buttonEdit;
+    @Shadow
+    private ButtonWidget buttonDelete;
+
+    /**
+     * Constructor for MultiplayerScreenMixin.
+     *
+     * @param title The title of the screen.
+     */
+    protected MultiplayerScreenMixin(Text title) {
+        super(title);
+    }
 
     @Shadow
     protected abstract void directConnect(boolean confirmedAction);
@@ -61,13 +106,7 @@ public abstract class MultiplayerScreenMixin extends Screen {
     protected abstract void addEntry(boolean confirmedAction);
 
     @Shadow
-    private ButtonWidget buttonEdit;
-
-    @Shadow
     protected abstract void editEntry(boolean confirmedAction);
-
-    @Shadow
-    private ButtonWidget buttonDelete;
 
     @Shadow
     protected abstract void removeEntry(boolean confirmedAction);
@@ -77,54 +116,6 @@ public abstract class MultiplayerScreenMixin extends Screen {
 
     @Shadow
     protected abstract void refresh();
-
-    /**
-     * Reference to the BungeeSpoofMod instance for accessing mod data.
-     */
-    @Unique
-    final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
-
-    @Unique
-    ButtonWidget uuidSpoofButton;
-
-    /**
-     * Button for toggling BungeeCord spoofing.
-     */
-    @Unique
-    ButtonWidget bungeeToggleButton;
-
-    /**
-     * Text field for inputting BungeeCord IP.
-     */
-    @Unique
-    TextFieldWidget bungeeClientIPField;
-
-    /**
-     * Button for toggling BungeeCord target hostname spoofing.
-     */
-    @Unique
-    ButtonWidget bungeeHostnameToggle;
-
-    /**
-     * Text field for inputting BungeeCord target hostname.
-     */
-    @Unique
-    TextFieldWidget bungeeHostnameField;
-
-    /**
-     * Renderer for displaying text.
-     */
-    @Unique
-    TextRenderer textRenderer;
-
-    /**
-     * Constructor for MultiplayerScreenMixin.
-     *
-     * @param title The title of the screen.
-     */
-    protected MultiplayerScreenMixin(Text title) {
-        super(title);
-    }
 
     /**
      * @author a
@@ -175,7 +166,7 @@ public abstract class MultiplayerScreenMixin extends Screen {
         this.bungeeToggleButton = this.addDrawableChild(
                 ButtonWidget.builder(getBungeeButtonText(),
                                 onPress -> {
-                                    this.bungeeSpoofMod.setBungeeEnabled(!bungeeSpoofMod.isBungeeEnabled());
+                                    this.bungeeSpoofMod.isIPForwarding = !bungeeSpoofMod.isIPForwarding;
                                     this.bungeeToggleButton.setMessage(getBungeeButtonText());
                                 })
                         .width(100)
@@ -185,7 +176,7 @@ public abstract class MultiplayerScreenMixin extends Screen {
         this.bungeeHostnameToggle = this.addDrawableChild(
                 ButtonWidget.builder(getBungeeTargetButtonText(),
                                 onPress -> {
-                                    this.bungeeSpoofMod.setBungeeTargetEnabled(!bungeeSpoofMod.isBungeeTargetEnabled());
+                                    this.bungeeSpoofMod.isHostnameForwarding = !bungeeSpoofMod.isHostnameForwarding;
                                     this.bungeeHostnameToggle.setMessage(getBungeeTargetButtonText());
                                 })
                         .width(100)
@@ -194,14 +185,14 @@ public abstract class MultiplayerScreenMixin extends Screen {
 
         this.bungeeClientIPField = new TextFieldWidget(this.textRenderer, 74, 20, Text.literal("Bungee IP"));
         this.bungeeClientIPField.setMaxLength(128);
-        this.bungeeClientIPField.setText(bungeeSpoofMod.getBungeeIP());
-        this.bungeeClientIPField.setChangedListener((text) -> bungeeSpoofMod.setBungeeIP(this.bungeeClientIPField.getText()));
+        this.bungeeClientIPField.setText(bungeeSpoofMod.ip);
+        this.bungeeClientIPField.setChangedListener((text) -> bungeeSpoofMod.ip = this.bungeeClientIPField.getText());
         this.addSelectableChild(this.bungeeClientIPField);
 
         this.bungeeHostnameField = new TextFieldWidget(this.textRenderer, 74, 20, Text.literal("Hostname"));
         this.bungeeHostnameField.setMaxLength(128);
-        this.bungeeHostnameField.setText(bungeeSpoofMod.getBungeeTargetIP());
-        this.bungeeHostnameField.setChangedListener((text) -> bungeeSpoofMod.setTargetIP(this.bungeeHostnameField.getText()));
+        this.bungeeHostnameField.setText(bungeeSpoofMod.hostname);
+        this.bungeeHostnameField.setChangedListener((text) -> bungeeSpoofMod.hostname = this.bungeeHostnameField.getText());
         this.addSelectableChild(this.bungeeHostnameField);
 
         this.buttonJoin = this.addDrawableChild(
@@ -325,7 +316,7 @@ public abstract class MultiplayerScreenMixin extends Screen {
      */
     @Unique
     private Text getBungeeButtonText() {
-        return bungeeSpoofMod.isBungeeEnabled() ? Text.literal("Bungee Enabled") : Text.literal("Bungee Disabled");
+        return bungeeSpoofMod.isIPForwarding ? Text.literal("Bungee Enabled") : Text.literal("Bungee Disabled");
     }
 
     /**
@@ -335,6 +326,6 @@ public abstract class MultiplayerScreenMixin extends Screen {
      */
     @Unique
     private Text getBungeeTargetButtonText() {
-        return bungeeSpoofMod.isBungeeTargetEnabled() ? Text.literal("Hostname Enabled") : Text.literal("Hostname Disabled");
+        return bungeeSpoofMod.isHostnameForwarding ? Text.literal("Hostname Enabled") : Text.literal("Hostname Disabled");
     }
 }

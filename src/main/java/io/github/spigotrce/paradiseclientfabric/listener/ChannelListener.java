@@ -20,7 +20,7 @@ public class ChannelListener implements Listener {
         try {
             if (Objects.equals(channelName, "minecraft:register") || Objects.equals(channelName, "REGISTER")) // 1.13 channel or 1.8 channel
                 for (String splitted : buf.toString(Charset.defaultCharset()).split("\000"))
-                    Helper.printChatMessage("&fChannel: &" + (ParadiseClient_Fabric.getNetworkMod().getRegisteredChannelsByName().contains(splitted) ? "c " : "d ") + splitted);
+                    Helper.printChatMessage("&fChannel: &" + (ParadiseClient_Fabric.networkMod.getRegisteredChannelsByName().contains(splitted) ? "c " : "d ") + splitted);
             else
                 Helper.printChatMessage("&fChannel: &d" + channelName + " &fData: &d" + buf.toString(Charset.defaultCharset()));
         } catch (Exception e) {

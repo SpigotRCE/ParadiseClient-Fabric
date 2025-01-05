@@ -12,12 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin {
-    @Shadow public abstract void sendMessage(Text message, boolean overlay);
+    @Shadow
+    public abstract void sendMessage(Text message, boolean overlay);
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void tick(CallbackInfo ci) {
-        ParadiseClient_Fabric.getMiscMod().delayedMessages.forEach(this::sendMessage);
-        ParadiseClient_Fabric.getMiscMod().delayedMessages.clear();
+        ParadiseClient_Fabric.miscMod.delayedMessages.forEach(this::sendMessage);
+        ParadiseClient_Fabric.miscMod.delayedMessages.clear();
     }
 
     @Unique

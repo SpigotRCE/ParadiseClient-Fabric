@@ -47,17 +47,17 @@ public class HandshakeC2SPacketMixin {
      */
     @Inject(method = "<init>(ILjava/lang/String;ILnet/minecraft/network/packet/c2s/handshake/ConnectionIntent;)V", at = @At("RETURN"))
     private void HandshakeC2SPacket(int i, String string, int j, ConnectionIntent connectionIntent, CallbackInfo ci) {
-        BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.getBungeeSpoofMod();
+        BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.bungeeSpoofMod;
 
-        if (bungeeSpoofMod.isBungeeTargetEnabled()) {
-            this.address = bungeeSpoofMod.getBungeeTargetIP();
+        if (bungeeSpoofMod.isHostnameForwarding) {
+            this.address = bungeeSpoofMod.hostname;
         }
-        if (bungeeSpoofMod.isBungeeEnabled() && connectionIntent == ConnectionIntent.LOGIN) {
+        if (bungeeSpoofMod.isIPForwarding && connectionIntent == ConnectionIntent.LOGIN) {
             this.address += "\000" +
-                    bungeeSpoofMod.getBungeeIP() +
-                    "\000" + bungeeSpoofMod.getBungeeUUID() +
+                    bungeeSpoofMod.ip +
+                    "\000" + bungeeSpoofMod.uuid +
                     "\000" +
-                    "[{\"name\": \"bungeeguard-token\", \"value\": \"" + ParadiseClient_Fabric.getBungeeSpoofMod().getBungeeToken() + "\"}]";
+                    "[{\"name\": \"bungeeguard-token\", \"value\": \"" + ParadiseClient_Fabric.bungeeSpoofMod.token + "\"}]";
         }
     }
 }

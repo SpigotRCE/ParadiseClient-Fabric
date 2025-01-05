@@ -36,7 +36,7 @@ public class ClientImpl implements Runnable {
         } catch (IOException e) {
             Constants.LOGGER.error("An exception raised while creating client socket", e);
             Helper.printChatMessage("[ChatRoom] An exception raised while creating client socket, see logs");
-            ParadiseClient_Fabric.getChatRoomMod().isConnected = false;
+            ParadiseClient_Fabric.chatRoomMod.isConnected = false;
             return;
         }
 
@@ -46,11 +46,11 @@ public class ClientImpl implements Runnable {
         } catch (Exception e) {
             Constants.LOGGER.error("An exception raised while creating reader and writer", e);
             Helper.printChatMessage("[ChatRoom] An exception raised while creating reader and writer, see logs");
-            ParadiseClient_Fabric.getChatRoomMod().isConnected = false;
+            ParadiseClient_Fabric.chatRoomMod.isConnected = false;
             return;
         }
         Helper.printChatMessage("[ChatRoom] Connected successfully");
-        ParadiseClient_Fabric.getChatRoomMod().isConnected = true;
+        ParadiseClient_Fabric.chatRoomMod.isConnected = true;
         ConnectionHandler connectionHandler = new ConnectionHandler(this.clientSocket, this.in, this.out);
         thread = new Thread(connectionHandler);
         thread.start();
@@ -74,7 +74,7 @@ public class ClientImpl implements Runnable {
             Helper.printChatMessage("[ChatRoom] An exception raised while shutting closing reader and writer, see logs");
         }
         Helper.printChatMessage("[ChatRoom] Disconnected");
-        ParadiseClient_Fabric.getChatRoomMod().isConnected = false;
+        ParadiseClient_Fabric.chatRoomMod.isConnected = false;
     }
 
     @SuppressWarnings("unused")

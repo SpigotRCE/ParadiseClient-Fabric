@@ -93,6 +93,7 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
 
     /**
      * Accessor method to send chat message internally without firing the chat events.
+     *
      * @param message The message to be sent.
      */
     @Override

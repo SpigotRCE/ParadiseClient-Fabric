@@ -7,11 +7,8 @@
  */
 package io.github.spigotrce.paradiseclientfabric;
 
-import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 public class Constants {
     /**

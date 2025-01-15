@@ -1,22 +1,37 @@
-# ParadiseClient-Fabric v1.21.4 g3 b11
+# **ParadiseClient-Fabric v1.21.4 g3 b11**
 
-* ParadiseClient-Fabric is a Minecraft Fabric mod made for pentesting Minecraft servers/networks.
-* This project is open source, but you are not allowed to modify, or distribute as your own without the permission of
-  the owner. But you are allowed to contribute to this project through GitHub commits only.
+ParadiseClient-Fabric is a Minecraft Fabric mod designed specifically for penetration testing Minecraft servers and networks.
 
- ---
+## **License and Contribution**
 
-# How to install
+This project is open source, but the following conditions apply:
 
-* To install this mod, you need java 21, Fabric 1.21.4 and Loader version 0.16.9
+- **Modification/Distribution**: You are **not allowed** to modify or distribute this project as your own without the explicit permission of the owner.
+- **Contribution**: Contributions to this project are welcome and must be made through GitHub commits only. All contributions are subject to review and approval by the project owner.
 
 ---
 
-# Side mods
+## **Installation Instructions**
 
-* We recommend to install optimization mods like sodium, etc. We highly recommend to install ViaFabricPlus as found
-  in [here](https://modrinth.com/mod/viafabricplus)
+To install this mod, ensure you have the following prerequisites:
 
-# Support and Dev builds
+- **Java**: Version 21
+- **Fabric**: Version 1.21.4
+- **Fabric Loader**: Version 0.16.9
 
-* Support and dev builds can be found at my discord as found in [here](https://discord.gg/3meyfSZ37J)
+---
+
+## **Recommended Side Mods**
+
+For optimal performance and functionality, we recommend the following side mods:
+
+- **Optimization Mods**: Install mods like Sodium for enhanced performance.
+- **Protocol Compatibility**: We highly recommend installing [ViaFabricPlus](https://modrinth.com/mod/viafabricplus) to improve compatibility with various Minecraft versions.
+
+---
+
+## **Support and Development Builds**
+
+- Access support and development builds through our official Discord server: [Join Here](https://discord.gg/3meyfSZ37J)
+
+---

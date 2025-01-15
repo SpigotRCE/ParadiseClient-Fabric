@@ -205,26 +205,20 @@ public class Helper {
     }
 
     public static String getLatestReleaseTag() throws IOException {
-        String apiUrl = "https://api.github.com/repos/SpigotRCE/ParadiseClient-Fabric/releases/latest";
-        // Open connection to the API URL
-        HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
+        HttpURLConnection connection = (HttpURLConnection) new URL(
+                "https://api.github.com/repos/SpigotRCE/ParadiseClient-Fabric/releases/latest"
+        ).openConnection();
         connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
         connection.setRequestMethod("GET");
-
-        // Check for a successful response
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            // Read the response
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null)
                 response.append(line);
-            }
             reader.close();
 
-            // Parse the JSON response with Gson
-            JsonObject jsonResponse = JsonParser.parseString(response.toString()).getAsJsonObject();
-            return jsonResponse.get("tag_name").getAsString();
+            return JsonParser.parseString(response.toString()).getAsJsonObject().get("tag_name").getAsString();
         } else {
             return null;
         }

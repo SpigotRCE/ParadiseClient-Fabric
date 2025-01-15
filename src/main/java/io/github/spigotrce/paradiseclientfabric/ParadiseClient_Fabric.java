@@ -79,7 +79,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
             try {
                 String latestVersion = Helper.getLatestReleaseTag();
                 if (latestVersion == null) return;
-                ParadiseClient_Fabric.miscMod.latestVersion = Helper.getLatestReleaseTag();
+                ParadiseClient_Fabric.miscMod.latestVersion = latestVersion;
                 if (!Objects.equals(ParadiseClient_Fabric.miscMod.latestVersion, Constants.VERSION))
                     ParadiseClient_Fabric.miscMod.isClientOutdated = true;
 

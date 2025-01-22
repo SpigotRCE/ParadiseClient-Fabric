@@ -34,5 +34,6 @@ public class ParadiseClient_FabricClient implements ClientModInitializer {
         PayloadTypeRegistry.playC2S().register(ChatSentryPayloadPacket.ID, ChatSentryPayloadPacket.CODEC);
         PayloadTypeRegistry.playC2S().register(ECBPayloadPacket.ID, ECBPayloadPacket.CODEC);
         PayloadTypeRegistry.playC2S().register(SignedVelocityPayloadPacket.ID, SignedVelocityPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(NotBountiesPayloadPacket.ID, NotBountiesPayloadPacket.CODEC);
     }
 }

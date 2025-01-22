@@ -5,7 +5,9 @@ import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -91,6 +93,10 @@ public class Helper {
      */
     public static void sendPacket(Packet<?> packet) {
         Objects.requireNonNull(MinecraftClient.getInstance().getNetworkHandler()).sendPacket(packet);
+    }
+
+    public static void sendPayload(CustomPayload payload) {
+        sendPacket(new CustomPayloadC2SPacket(payload));
     }
 
     /**

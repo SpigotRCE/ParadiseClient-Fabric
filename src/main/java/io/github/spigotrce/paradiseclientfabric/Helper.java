@@ -5,6 +5,8 @@ import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.toast.SystemToast;
+import net.minecraft.client.toast.ToastManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
@@ -228,6 +230,18 @@ public class Helper {
         } else {
             return null;
         }
+    }
+
+    public static void showNotification(String title, String message) {
+        System.out.println(title);
+        System.out.println(message);
+        ToastManager toastManager = MinecraftClient.getInstance().getToastManager();
+        SystemToast toast = new SystemToast(
+                SystemToast.Type.CHUNK_LOAD_FAILURE,
+                Text.literal(title),
+                Text.literal(message)
+        );
+        toastManager.add(toast);
     }
 
     @SuppressWarnings("unused")

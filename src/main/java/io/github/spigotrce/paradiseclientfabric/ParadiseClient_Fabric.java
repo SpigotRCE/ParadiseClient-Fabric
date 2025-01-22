@@ -70,21 +70,16 @@ public class ParadiseClient_Fabric implements ModInitializer {
      */
     public static NetworkMod networkMod;
 
-    /**
-     * The instance of {@link Thread}, for update checking
-     */
-    public static Thread updateCheckerThread;
-
     public static void onClientInitialize() {
         initializeMods();
         initializeManagers();
         initializeListeners();
 
-        updateCheckerThread = new Thread(() -> {
+        new Thread(() -> {
             try {
                 String latestVersion = Helper.getLatestReleaseTag();
                 if (latestVersion == null) return;
-                ParadiseClient_Fabric.miscMod.latestVersion = Helper.getLatestReleaseTag();
+                ParadiseClient_Fabric.miscMod.latestVersion = latestVersion;
                 if (!Objects.equals(ParadiseClient_Fabric.miscMod.latestVersion, Constants.VERSION))
                     ParadiseClient_Fabric.miscMod.isClientOutdated = true;
 
@@ -93,8 +88,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
             } catch (IOException e) {
                 Constants.LOGGER.error("Error getting latest release tag", e);
             }
-        });
-        updateCheckerThread.start();
+        }).start();
     }
 
     public static void initializeMods() {

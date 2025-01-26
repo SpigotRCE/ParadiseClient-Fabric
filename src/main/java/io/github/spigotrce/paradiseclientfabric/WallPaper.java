@@ -72,7 +72,7 @@ public class WallPaper {
         // Update and draw each particle
         for (Particle particle : particles) {
             particle.update(width, height);
-            context.fill(particle.x, particle.y, particle.x + 2, particle.y + 2, particle.color);
+            context.fill(particle.x, particle.y, particle.x + 2, particle.y + 2, 0x80FFFFFF);
         }
     }
 

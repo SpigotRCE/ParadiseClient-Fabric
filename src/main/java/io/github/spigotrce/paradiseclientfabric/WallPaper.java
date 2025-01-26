@@ -67,7 +67,7 @@ public class WallPaper {
         }
 
         // Draw the gradient background
-        context.fillGradient(0, 0, width, height, 0xFF1A237E, 0xFF882dbd); // Blue -> Indigo gradient
+        context.fillGradient(0, 0, width, height, 0x801A237E, 0x80882dbd);
 
         // Update and draw each particle
         for (Particle particle : particles) {

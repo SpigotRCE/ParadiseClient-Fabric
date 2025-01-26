@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.WallPaper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -32,10 +33,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * This class modifies the Title Screen to include a custom button recommending
  * the installation of "ViaFabricPlus" and customizes the background fade effect.
  * It also displays additional information about the client and game version.
+ * </p>
  *
  * @author SpigotRCE
  * @since 2.9
- * </p>
  */
 @SuppressWarnings("unused")
 @Mixin(TitleScreen.class)
@@ -108,7 +109,7 @@ public abstract class TitleScreenMixin extends Screen {
                                 MinecraftClient.getInstance().setScreen(new TitleScreen());
                             })
                     .width(this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5)
-                    .position((this.width / 2) - ((this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5) / 2), this.height / 4 + 48 + 72 + 12 + 35)
+                    .position((this.width / 2) - ((this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5) / 2), this.height / 4 + 48 + 72 + 12 + 35 + 33)
                     .build()
             );
         }
@@ -121,6 +122,29 @@ public abstract class TitleScreenMixin extends Screen {
                 MinecraftClient.getInstance().setScreen(new TitleScreen());
             }, this.textRenderer));
         }
+
+        // Adding a button to switch themes dynamically
+        // This button toggles between "hack" and "particle" themes
+        String currentTheme = WallPaper.getTheme();
+        this.addDrawableChild(ButtonWidget.builder(Text.literal("Theme: " + WallPaper.getTheme()),
+                        onPress -> {
+                            // Basculer entre les thèmes disponibles
+                            String newTheme = switch (WallPaper.getTheme()) {
+                                case "ParadiseHack" -> "ParadiseParticle";
+                                default -> "ParadiseHack";
+                            };
+
+                            // Mettre à jour le thème dans ConfigManager et l'interface
+                            WallPaper.setTheme(newTheme);
+
+                            // Mettre à jour le texte du bouton
+                            onPress.setMessage(Text.literal("Theme: " + newTheme));
+                        })
+                .width(150)
+                .position(this.width / 2 - 75, this.height / 4 + 160)
+                .build()
+        );
+
     }
 
     /**
@@ -160,6 +184,8 @@ public abstract class TitleScreenMixin extends Screen {
             this.backgroundFadeStart = Util.getMeasuringTimeMs();
         }
 
+        WallPaper.render(context, this.width, this.height);
+
         float f = 1.0F;
         if (this.doBackgroundFade) {
             float g = (float) (Util.getMeasuringTimeMs() - this.backgroundFadeStart) / 2000.0F;
@@ -175,7 +201,6 @@ public abstract class TitleScreenMixin extends Screen {
             this.setWidgetAlpha(f);
         }
 
-        this.renderPanoramaBackground(context, delta);
         int i = MathHelper.ceil(f * 255.0F) << 24;
         if ((i & -67108864) != 0) {
             super.render(context, mouseX, mouseY, delta);
@@ -193,7 +218,7 @@ public abstract class TitleScreenMixin extends Screen {
                 this.realmsNotificationGui.render(context, mouseX, mouseY, delta);
             }
         }
-
+        super.render(context, mouseX, mouseY, delta);
         ci.cancel();
     }
 }

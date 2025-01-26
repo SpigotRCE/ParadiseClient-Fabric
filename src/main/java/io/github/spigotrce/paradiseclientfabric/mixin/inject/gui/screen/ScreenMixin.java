@@ -35,7 +35,7 @@ public abstract class ScreenMixin {
      */
     @Inject(method = "renderBackground", at = @At(value = "HEAD"), cancellable = true)
     private void renderBackground(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        WallPaper.renderMatrix(context, width, height);
+        WallPaper.render(context, width, height);
         ci.cancel();
     }
 }

@@ -25,10 +25,10 @@ public class WallPaper {
     }
 
     /**
-     * Rend l'arrière-plan selon le thème actuel.
+     * Renders the background according to the current theme.
      */
     public static void render(DrawContext context, int width, int height) {
-        String theme = getTheme(); // Récupérer le thème à partir de la configuration
+        String theme = getTheme(); // Retrieve theme from configuration
         switch (theme) {
             case "ParadiseHack" -> renderMatrix(context, width, height);
             case "ParadiseParticle" -> renderElegantBackground(context, width, height);
@@ -37,7 +37,7 @@ public class WallPaper {
     }
 
 
-    // Thème Hack (style Matrix)
+    // Theme Hack (style matrix)
     public static void renderMatrix(DrawContext context, int width, int height) {
         context.fillGradient(0, 0, width, height, 0xCC000000, 0xCC000000);
         for (int i = 0; i < drops.length; i++) {
@@ -50,7 +50,7 @@ public class WallPaper {
         }
     }
 
-    // Thème Particle (particules dynamiques)
+    // Theme Particle (dynamic particles)
     public static void renderElegantBackground(DrawContext context, int width, int height) {
         context.fillGradient(0, 0, width, height, 0xFF1A237E, 0xFF882dbd); // Bleu -> Violet
         for (Particle particle : particles) {

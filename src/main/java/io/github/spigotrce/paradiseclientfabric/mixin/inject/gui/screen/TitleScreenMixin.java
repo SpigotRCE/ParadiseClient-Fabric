@@ -109,7 +109,7 @@ public abstract class TitleScreenMixin extends Screen {
                                 MinecraftClient.getInstance().setScreen(new TitleScreen());
                             })
                     .width(this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5)
-                    .position((this.width / 2) - ((this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5) / 2), this.height / 4 + 200)
+                    .position((this.width / 2) - ((this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5) / 2), this.height / 4 + 48 + 72 + 12 + 35 + 33)
                     .build()
             );
         }

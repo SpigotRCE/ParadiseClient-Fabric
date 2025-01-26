@@ -26,20 +26,22 @@ public class WallPaper {
 
     /**
      * Renders the background according to the current theme.
+     * Switches between themes and calls the appropriate render method.
      */
     public static void render(DrawContext context, int width, int height) {
-        String theme = getTheme(); // Retrieve theme from configuration
+        String theme = getTheme(); // Retrieve the theme from configuration
         switch (theme) {
             case "ParadiseHack" -> renderMatrix(context, width, height);
             case "ParadiseParticle" -> renderElegantBackground(context, width, height);
-            default -> renderMatrix(context, width, height); // Hack par défaut
+            default -> renderMatrix(context, width, height); // Default to "Hack" theme
         }
     }
 
-
-    // Theme Hack (style matrix)
+    /**
+     * Renders the "Matrix" style theme with falling characters.
+     */
     public static void renderMatrix(DrawContext context, int width, int height) {
-        context.fillGradient(0, 0, width, height, 0xCC000000, 0xCC000000);
+        context.fillGradient(0, 0, width, height, 0xCC000000, 0xCC000000); // Black gradient background
         for (int i = 0; i < drops.length; i++) {
             String text = Helper.generateRandomString(1, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", random);
             context.drawText(MinecraftClient.getInstance().textRenderer, text, i * 10, drops[i] * 10, 0x00FF00, false);
@@ -50,22 +52,56 @@ public class WallPaper {
         }
     }
 
-    // Theme Particle (dynamic particles)
+    /**
+     * Renders the particle-based elegant background theme.
+     */
+    private static int lastWidth = -1;
+    private static int lastHeight = -1;
+
     public static void renderElegantBackground(DrawContext context, int width, int height) {
-        context.fillGradient(0, 0, width, height, 0xFF1A237E, 0xFF882dbd); // Bleu -> Violet
+        // Check if the window size has changed
+        if (width != lastWidth || height != lastHeight) {
+            regenerateParticles(width, height);
+            lastWidth = width;
+            lastHeight = height;
+        }
+
+        // Draw the gradient background
+        context.fillGradient(0, 0, width, height, 0xFF1A237E, 0xFF882dbd); // Blue -> Indigo gradient
+
+        // Update and draw each particle
         for (Particle particle : particles) {
             particle.update(width, height);
             context.fill(particle.x, particle.y, particle.x + 2, particle.y + 2, particle.color);
         }
     }
 
+    /**
+     * Regenerates all particles to adapt to the new window size.
+     */
+    private static void regenerateParticles(int width, int height) {
+        for (Particle particle : particles) {
+            particle.reset(width, height);
+        }
+    }
+
+    /**
+     * Represents an individual particle with position, velocity, and color.
+     */
     private static class Particle {
         int x, y, speedX, speedY, color;
 
         public Particle() {
-            reset(800, 600);
+            this(0, 0); // Initialize without specific dimensions
         }
 
+        public Particle(int width, int height) {
+            reset(width, height);
+        }
+
+        /**
+         * Updates the particle's position and resets it if it moves out of bounds.
+         */
         public void update(int width, int height) {
             x += speedX;
             y += speedY;
@@ -75,16 +111,19 @@ public class WallPaper {
             }
         }
 
+        /**
+         * Resets the particle to a new random position, speed, and color.
+         */
         public void reset(int width, int height) {
-            x = random.nextInt(width);
-            y = random.nextInt(height);
+            x = random.nextInt(Math.max(width, 1));
+            y = random.nextInt(Math.max(height, 1));
 
             do {
-                speedX = -1 + random.nextInt(3); // Vitesse entre -1 et 1
+                speedX = -1 + random.nextInt(3); // Velocity between -1 and 1
                 speedY = -1 + random.nextInt(3);
             } while (speedX == 0 && speedY == 0);
 
-            color = 0xFFFFFFFF; // Blanc
+            color = 0xFFFFFFFF; // White color
         }
     }
 }

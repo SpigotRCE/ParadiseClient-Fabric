@@ -32,16 +32,6 @@ public class ChannelCommand extends Command {
                         }
                     }
                     return SINGLE_SUCCESS;
-                })
-                .then(LiteralArgumentBuilder.<CommandSource>literal("add")
-                        .then(RequiredArgumentBuilder.<CommandSource, String>argument("channel", StringArgumentType.string())
-                                .executes(context -> {
-                                    String channelName = StringArgumentType.getString(context, "channel");
-                                    ChannelListener.addChannel(channelName);
-                                    Helper.printChatMessage("&aChannel added: &d" + channelName);
-                                    return SINGLE_SUCCESS;
-                                })
-                        )
-                );
+                });
     }
 }

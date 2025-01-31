@@ -41,9 +41,4 @@ public class ChannelListener implements Listener {
     public static Set<String> getDetectedChannels() {
         return detectedChannels;
     }
-
-    public static void addChannel(String channelName) {
-        detectedChannels.add(channelName);
-        Helper.printChatMessage("&aManually added channel: &d" + channelName);
-    }
 }

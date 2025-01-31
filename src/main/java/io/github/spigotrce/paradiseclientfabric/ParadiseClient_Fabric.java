@@ -9,6 +9,7 @@ import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.option.KeyBinding;
@@ -127,6 +128,9 @@ public class ParadiseClient_Fabric implements ModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (paradiseCommandOpener.wasPressed())
                 MinecraftClient.getInstance().setScreen(new ChatScreen(ParadiseClient_Fabric.commandManager.prefix));
+        });
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            ChannelListener.clearChannels();
         });
     }
 }

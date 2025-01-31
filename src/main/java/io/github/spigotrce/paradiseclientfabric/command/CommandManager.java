@@ -59,6 +59,7 @@ public class CommandManager implements Listener {
         register(new ECBCommand(minecraftClient));
         register(new SignedVelocityCommand(minecraftClient));
         register(new DumpCommand(minecraftClient));
+        register(new ChannelCommand(minecraftClient));
 
 
         // Register this command at the very end so it registers all commands in it

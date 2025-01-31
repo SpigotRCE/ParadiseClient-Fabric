@@ -25,11 +25,11 @@ public class ChannelListener implements Listener {
             if (Objects.equals(channelName, "minecraft:register") || Objects.equals(channelName, "REGISTER")) {
                 for (String splitted : buf.toString(Charset.defaultCharset()).split("\000")) {
                     detectedChannels.add(splitted); // Adds the channel to the list
-                    Helper.printChatMessage("&fDetected channel: &d" + splitted);
+                    Helper.printChatMessage("&fChannel: &d" + splitted);
                 }
             } else {
                 detectedChannels.add(channelName);
-                Helper.printChatMessage("&fDetected channel: &d" + channelName);
+                Helper.printChatMessage("&fChannel: &d" + channelName);
             }
         } catch (Exception e) {
             Helper.printChatMessage("&4Error handling listener for channel: " + channelName + " " + e.getMessage());
@@ -42,7 +42,5 @@ public class ChannelListener implements Listener {
     }
     public static void clearChannels() {
         detectedChannels.clear();
-        Helper.printChatMessage("&cLes channels détectés ont été réinitialisés après la déconnexion.");
-        Constants.LOGGER.info("✅ Channels list cleared after disconnection.");
     }
 }

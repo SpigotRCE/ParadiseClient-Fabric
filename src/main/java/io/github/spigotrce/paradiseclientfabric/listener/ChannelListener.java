@@ -41,9 +41,9 @@ public class ChannelListener implements Listener {
     public static Set<String> getDetectedChannels() {
         return detectedChannels;
     }
-
     public static void clearChannels() {
         detectedChannels.clear();
         Helper.printChatMessage("&cLes channels détectés ont été réinitialisés après la déconnexion.");
+        Constants.LOGGER.info("✅ Channels list cleared after disconnection.");
     }
 }

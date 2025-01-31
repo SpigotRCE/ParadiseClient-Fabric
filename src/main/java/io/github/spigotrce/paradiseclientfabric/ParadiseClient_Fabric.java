@@ -9,6 +9,7 @@ import io.github.spigotrce.paradiseclientfabric.mod.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.option.KeyBinding;
@@ -69,13 +70,6 @@ public class ParadiseClient_Fabric implements ModInitializer {
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
     public static NetworkMod networkMod;
-
-    public static void init() {
-        // Ajoute un listener pour vider les channels à la déconnexion
-        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
-            ChannelListener.clearChannels();
-        });
-    }
 
     public static void onClientInitialize() {
         initializeMods();

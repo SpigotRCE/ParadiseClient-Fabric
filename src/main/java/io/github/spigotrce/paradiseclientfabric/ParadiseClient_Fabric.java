@@ -70,6 +70,13 @@ public class ParadiseClient_Fabric implements ModInitializer {
      */
     public static NetworkMod networkMod;
 
+    public static void init() {
+        // Ajoute un listener pour vider les channels à la déconnexion
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            ChannelListener.clearChannels();
+        });
+    }
+
     public static void onClientInitialize() {
         initializeMods();
         initializeManagers();

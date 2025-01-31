@@ -50,9 +50,9 @@ public class UUIDSpoofScreen extends Screen {
         int widgetXOffset = widgetWidth / 2;
         currentHeight = this.height / 2 - 90;
 
-        addInputField("Username", this.bungeeSpoofMod.usernameReal, value -> this.bungeeSpoofMod.usernameReal = value);
-        addInputField("FakeUsername", this.bungeeSpoofMod.usernameFake, value -> this.bungeeSpoofMod.usernameFake = value);
-        addInputField("BungeeGuard Token", this.bungeeSpoofMod.token, value -> this.bungeeSpoofMod.token = value);
+        this.bungeeUsernameField = addInputField("Username", this.bungeeSpoofMod.usernameReal, value -> this.bungeeSpoofMod.usernameReal = value);
+        this.bungeeFakeUsernameField = addInputField("FakeUsername", this.bungeeSpoofMod.usernameFake, value -> this.bungeeSpoofMod.usernameFake = value);
+        this.bungeeTokenField = addInputField("BungeeGuard Token", this.bungeeSpoofMod.token, value -> this.bungeeSpoofMod.token = value);
 
         premiumButton = addButton(bungeeSpoofMod.isUUIDOnline ? "Premium" : "Cracked", widgetWidth, widgetXOffset, button -> togglePremium());
         addButton("Spoof", widgetWidth, widgetXOffset, button -> spoof());
@@ -122,7 +122,7 @@ public class UUIDSpoofScreen extends Screen {
         return currentHeight;
     }
 
-    private void addInputField(String label, String initialValue, java.util.function.Consumer<String> onTextChanged) {
+    private TextFieldWidget addInputField(String label, String initialValue, java.util.function.Consumer<String> onTextChanged) {
         int widgetWidth = 200;
         int widgetXOffset = widgetWidth / 2;
         int tHeight = getNewHeight();
@@ -135,6 +135,8 @@ public class UUIDSpoofScreen extends Screen {
         this.addDrawable(textField);
 
         this.addDrawable(new TextWidget(this.width / 2 - widgetXOffset, tHeight - 15, widgetWidth, 20, Text.literal(label), this.textRenderer));
+
+        return textField;
     }
 
     private ButtonWidget addButton(String label, int width, int xOffset, ButtonWidget.PressAction action) {

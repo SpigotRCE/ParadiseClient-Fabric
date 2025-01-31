@@ -4,7 +4,6 @@ import io.github.spigotrce.eventbus.event.EventHandler;
 import io.github.spigotrce.eventbus.event.listener.Listener;
 import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.Helper;
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.event.channel.PluginMessageEvent;
 import net.minecraft.network.PacketByteBuf;
 

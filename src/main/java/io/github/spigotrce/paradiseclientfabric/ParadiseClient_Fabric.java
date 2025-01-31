@@ -135,5 +135,8 @@ public class ParadiseClient_Fabric implements ModInitializer {
             while (paradiseCommandOpener.wasPressed())
                 MinecraftClient.getInstance().setScreen(new ChatScreen(ParadiseClient_Fabric.commandManager.prefix));
         });
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
+            ChannelListener.clearChannels();
+        });
     }
 }

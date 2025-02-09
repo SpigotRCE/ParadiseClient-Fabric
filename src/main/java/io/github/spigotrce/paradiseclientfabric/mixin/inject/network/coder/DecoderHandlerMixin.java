@@ -2,13 +2,10 @@ package io.github.spigotrce.paradiseclientfabric.mixin.inject.network.coder;
 
 import com.mojang.logging.LogUtils;
 import io.github.spigotrce.paradiseclientfabric.Helper;
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
-import io.github.spigotrce.paradiseclientfabric.event.channel.PluginMessageEvent;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.NetworkState;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.handler.DecoderHandler;
 import net.minecraft.network.handler.NetworkStateTransitionHandler;
 import net.minecraft.network.listener.PacketListener;
@@ -42,20 +39,6 @@ public class DecoderHandlerMixin<T extends PacketListener> {
 
     @Inject(method = "decode", at = @At("HEAD"), cancellable = true)
     public void decode(ChannelHandlerContext context, ByteBuf buf, List<Object> objects, CallbackInfo ci) {
-        PacketByteBuf b = new PacketByteBuf(buf.copy());
-        if (b.readVarInt() == 25) {
-            PluginMessageEvent event = new PluginMessageEvent(b.readString(), b);
-            try {
-                ParadiseClient_Fabric.eventManager.fireEvent(event);
-            } catch (Exception e) {
-                LOGGER.error("Unable to fire PluginMessageEvent", e);
-                LOGGER.error("Not dropping the packet! (TODO: Change this in the future)");
-                return;
-            }
-
-            if (event.isCancel()) return;
-        }
-
         int i = buf.readableBytes();
         if (i != 0) {
             Packet<? super T> packet = this.state.codec().decode(buf);

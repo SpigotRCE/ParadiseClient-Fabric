@@ -4,9 +4,12 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.client.toast.ToastManager;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
@@ -236,6 +239,10 @@ public class Helper {
                 Text.literal(message)
         );
         toastManager.add(toast);
+    }
+
+    public static PacketByteBuf byteBufToPacketBuf(ByteBuf buf) {
+        return new PacketByteBuf(buf);
     }
 
     @SuppressWarnings("unused")

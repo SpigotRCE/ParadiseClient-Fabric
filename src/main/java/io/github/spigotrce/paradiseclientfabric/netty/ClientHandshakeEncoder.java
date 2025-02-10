@@ -7,6 +7,8 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
+import net.md_5.bungee.protocol.Protocol;
+import net.md_5.bungee.protocol.packet.Handshake;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
 
@@ -24,6 +26,8 @@ public class ClientHandshakeEncoder extends MessageToMessageEncoder<ByteBuf> {
     }
 
     private void decodeHandshake(PacketByteBuf b) {
-        ParadiseClient_Fabric.selectedProtocolVersion.protocolVersion = b.readVarInt();
+        Handshake handshake = new Handshake();
+        handshake.read(b.asByteBuf());
+        ParadiseClient_Fabric.selectedProtocolVersion.protocolVersion = handshake.getProtocolVersion();
     }
 }

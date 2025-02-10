@@ -18,11 +18,9 @@ public class ClientPayloadPacketDecoder extends MessageToMessageDecoder<ByteBuf>
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         PacketByteBuf b = Helper.byteBufToPacketBuf(ctx.alloc().buffer().writeBytes(in));
-        int id = b.readVarInt();
-        if (PayloadRegistry.isValidPacket(ParadiseClient_Fabric.selectedProtocolVersion.protocolVersion, id))
-            if (decodePayload(b)) {
+        if (PayloadRegistry.isValidPacket(ParadiseClient_Fabric.selectedProtocolVersion.protocolVersion, b.readVarInt()))
+            if (decodePayload(b))
                 return;
-            }
         out.add(in.resetReaderIndex().retain());
     }
 

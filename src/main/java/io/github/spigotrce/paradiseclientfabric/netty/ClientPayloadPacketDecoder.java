@@ -5,8 +5,11 @@ import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.event.channel.PluginMessageEvent;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
+import net.md_5.bungee.protocol.ProtocolConstants;
+import net.md_5.bungee.protocol.packet.PluginMessage;
 import net.minecraft.network.PacketByteBuf;
 
 import java.util.List;
@@ -24,7 +27,9 @@ public class ClientPayloadPacketDecoder extends MessageToMessageDecoder<ByteBuf>
     }
 
     public boolean decodePayload(PacketByteBuf b) {
-        PluginMessageEvent event = new PluginMessageEvent(b.readString(), b);
+        PluginMessage message = new PluginMessage();
+        message.read(b.asByteBuf(), ProtocolConstants.Direction.TO_CLIENT, ParadiseClient_Fabric.selectedProtocolVersion.protocolVersion);
+        PluginMessageEvent event = new PluginMessageEvent(message.getTag(), new PacketByteBuf(Unpooled.buffer().writeBytes(message.getData())));
         try {
             ParadiseClient_Fabric.eventManager.fireEvent(event);
         } catch (Exception e) {

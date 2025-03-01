@@ -1,6 +1,5 @@
-package io.github.spigotrce.paradiseclientfabric.client;
+package io.github.spigotrce.paradiseclientfabric;
 
-import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.packet.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;

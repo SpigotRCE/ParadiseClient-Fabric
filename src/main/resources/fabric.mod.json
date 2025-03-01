@@ -12,7 +12,7 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "io.github.spigotrce.paradiseclientfabric.client.ParadiseClient_FabricClient"
+      "io.github.spigotrce.paradiseclientfabric.ParadiseClient_FabricClient"
     ],
     "main": [
       "io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric"

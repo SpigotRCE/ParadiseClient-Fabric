@@ -1,5 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.mixin.inject.network.connection;
 
+import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.netty.NettyConstants;
 import io.github.spigotrce.paradiseclientfabric.netty.ClientPayloadPacketDecoder;
 import io.github.spigotrce.paradiseclientfabric.netty.ClientHandshakeEncoder;
@@ -22,7 +23,7 @@ public class ClientConnection_1Mixin {
             pipeline.addBefore(HandlerNames.ENCODER, NettyConstants.PARADISE_HANDLER_ENCODER_NAME, new ClientHandshakeEncoder());
             pipeline.addBefore(HandlerNames.INBOUND_CONFIG , NettyConstants.PARADISE_HANDLER_DECODER_NAME, new ClientPayloadPacketDecoder());
         } else {
-            System.out.println("Channel not an instance of netty socket");
+            Constants.LOGGER.warn("Channel not an instance of netty socket");
         }
     }
 }

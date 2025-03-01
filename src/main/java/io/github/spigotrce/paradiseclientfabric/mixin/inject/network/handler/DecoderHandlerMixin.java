@@ -1,10 +1,9 @@
-package io.github.spigotrce.paradiseclientfabric.mixin.inject.network.coder;
+package io.github.spigotrce.paradiseclientfabric.mixin.inject.network.handler;
 
 import com.mojang.logging.LogUtils;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.network.ClientConnection;
 import net.minecraft.network.NetworkState;
 import net.minecraft.network.handler.DecoderHandler;
 import net.minecraft.network.handler.NetworkStateTransitionHandler;
@@ -14,9 +13,6 @@ import net.minecraft.network.packet.PacketType;
 import net.minecraft.util.profiling.jfr.FlightProfiler;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 

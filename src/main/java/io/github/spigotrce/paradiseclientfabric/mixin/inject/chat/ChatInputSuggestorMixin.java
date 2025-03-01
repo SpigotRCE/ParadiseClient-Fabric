@@ -47,17 +47,15 @@ public abstract class ChatInputSuggestorMixin {
         if (reader.canRead(length) && reader.getString().startsWith(prefix, reader.getCursor())) {
             reader.setCursor(reader.getCursor() + length);
 
-            if (this.parse == null) {
+            if (this.parse == null)
                 this.parse = ParadiseClient_Fabric.COMMAND_MANAGER.DISPATCHER.parse(reader, MinecraftClient.getInstance().getNetworkHandler().getCommandSource());
-            }
 
             int cursor = textField.getCursor();
             if (cursor >= length && (this.window == null || !this.completingSuggestions)) {
                 this.pendingSuggestions = ParadiseClient_Fabric.COMMAND_MANAGER.DISPATCHER.getCompletionSuggestions(this.parse, cursor);
                 this.pendingSuggestions.thenRun(() -> {
-                    if (this.pendingSuggestions.isDone()) {
+                    if (this.pendingSuggestions.isDone())
                         this.showCommandSuggestions();
-                    }
                 });
             }
 

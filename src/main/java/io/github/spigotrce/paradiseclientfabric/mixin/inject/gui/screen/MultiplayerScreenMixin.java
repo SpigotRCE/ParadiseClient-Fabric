@@ -125,9 +125,9 @@ public abstract class MultiplayerScreenMixin extends Screen {
     public void init() {
         if (this.client == null) return; // To shut Intellij up
 
-        if (this.initialized) {
+        if (this.initialized)
             this.serverListWidget.setDimensionsAndPosition(this.width, this.height - 64 - 32, 0, 32);
-        } else {
+        else {
             this.initialized = true;
             this.serverList = new ServerList(this.client);
             this.serverList.loadFile();

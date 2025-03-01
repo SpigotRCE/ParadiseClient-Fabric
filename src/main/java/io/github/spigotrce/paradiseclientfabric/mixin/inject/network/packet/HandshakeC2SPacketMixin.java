@@ -49,15 +49,13 @@ public class HandshakeC2SPacketMixin {
     private void HandshakeC2SPacket(int i, String string, int j, ConnectionIntent connectionIntent, CallbackInfo ci) {
         BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.BUNGEE_SPOOF_MOD;
 
-        if (bungeeSpoofMod.isHostnameForwarding) {
+        if (bungeeSpoofMod.isHostnameForwarding)
             this.address = bungeeSpoofMod.hostname;
-        }
-        if (bungeeSpoofMod.isIPForwarding && connectionIntent == ConnectionIntent.LOGIN) {
+        if (bungeeSpoofMod.isIPForwarding && connectionIntent == ConnectionIntent.LOGIN)
             this.address += "\000" +
                     bungeeSpoofMod.ip +
                     "\000" + bungeeSpoofMod.uuid +
                     "\000" +
                     "[{\"name\": \"bungeeguard-token\", \"value\": \"" + ParadiseClient_Fabric.BUNGEE_SPOOF_MOD.token + "\"}]";
-        }
     }
 }

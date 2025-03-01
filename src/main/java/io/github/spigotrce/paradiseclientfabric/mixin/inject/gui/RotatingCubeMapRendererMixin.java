@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class RotatingCubeMapRendererMixin {
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(DrawContext context, int width, int height, float alpha, float tickDelta, CallbackInfo ci) {
-        // Appelle le rendu dynamique basé sur le thème défini
+        // Calls dynamic rendering based on the defined theme
         WallPaper.render(context, width, height);
-        ci.cancel(); // Annule le rendu original
+        ci.cancel();
     }
 }

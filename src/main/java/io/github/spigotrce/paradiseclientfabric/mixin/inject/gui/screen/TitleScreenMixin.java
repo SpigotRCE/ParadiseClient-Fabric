@@ -19,10 +19,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -102,19 +99,19 @@ public abstract class TitleScreenMixin extends Screen {
     @Inject(method = "init", at = @At(value = "TAIL"))
     public void init(CallbackInfo ci) {
         if (!FabricLoader.getInstance().isModLoaded("viafabricplus")) {
-            String VIAFABRICPLUS_REMINDER = "We recommend installing ViaFabricPlus";
-            this.addDrawableChild(ButtonWidget.builder(Text.literal(VIAFABRICPLUS_REMINDER),
+
+            String VFP_REMINDER = "We recommend installing ViaFabricPlus";
+            this.addDrawableChild(ButtonWidget.builder(Text.literal(VFP_REMINDER),
                             onPress -> {
                                 Util.getOperatingSystem().open("https://modrinth.com/mod/viafabricplus/versions");
                                 MinecraftClient.getInstance().setScreen(new TitleScreen());
                             })
-                    .width(this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5)
-                    .position((this.width / 2) - ((this.textRenderer.getWidth(VIAFABRICPLUS_REMINDER) + 5) / 2), this.height / 4 + 48 + 72 + 12 + 35 + 33)
+                    .width(this.textRenderer.getWidth(VFP_REMINDER) + 5)
+                    .position((this.width / 2) - ((this.textRenderer.getWidth(VFP_REMINDER) + 5) / 2), this.height / 4 + 48 + 72 + 12 + 35 + 33)
                     .build()
             );
         }
 
-//        Text updateMessage = Helper.parseColoredText("&cYou are using an outdated version of &aParadiseClient");
         Text updateMessage1 = Helper.parseColoredText("&2Current version: &1" + Constants.VERSION + " &2Latetst version: &1" + ParadiseClient_Fabric.MISC_MOD.latestVersion + " &fClick to download");
         if (ParadiseClient_Fabric.MISC_MOD.isClientOutdated) {
             this.addDrawableChild(new PressableTextWidget(this.width - this.textRenderer.getWidth(updateMessage1) - 2, this.height - 20, this.textRenderer.getWidth(updateMessage1), 10, updateMessage1, (button) -> {
@@ -128,16 +125,16 @@ public abstract class TitleScreenMixin extends Screen {
         String currentTheme = WallPaper.getTheme();
         this.addDrawableChild(ButtonWidget.builder(Text.literal("Theme: " + WallPaper.getTheme()),
                         onPress -> {
-                            // Basculer entre les thèmes disponibles
+                            // Switch between available themes
                             String newTheme = switch (WallPaper.getTheme()) {
                                 case "ParadiseHack" -> "ParadiseParticle";
                                 default -> "ParadiseHack";
                             };
 
-                            // Mettre à jour le thème dans ConfigManager et l'interface
+                            // Update theme in ConfigManager and interface
                             WallPaper.setTheme(newTheme);
 
-                            // Mettre à jour le texte du bouton
+                            // Update button text
                             onPress.setMessage(Text.literal("Theme: " + newTheme));
                         })
                 .width(150)
@@ -180,9 +177,8 @@ public abstract class TitleScreenMixin extends Screen {
      */
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (this.backgroundFadeStart == 0L && this.doBackgroundFade) {
+        if (this.backgroundFadeStart == 0L && this.doBackgroundFade)
             this.backgroundFadeStart = Util.getMeasuringTimeMs();
-        }
 
         WallPaper.render(context, this.width, this.height);
 
@@ -205,16 +201,12 @@ public abstract class TitleScreenMixin extends Screen {
         if ((i & -67108864) != 0) {
             super.render(context, mouseX, mouseY, delta);
             this.logoDrawer.draw(context, this.width, f);
-            if (this.splashText != null) {
-                assert this.client != null;
-                if (!(Boolean) this.client.options.getHideSplashTexts().getValue()) {
+            if (this.splashText != null)
+                if (!(Boolean) this.client.options.getHideSplashTexts().getValue())
                     this.splashText.render(context, this.width, this.textRenderer, i);
-                }
-            }
             context.drawTextWithShadow(this.textRenderer, Constants.WINDOW_TITLE, 2, this.height - 10, 16777215 | i);
             if (this.isRealmsNotificationsGuiDisplayed() && f >= 1.0F) {
                 RenderSystem.enableDepthTest();
-                assert this.realmsNotificationGui != null;
                 this.realmsNotificationGui.render(context, mouseX, mouseY, delta);
             }
         }

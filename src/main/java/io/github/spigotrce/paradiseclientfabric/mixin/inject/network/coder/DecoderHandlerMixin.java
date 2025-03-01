@@ -37,6 +37,7 @@ public class DecoderHandlerMixin<T extends PacketListener> {
         this.state = state;
     }
 
+    // TODO: Refactor to OverWrite
     @Inject(method = "decode", at = @At("HEAD"), cancellable = true)
     public void decode(ChannelHandlerContext context, ByteBuf buf, List<Object> objects, CallbackInfo ci) {
         int i = buf.readableBytes();
@@ -44,16 +45,10 @@ public class DecoderHandlerMixin<T extends PacketListener> {
             Packet<? super T> packet = this.state.codec().decode(buf);
             PacketType<? extends Packet<? super T>> packetType = packet.getPacketType();
             FlightProfiler.INSTANCE.onPacketReceived(this.state.id(), packetType, context.channel().remoteAddress(), i);
-            if (buf.readableBytes() > 0) {
-                String var10002 = this.state.id().getId();
-                Helper.printChatMessage("&cError handling packet " + var10002 + "/" + packetType + " (" + packet.getClass().getSimpleName() + ") was larger than I expected, found " + buf.readableBytes() + " bytes extra whilst reading packet " + packetType);
-//                throw new IOException("Packet " + var10002 + "/" + packetType + " (" + packet.getClass().getSimpleName() + ") was larger than I expected, found " + buf.readableBytes() + " bytes extra whilst reading packet " + packetType);
-            } else {
+            if (buf.readableBytes() > 0)
+                Helper.printChatMessage("&cError handling packet " + this.state.id().getId() + "/" + packetType + " (" + packet.getClass().getSimpleName() + ") was larger than I expected, found " + buf.readableBytes() + " bytes extra whilst reading packet " + packetType);
+            else {
                 objects.add(packet);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug(ClientConnection.PACKET_RECEIVED_MARKER, " IN: [{}:{}] {} -> {} bytes", this.state.id().getId(), packetType, packet.getClass().getName(), i);
-                }
-
                 NetworkStateTransitionHandler.onDecoded(context, packet);
             }
         }

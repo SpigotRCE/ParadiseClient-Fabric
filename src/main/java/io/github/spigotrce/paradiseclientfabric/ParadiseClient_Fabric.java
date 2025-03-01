@@ -92,8 +92,7 @@ public class ParadiseClient_Fabric implements ModInitializer, ClientModInitializ
                 if (!Objects.equals(ParadiseClient_Fabric.MISC_MOD.latestVersion, Constants.VERSION))
                     ParadiseClient_Fabric.MISC_MOD.isClientOutdated = true;
 
-                Constants.WINDOW_TITLE = Constants.MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION + " " +
-                        (ParadiseClient_Fabric.MISC_MOD.isClientOutdated ? "Outdated" : "");
+                Constants.reloadTitle();
             } catch (IOException e) {
                 Constants.LOGGER.error("Error getting latest release tag", e);
             }

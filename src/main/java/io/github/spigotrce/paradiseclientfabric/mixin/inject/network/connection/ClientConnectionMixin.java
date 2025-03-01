@@ -49,9 +49,8 @@ public class ClientConnectionMixin {
             Constants.LOGGER.error("Unable to fire PacketIncomingPreEvent", e);
             return;
         }
-        if (event.isCancel()) {
+        if (event.isCancel())
             ci.cancel();
-        }
     }
 
     /**
@@ -96,9 +95,8 @@ public class ClientConnectionMixin {
             Constants.LOGGER.error("Unable to fire PacketOutgoingPreEvent", e);
             return;
         }
-        if (event.isCancel()) {
+        if (event.isCancel())
             ci.cancel();
-        }
     }
 
     /**

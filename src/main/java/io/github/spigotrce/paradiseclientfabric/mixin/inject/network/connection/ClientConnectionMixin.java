@@ -9,7 +9,9 @@ import io.github.spigotrce.paradiseclientfabric.event.packet.outgoing.PacketOutg
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.DisconnectionInfo;
+import net.minecraft.network.NetworkState;
 import net.minecraft.network.PacketCallbacks;
+import net.minecraft.network.listener.PacketListener;
 import net.minecraft.network.packet.Packet;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -133,5 +135,10 @@ public class ClientConnectionMixin {
     @Inject(method = "disconnect(Lnet/minecraft/network/DisconnectionInfo;)V", at = @At("HEAD"))
     public void disconnectHead(DisconnectionInfo disconnectionInfo, CallbackInfo ci) {
         ParadiseClient_Fabric.NETWORK_MOD.isConnected = false;
+    }
+
+    @Inject(method = "transitionInbound", at = @At("HEAD"))
+    public <T extends PacketListener> void transitionInbound(NetworkState<T> state, T packetListener, CallbackInfo ci) {
+        ParadiseClient_Fabric.NETWORK_CONFIGURATION.state = state;
     }
 }

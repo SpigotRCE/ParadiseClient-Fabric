@@ -23,6 +23,6 @@ public class ClientHandshakeEncoder extends MessageToMessageEncoder<ByteBuf> {
     private void decodeHandshake(PacketByteBuf b) {
         Handshake handshake = new Handshake();
         handshake.read(b.asByteBuf());
-        ParadiseClient_Fabric.SELECTED_PROTOCOL_VERSION.protocolVersion = handshake.getProtocolVersion();
+        ParadiseClient_Fabric.NETWORK_CONFIGURATION.protocolVersion = handshake.getProtocolVersion();
     }
 }

@@ -13,10 +13,7 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.PacketType;
 import net.minecraft.util.profiling.jfr.FlightProfiler;
 import org.slf4j.Logger;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -37,9 +34,13 @@ public class DecoderHandlerMixin<T extends PacketListener> {
         this.state = state;
     }
 
-    // TODO: Refactor to OverWrite
-    @Inject(method = "decode", at = @At("HEAD"), cancellable = true)
-    public void decode(ChannelHandlerContext context, ByteBuf buf, List<Object> objects, CallbackInfo ci) {
+
+    /**
+     * @author SpigotRCE
+     * @reason To prevent disconnection issues
+     */
+    @Overwrite()
+    public void decode(ChannelHandlerContext context, ByteBuf buf, List<Object> objects) {
         int i = buf.readableBytes();
         if (i != 0) {
             Packet<? super T> packet = this.state.codec().decode(buf);
@@ -52,6 +53,5 @@ public class DecoderHandlerMixin<T extends PacketListener> {
                 NetworkStateTransitionHandler.onDecoded(context, packet);
             }
         }
-        ci.cancel();
     }
 }

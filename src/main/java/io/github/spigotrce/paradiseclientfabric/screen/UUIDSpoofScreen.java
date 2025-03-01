@@ -27,7 +27,7 @@ import static io.github.spigotrce.paradiseclientfabric.Constants.LOGGER;
  */
 public class UUIDSpoofScreen extends Screen {
 
-    private final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.bungeeSpoofMod;
+    private final BungeeSpoofMod bungeeSpoofMod = ParadiseClient_Fabric.BUNGEE_SPOOF_MOD;
     private final Screen parentScreen;
     private final MinecraftClient minecraftClient = MinecraftClient.getInstance();
 

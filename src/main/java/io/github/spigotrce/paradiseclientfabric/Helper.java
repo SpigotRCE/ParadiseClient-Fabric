@@ -2,10 +2,8 @@ package io.github.spigotrce.paradiseclientfabric;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.client.toast.ToastManager;
@@ -66,7 +64,7 @@ public class Helper {
     }
 
     public static void printChatMessage(Text message) {
-        ParadiseClient_Fabric.miscMod.delayedMessages.add(message);
+        ParadiseClient_Fabric.MISC_MOD.delayedMessages.add(message);
     }
 
     public static String appendPrefix(String text) {

@@ -53,7 +53,7 @@ public class MinecraftClientMixin {
      */
     @Inject(method = "close", at = @At(value = "HEAD"))
     private void closeHead(CallbackInfo ci) {
-        ParadiseClient_Fabric.chatRoomMod.client.shutdown();
+        ParadiseClient_Fabric.CHAT_ROOM_MOD.client.shutdown();
     }
 
     /**
@@ -81,6 +81,6 @@ public class MinecraftClientMixin {
      */
     @Inject(method = "setScreen", at = @At(value = "HEAD"))
     private void setScreenHead(Screen screen, CallbackInfo ci) {
-        ParadiseClient_Fabric.miscMod.currentScreen = screen;
+        ParadiseClient_Fabric.MISC_MOD.currentScreen = screen;
     }
 }

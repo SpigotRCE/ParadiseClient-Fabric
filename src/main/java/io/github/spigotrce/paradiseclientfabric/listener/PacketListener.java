@@ -7,7 +7,6 @@ import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.event.packet.incoming.PacketIncomingPreEvent;
 import io.github.spigotrce.paradiseclientfabric.event.packet.outgoing.PacketOutgoingPostEvent;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.packet.c2s.play.CommandExecutionC2SPacket;
 import net.minecraft.network.packet.s2c.common.ResourcePackSendS2CPacket;
 import net.minecraft.network.packet.s2c.play.CommandSuggestionsS2CPacket;
 
@@ -41,7 +40,7 @@ public class PacketListener implements Listener {
 
     @EventHandler
     public void onOutgoingPacketReceive(PacketOutgoingPostEvent event) {
-        ParadiseClient_Fabric.networkMod.lastOutgoingPacket = event.getPacket();
-        ParadiseClient_Fabric.networkMod.lastOutgoingPacketTime = System.currentTimeMillis();
+        ParadiseClient_Fabric.NETWORK_MOD.lastOutgoingPacket = event.getPacket();
+        ParadiseClient_Fabric.NETWORK_MOD.lastOutgoingPacketTime = System.currentTimeMillis();
     }
 }

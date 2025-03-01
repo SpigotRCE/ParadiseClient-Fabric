@@ -3,7 +3,6 @@ package io.github.spigotrce.paradiseclientfabric;
 import io.github.spigotrce.eventbus.event.EventManager;
 import io.github.spigotrce.paradiseclientfabric.command.CommandManager;
 import io.github.spigotrce.paradiseclientfabric.exploit.ExploitManager;
-import io.github.spigotrce.paradiseclientfabric.hook.viafabric.SelectedProtocolVersion;
 import io.github.spigotrce.paradiseclientfabric.listener.ChannelListener;
 import io.github.spigotrce.paradiseclientfabric.listener.PacketListener;
 import io.github.spigotrce.paradiseclientfabric.mod.*;
@@ -74,9 +73,9 @@ public class ParadiseClient_Fabric implements ModInitializer, ClientModInitializ
      */
     public static NetworkMod NETWORK_MOD;
     /**
-     * The instance of {@link SelectedProtocolVersion}, which stores the protocol version selected in VFP.
+     * The instance of {@link NetworkConfiguration}, which stores the protocol version selected in VFP.
      */
-    public static SelectedProtocolVersion SELECTED_PROTOCOL_VERSION = new SelectedProtocolVersion();
+    public static NetworkConfiguration NETWORK_CONFIGURATION = new NetworkConfiguration();
 
     public static void onClientInitialize() {
         registerChannels();

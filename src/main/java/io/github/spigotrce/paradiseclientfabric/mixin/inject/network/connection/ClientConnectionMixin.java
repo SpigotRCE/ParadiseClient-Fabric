@@ -9,7 +9,9 @@ import io.github.spigotrce.paradiseclientfabric.event.packet.outgoing.PacketOutg
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.DisconnectionInfo;
+import net.minecraft.network.NetworkState;
 import net.minecraft.network.PacketCallbacks;
+import net.minecraft.network.listener.PacketListener;
 import net.minecraft.network.packet.Packet;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,14 +46,13 @@ public class ClientConnectionMixin {
         PacketIncomingPreEvent event = new PacketIncomingPreEvent(packet);
 
         try {
-            ParadiseClient_Fabric.eventManager.fireEvent(event);
+            ParadiseClient_Fabric.EVENT_MANAGER.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Unable to fire PacketIncomingPreEvent", e);
             return;
         }
-        if (event.isCancel()) {
+        if (event.isCancel())
             ci.cancel();
-        }
     }
 
     /**
@@ -69,7 +70,7 @@ public class ClientConnectionMixin {
         PacketIncomingPostEvent event = new PacketIncomingPostEvent(packet);
 
         try {
-            ParadiseClient_Fabric.eventManager.fireEvent(event);
+            ParadiseClient_Fabric.EVENT_MANAGER.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Unable to fire PacketIncomingPostEvent", e);
         }
@@ -91,14 +92,13 @@ public class ClientConnectionMixin {
         PacketOutgoingPreEvent event = new PacketOutgoingPreEvent(packet);
 
         try {
-            ParadiseClient_Fabric.eventManager.fireEvent(event);
+            ParadiseClient_Fabric.EVENT_MANAGER.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Unable to fire PacketOutgoingPreEvent", e);
             return;
         }
-        if (event.isCancel()) {
+        if (event.isCancel())
             ci.cancel();
-        }
     }
 
     /**
@@ -117,7 +117,7 @@ public class ClientConnectionMixin {
         PacketOutgoingPostEvent event = new PacketOutgoingPostEvent(packet);
 
         try {
-            ParadiseClient_Fabric.eventManager.fireEvent(event);
+            ParadiseClient_Fabric.EVENT_MANAGER.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Unable to fire PacketOutgoingPostEvent", e);
         }
@@ -134,6 +134,11 @@ public class ClientConnectionMixin {
      */
     @Inject(method = "disconnect(Lnet/minecraft/network/DisconnectionInfo;)V", at = @At("HEAD"))
     public void disconnectHead(DisconnectionInfo disconnectionInfo, CallbackInfo ci) {
-        ParadiseClient_Fabric.networkMod.isConnected = false;
+        ParadiseClient_Fabric.NETWORK_MOD.isConnected = false;
+    }
+
+    @Inject(method = "transitionInbound", at = @At("HEAD"))
+    public <T extends PacketListener> void transitionInbound(NetworkState<T> state, T packetListener, CallbackInfo ci) {
+        ParadiseClient_Fabric.NETWORK_CONFIGURATION.state = state;
     }
 }

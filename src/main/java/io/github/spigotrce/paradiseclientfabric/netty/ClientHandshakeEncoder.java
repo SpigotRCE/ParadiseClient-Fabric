@@ -3,16 +3,11 @@ package io.github.spigotrce.paradiseclientfabric.netty;
 import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
-import net.md_5.bungee.protocol.Protocol;
 import net.md_5.bungee.protocol.packet.Handshake;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.c2s.handshake.HandshakeC2SPacket;
 
-import java.nio.charset.Charset;
 import java.util.List;
 
 public class ClientHandshakeEncoder extends MessageToMessageEncoder<ByteBuf> {
@@ -28,6 +23,6 @@ public class ClientHandshakeEncoder extends MessageToMessageEncoder<ByteBuf> {
     private void decodeHandshake(PacketByteBuf b) {
         Handshake handshake = new Handshake();
         handshake.read(b.asByteBuf());
-        ParadiseClient_Fabric.selectedProtocolVersion.protocolVersion = handshake.getProtocolVersion();
+        ParadiseClient_Fabric.NETWORK_CONFIGURATION.protocolVersion = handshake.getProtocolVersion();
     }
 }

@@ -17,8 +17,8 @@ public abstract class ClientPlayerEntityMixin {
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void tick(CallbackInfo ci) {
-        ParadiseClient_Fabric.miscMod.delayedMessages.forEach(this::sendMessage);
-        ParadiseClient_Fabric.miscMod.delayedMessages.clear();
+        ParadiseClient_Fabric.MISC_MOD.delayedMessages.forEach(this::sendMessage);
+        ParadiseClient_Fabric.MISC_MOD.delayedMessages.clear();
     }
 
     @Unique

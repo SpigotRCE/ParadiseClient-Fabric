@@ -2,10 +2,8 @@ package io.github.spigotrce.paradiseclientfabric;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.client.toast.ToastManager;
@@ -66,7 +64,7 @@ public class Helper {
     }
 
     public static void printChatMessage(Text message) {
-        ParadiseClient_Fabric.miscMod.delayedMessages.add(message);
+        ParadiseClient_Fabric.MISC_MOD.delayedMessages.add(message);
     }
 
     public static String appendPrefix(String text) {
@@ -243,6 +241,19 @@ public class Helper {
 
     public static PacketByteBuf byteBufToPacketBuf(ByteBuf buf) {
         return new PacketByteBuf(buf);
+    }
+
+    public static String fetchUUID(String username) throws Exception {
+        URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        if (connection.getResponseCode() == 200) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                String response = reader.lines().reduce("", (acc, line) -> acc + line);
+                return JsonParser.parseString(response).getAsJsonObject().get("id").getAsString();
+            }
+        }
+        throw new Exception("Failed to fetch UUID");
     }
 
     @SuppressWarnings("unused")

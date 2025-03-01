@@ -2,6 +2,7 @@ package io.github.spigotrce.paradiseclientfabric.netty;
 
 import io.github.spigotrce.paradiseclientfabric.protocol.ProtocolConstants;
 
+// TODO: Migrate to Bungee protocol
 enum PayloadRegistry {
     MINECRAFT_1_8(ProtocolConstants.MINECRAFT_1_8, 63),
     MINECRAFT_1_8_1(ProtocolConstants.MINECRAFT_1_8_1, 63),

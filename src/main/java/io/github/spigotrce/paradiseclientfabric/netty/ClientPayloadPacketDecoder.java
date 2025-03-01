@@ -18,7 +18,7 @@ public class ClientPayloadPacketDecoder extends MessageToMessageDecoder<ByteBuf>
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         PacketByteBuf b = Helper.byteBufToPacketBuf(ctx.alloc().buffer().writeBytes(in));
-        if (PayloadRegistry.isValidPacket(ParadiseClient_Fabric.selectedProtocolVersion.protocolVersion, b.readVarInt()))
+        if (PayloadRegistry.isValidPacket(ParadiseClient_Fabric.NETWORK_CONFIGURATION.protocolVersion, b.readVarInt()))
             if (decodePayload(b))
                 return;
         out.add(in.resetReaderIndex().retain());
@@ -26,10 +26,10 @@ public class ClientPayloadPacketDecoder extends MessageToMessageDecoder<ByteBuf>
 
     public boolean decodePayload(PacketByteBuf b) {
         PluginMessage message = new PluginMessage();
-        message.read(b.asByteBuf(), ProtocolConstants.Direction.TO_CLIENT, ParadiseClient_Fabric.selectedProtocolVersion.protocolVersion);
+        message.read(b.asByteBuf(), ProtocolConstants.Direction.TO_CLIENT, ParadiseClient_Fabric.NETWORK_CONFIGURATION.protocolVersion);
         PluginMessageEvent event = new PluginMessageEvent(message.getTag(), new PacketByteBuf(Unpooled.buffer().writeBytes(message.getData())));
         try {
-            ParadiseClient_Fabric.eventManager.fireEvent(event);
+            ParadiseClient_Fabric.EVENT_MANAGER.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Unable to fire PluginMessageEvent", e);
         }

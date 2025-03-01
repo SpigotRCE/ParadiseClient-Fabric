@@ -52,7 +52,7 @@ public class SignedVelocityCommand extends Command {
                         .then(argument("command", StringArgumentType.greedyString())
                                 .executes(context -> {
                                     String user = context.getArgument("user", String.class);
-                                    for (PlayerListEntry p : getMinecraftClient().getNetworkHandler().getPlayerList()) {
+                                    for (PlayerListEntry p : getMinecraftClient().getNetworkHandler().getPlayerList())
                                         if (p.getProfile().getName().equalsIgnoreCase(user)) {
                                             Helper.sendPacket(new CustomPayloadC2SPacket(new SignedVelocityPayloadPacket(
                                                     p.getProfile().getId().toString(), context.getArgument("command", String.class)
@@ -60,7 +60,6 @@ public class SignedVelocityCommand extends Command {
                                             Helper.printChatMessage("Payload sent!");
                                             return SINGLE_SUCCESS;
                                         }
-                                    }
 
                                     Helper.printChatMessage("Player not found!");
                                     return SINGLE_SUCCESS;

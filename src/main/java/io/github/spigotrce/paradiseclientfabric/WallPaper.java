@@ -11,9 +11,8 @@ public class WallPaper {
     private static final Particle[] particles = new Particle[100];
 
     static {
-        for (int i = 0; i < particles.length; i++) {
+        for (int i = 0; i < particles.length; i++)
             particles[i] = new Particle();
-        }
     }
 
     public static String getTheme() {
@@ -80,9 +79,8 @@ public class WallPaper {
      * Regenerates all particles to adapt to the new window size.
      */
     private static void regenerateParticles(int width, int height) {
-        for (Particle particle : particles) {
+        for (Particle particle : particles)
             particle.reset(width, height);
-        }
     }
 
     /**

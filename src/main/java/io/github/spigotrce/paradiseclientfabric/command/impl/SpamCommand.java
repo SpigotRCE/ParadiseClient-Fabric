@@ -80,7 +80,6 @@ public class SpamCommand extends Command {
                                                     } catch (InterruptedException e) {
                                                         Constants.LOGGER.error("Unable to sleep for 1000ms", e);
                                                     }
-                                                    assert getMinecraftClient().player != null;
                                                     getMinecraftClient().player.networkHandler.sendChatCommand(command);
                                                 }
                                             });

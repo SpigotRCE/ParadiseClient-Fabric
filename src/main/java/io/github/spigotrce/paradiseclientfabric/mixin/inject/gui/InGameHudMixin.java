@@ -80,7 +80,6 @@ public abstract class InGameHudMixin {
 
         text.add(Constants.WINDOW_TITLE);
         text.add("Server " + ((!Objects.isNull(this.client.getCurrentServerEntry()) && ParadiseClient_Fabric.HUD_MOD.showServerIP) ? this.client.getCurrentServerEntry().address : "Hidden"));
-        assert this.client.player != null;
         text.add("Engine " + (Objects.isNull(this.client.player.networkHandler) ? "" : this.client.player.networkHandler.getBrand()));
         text.add("FPS " + this.client.getCurrentFps());
         text.add("Players: " + this.client.player.networkHandler.getPlayerList().size());
@@ -119,12 +118,10 @@ public abstract class InGameHudMixin {
         ScoreboardObjective scoreboardObjective = scoreboard.getObjectiveForSlot(ScoreboardDisplaySlot.LIST);
         if (!this.client.options.playerListKey.isPressed() || this.client.isInSingleplayer() && Objects.requireNonNull(this.client.player).networkHandler.getListedPlayerListEntries().size() <= 1 && scoreboardObjective == null) {
             this.playerListHud.setVisible(false);
-            if (ParadiseClient_Fabric.HUD_MOD.showPlayerList) {
+            if (ParadiseClient_Fabric.HUD_MOD.showPlayerList)
                 this.renderTAB(context, context.getScaledWindowWidth(), scoreboard, scoreboardObjective);
-            }
-        } else {
+        } else
             this.renderTAB(context, context.getScaledWindowWidth(), scoreboard, scoreboardObjective);
-        }
         ci.cancel();
     }
 

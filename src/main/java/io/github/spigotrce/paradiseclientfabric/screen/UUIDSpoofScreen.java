@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.screen;
 
 import com.google.gson.JsonParser;
+import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.mod.BungeeSpoofMod;
 import net.minecraft.client.MinecraftClient;
@@ -86,7 +87,7 @@ public class UUIDSpoofScreen extends Screen {
         this.bungeeSpoofMod.sessionAccessor.paradiseClient_Fabric$setUsername(this.bungeeSpoofMod.usernameReal);
         if (this.bungeeSpoofMod.isUUIDOnline) {
             try {
-                this.bungeeSpoofMod.uuid = fetchUUID(this.bungeeSpoofMod.usernameFake);
+                this.bungeeSpoofMod.uuid = Helper.fetchUUID(this.bungeeSpoofMod.usernameFake);
                 this.status = "Successfully spoofed premium UUID for \"" + this.bungeeSpoofMod.usernameFake + "\".";
             } catch (Exception e) {
                 this.status = "Error fetching UUID. \"" + this.bungeeSpoofMod.usernameFake + "\" may not be premium.";
@@ -97,19 +98,6 @@ public class UUIDSpoofScreen extends Screen {
             this.bungeeSpoofMod.uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + bungeeSpoofMod.usernameFake).getBytes()).toString().replace("-", "");
             this.status = "Successfully spoofed cracked UUID for \"" + this.bungeeSpoofMod.usernameFake + "\".";
         }
-    }
-
-    private String fetchUUID(String username) throws Exception {
-        URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        if (connection.getResponseCode() == 200) {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                String response = reader.lines().reduce("", (acc, line) -> acc + line);
-                return JsonParser.parseString(response).getAsJsonObject().get("id").getAsString();
-            }
-        }
-        throw new Exception("Failed to fetch UUID");
     }
 
     private void togglePremium() {

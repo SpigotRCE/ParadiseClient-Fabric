@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+// TODO: Migrate to Boosted yaml
 public class ConfigManager {
     private static final File CONFIG_FILE = new File("config/paradiseclient.json");
     private static JsonObject config;
@@ -16,7 +17,7 @@ public class ConfigManager {
         loadConfig();
     }
 
-    // Charger la configuration depuis le fichier
+    // Load configuration from file
     private static void loadConfig() {
         try {
             if (CONFIG_FILE.exists()) {
@@ -32,7 +33,7 @@ public class ConfigManager {
         }
     }
 
-    // Sauvegarder la configuration dans le fichier
+    // Save configuration to file
     private static void saveConfig() {
         try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
             writer.write(config.toString());
@@ -46,8 +47,8 @@ public class ConfigManager {
     }
 
     public static void setTheme(String theme) {
-        config.addProperty("theme", theme); // Mise à jour
-        saveConfig(); // Sauvegarde immédiate
+        config.addProperty("theme", theme); // Update
+        saveConfig(); // Immediate backup
     }
 
 }

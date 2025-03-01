@@ -41,4 +41,9 @@ public class Constants {
      * Not final because MiscMod#isClientOutdated is dynamic
      */
     public static String WINDOW_TITLE = MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION;
+
+    public static void reloadTitle() {
+        WINDOW_TITLE = Constants.MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION + " " +
+                (ParadiseClient_Fabric.MISC_MOD.isClientOutdated ? "Outdated" : "");
+    }
 }

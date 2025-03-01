@@ -243,6 +243,19 @@ public class Helper {
         return new PacketByteBuf(buf);
     }
 
+    public static String fetchUUID(String username) throws Exception {
+        URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + username);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        if (connection.getResponseCode() == 200) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                String response = reader.lines().reduce("", (acc, line) -> acc + line);
+                return JsonParser.parseString(response).getAsJsonObject().get("id").getAsString();
+            }
+        }
+        throw new Exception("Failed to fetch UUID");
+    }
+
     @SuppressWarnings("unused")
     public static class ByteArrayOutput {
         private final ByteArrayDataOutput out;

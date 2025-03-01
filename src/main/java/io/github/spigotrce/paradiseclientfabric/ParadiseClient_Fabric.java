@@ -7,9 +7,11 @@ import io.github.spigotrce.paradiseclientfabric.hook.viafabric.SelectedProtocolV
 import io.github.spigotrce.paradiseclientfabric.listener.ChannelListener;
 import io.github.spigotrce.paradiseclientfabric.listener.PacketListener;
 import io.github.spigotrce.paradiseclientfabric.mod.*;
+import io.github.spigotrce.paradiseclientfabric.packet.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.option.KeyBinding;
@@ -77,6 +79,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
     public static SelectedProtocolVersion selectedProtocolVersion = new SelectedProtocolVersion();
 
     public static void onClientInitialize() {
+        registerChannels();
         initializeMods();
         initializeManagers();
         initializeListeners();
@@ -95,6 +98,15 @@ public class ParadiseClient_Fabric implements ModInitializer {
                 Constants.LOGGER.error("Error getting latest release tag", e);
             }
         }).start();
+    }
+
+    public static void registerChannels() {
+        PayloadTypeRegistry.playC2S().register(VelocityReportPayloadPacket.ID, VelocityReportPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(PurpurExploitPayloadPacket.ID, PurpurExploitPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(AuthMeVelocityPayloadPacket.ID, AuthMeVelocityPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(ChatSentryPayloadPacket.ID, ChatSentryPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(ECBPayloadPacket.ID, ECBPayloadPacket.CODEC);
+        PayloadTypeRegistry.playC2S().register(SignedVelocityPayloadPacket.ID, SignedVelocityPayloadPacket.CODEC);
     }
 
     public static void initializeMods() {

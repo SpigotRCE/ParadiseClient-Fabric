@@ -107,14 +107,6 @@ jar {
 shadowJar {
     configurations = [project.configurations.shadow]
     archiveClassifier.set("dev")
-
-    dependencies {
-        include(dependency('net.md_5.bungee:BungeeCord'))
-    }
-
-    // Exclude everything except the protocol package
-    exclude 'net/md_5/bungee/**'
-    include 'net/md_5/bungee/protocol/**'
 }
 
 remapJar {

@@ -115,10 +115,10 @@ public abstract class TitleScreenMixin extends Screen {
         }
 
 //        Text updateMessage = Helper.parseColoredText("&cYou are using an outdated version of &aParadiseClient");
-        Text updateMessage1 = Helper.parseColoredText("&2Current version: &1" + Constants.VERSION + " &2Latetst version: &1" + ParadiseClient_Fabric.miscMod.latestVersion + " &fClick to download");
-        if (ParadiseClient_Fabric.miscMod.isClientOutdated) {
+        Text updateMessage1 = Helper.parseColoredText("&2Current version: &1" + Constants.VERSION + " &2Latetst version: &1" + ParadiseClient_Fabric.MISC_MOD.latestVersion + " &fClick to download");
+        if (ParadiseClient_Fabric.MISC_MOD.isClientOutdated) {
             this.addDrawableChild(new PressableTextWidget(this.width - this.textRenderer.getWidth(updateMessage1) - 2, this.height - 20, this.textRenderer.getWidth(updateMessage1), 10, updateMessage1, (button) -> {
-                Util.getOperatingSystem().open("https://github.com/SpigotRCE/ParadiseClient-Fabric/releases/tag/" + ParadiseClient_Fabric.miscMod.latestVersion);
+                Util.getOperatingSystem().open("https://github.com/SpigotRCE/ParadiseClient-Fabric/releases/tag/" + ParadiseClient_Fabric.MISC_MOD.latestVersion);
                 MinecraftClient.getInstance().setScreen(new TitleScreen());
             }, this.textRenderer));
         }

@@ -35,48 +35,47 @@ public class ParadiseClient_Fabric implements ModInitializer {
     /**
      * The Minecraft client instance.
      */
-    public static final MinecraftClient minecraftClient = MinecraftClient.getInstance();
+    public static final MinecraftClient MINECRAFT_CLIENT = MinecraftClient.getInstance();
     /**
      * The instance of {@link EventManager}, which handles the events being fired and listened.
      */
-    public static EventManager eventManager;
+    public static EventManager EVENT_MANAGER;
     /**
      * The instance of {@link BungeeSpoofMod}, which handles BungeeCord spoofing functionality.
      */
-    public static BungeeSpoofMod bungeeSpoofMod;
+    public static BungeeSpoofMod BUNGEE_SPOOF_MOD;
     /**
      * The instance of {@link MiscMod}, which handles miscellaneous functionalities.
      */
-    public static MiscMod miscMod;
+    public static MiscMod MISC_MOD;
     /**
      * The instance of {@link HudMod}, which handles HUD (Heads-Up Display) functionalities.
      */
-    public static HudMod hudMod;
+    public static HudMod HUD_MOD;
     /**
      * The instance of {@link ChatRoomMod}, which handles chat room functionalities.
      */
-    public static ChatRoomMod chatRoomMod;
+    public static ChatRoomMod CHAT_ROOM_MOD;
     /**
      * The instance of {@link ExploitMod}, which handles various exploit-related functionalities.
      */
-    public static ExploitMod exploitMod;
+    public static ExploitMod EXPLOIT_MOD;
     /**
      * The instance of {@link CommandManager}, which manages commands in the mod.
      */
-    public static CommandManager commandManager;
+    public static CommandManager COMMAND_MANAGER;
     /**
      * The instance of {@link ExploitManager}, which manages different types of exploits.
      */
-    public static ExploitManager exploitManager;
+    public static ExploitManager EXPLOIT_MANAGER;
     /**
      * The instance of {@link NetworkMod}, which manages network-related functionalities.
      */
-    public static NetworkMod networkMod;
-
+    public static NetworkMod NETWORK_MOD;
     /**
      * The instance of {@link SelectedProtocolVersion}, which stores the protocol version selected in VFP.
      */
-    public static SelectedProtocolVersion selectedProtocolVersion = new SelectedProtocolVersion();
+    public static SelectedProtocolVersion SELECTED_PROTOCOL_VERSION = new SelectedProtocolVersion();
 
     public static void onClientInitialize() {
         registerChannels();
@@ -88,12 +87,12 @@ public class ParadiseClient_Fabric implements ModInitializer {
             try {
                 String latestVersion = Helper.getLatestReleaseTag();
                 if (latestVersion == null) return;
-                ParadiseClient_Fabric.miscMod.latestVersion = latestVersion;
-                if (!Objects.equals(ParadiseClient_Fabric.miscMod.latestVersion, Constants.VERSION))
-                    ParadiseClient_Fabric.miscMod.isClientOutdated = true;
+                ParadiseClient_Fabric.MISC_MOD.latestVersion = latestVersion;
+                if (!Objects.equals(ParadiseClient_Fabric.MISC_MOD.latestVersion, Constants.VERSION))
+                    ParadiseClient_Fabric.MISC_MOD.isClientOutdated = true;
 
                 Constants.WINDOW_TITLE = Constants.MOD_NAME + " [" + Constants.EDITION + "] " + Constants.VERSION + " " +
-                        (ParadiseClient_Fabric.miscMod.isClientOutdated ? "Outdated" : "");
+                        (ParadiseClient_Fabric.MISC_MOD.isClientOutdated ? "Outdated" : "");
             } catch (IOException e) {
                 Constants.LOGGER.error("Error getting latest release tag", e);
             }
@@ -110,26 +109,26 @@ public class ParadiseClient_Fabric implements ModInitializer {
     }
 
     public static void initializeMods() {
-        bungeeSpoofMod = new BungeeSpoofMod();
-        miscMod = new MiscMod();
-        hudMod = new HudMod();
-        chatRoomMod = new ChatRoomMod();
-        exploitMod = new ExploitMod();
-        networkMod = new NetworkMod();
+        BUNGEE_SPOOF_MOD = new BungeeSpoofMod();
+        MISC_MOD = new MiscMod();
+        HUD_MOD = new HudMod();
+        CHAT_ROOM_MOD = new ChatRoomMod();
+        EXPLOIT_MOD = new ExploitMod();
+        NETWORK_MOD = new NetworkMod();
     }
 
     public static void initializeManagers() {
-        eventManager = new EventManager();
-        exploitManager = new ExploitManager(ParadiseClient_Fabric.minecraftClient);
-        ParadiseClient_Fabric.exploitManager.init();
-        commandManager = new CommandManager(ParadiseClient_Fabric.minecraftClient);
-        ParadiseClient_Fabric.commandManager.init();
+        EVENT_MANAGER = new EventManager();
+        EXPLOIT_MANAGER = new ExploitManager(ParadiseClient_Fabric.MINECRAFT_CLIENT);
+        ParadiseClient_Fabric.EXPLOIT_MANAGER.init();
+        COMMAND_MANAGER = new CommandManager(ParadiseClient_Fabric.MINECRAFT_CLIENT);
+        ParadiseClient_Fabric.COMMAND_MANAGER.init();
     }
 
     public static void initializeListeners() {
-        ParadiseClient_Fabric.eventManager.registerListener(new PacketListener());
-        ParadiseClient_Fabric.eventManager.registerListener(ParadiseClient_Fabric.commandManager);
-        ParadiseClient_Fabric.eventManager.registerListener(new ChannelListener());
+        ParadiseClient_Fabric.EVENT_MANAGER.registerListener(new PacketListener());
+        ParadiseClient_Fabric.EVENT_MANAGER.registerListener(ParadiseClient_Fabric.COMMAND_MANAGER);
+        ParadiseClient_Fabric.EVENT_MANAGER.registerListener(new ChannelListener());
     }
 
     @Override
@@ -144,7 +143,7 @@ public class ParadiseClient_Fabric implements ModInitializer {
         );
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (paradiseCommandOpener.wasPressed())
-                MinecraftClient.getInstance().setScreen(new ChatScreen(ParadiseClient_Fabric.commandManager.prefix));
+                MinecraftClient.getInstance().setScreen(new ChatScreen(ParadiseClient_Fabric.COMMAND_MANAGER.prefix));
         });
     }
 }

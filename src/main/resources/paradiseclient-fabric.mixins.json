@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "api.PayloadTypeRegistryImplMixin",
-    "network.coder.DecoderHandlerMixin",
+    "network.handler.DecoderHandlerMixin",
     "network.connection.ClientConnection_1Mixin"
   ],
   "client": [

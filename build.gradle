@@ -60,6 +60,7 @@ dependencies {
     implementation 'org.apiguardian:apiguardian-api:1.1.2'
 //    implementation 'com.github.JnCrMx:discord-game-sdk4j:v0.5.5'
     shadow(implementation 'io.github.spigotrce.eventbus:EventBus:1.0-SNAPSHOT')
+    shadow(implementation 'net.md_5.bungee:BungeeCord')
 
 //    include("org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT") {
 //        exclude group: "io.netty"
@@ -103,10 +104,17 @@ jar {
     }
     archiveClassifier.set("dev")
 }
-
 shadowJar {
     configurations = [project.configurations.shadow]
     archiveClassifier.set("dev")
+
+    dependencies {
+        include(dependency('net.md_5.bungee:BungeeCord'))
+    }
+
+    // Exclude everything except the protocol package
+    exclude 'net/md_5/bungee/**'
+    include 'net/md_5/bungee/protocol/**'
 }
 
 remapJar {

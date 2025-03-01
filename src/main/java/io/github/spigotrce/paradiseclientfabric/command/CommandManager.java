@@ -92,10 +92,9 @@ public class CommandManager implements Listener {
      * @return The command with the specified alias, or null if not found.
      */
     public Command getCommand(String alias) {
-        for (Command command : commands) {
+        for (Command command : commands)
             if (command.getName().equals(alias))
                 return command;
-        }
         return null;
     }
 

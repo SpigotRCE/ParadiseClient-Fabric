@@ -22,8 +22,7 @@ public class ClientConnection_1Mixin {
         if (pipeline.channel() instanceof SocketChannel) {
             pipeline.addBefore(HandlerNames.ENCODER, NettyConstants.PARADISE_HANDLER_ENCODER_NAME, new ClientHandshakeEncoder());
             pipeline.addBefore(HandlerNames.INBOUND_CONFIG , NettyConstants.PARADISE_HANDLER_DECODER_NAME, new ClientPayloadPacketDecoder());
-        } else {
+        } else
             Constants.LOGGER.warn("Channel not an instance of netty socket");
-        }
     }
 }

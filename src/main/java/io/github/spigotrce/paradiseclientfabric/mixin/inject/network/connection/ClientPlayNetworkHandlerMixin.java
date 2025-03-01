@@ -52,10 +52,10 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
      */
     @Inject(method = "onGameJoin", at = @At("TAIL"))
     private void onGameJoin(GameJoinS2CPacket packet, CallbackInfo info) {
-        ParadiseClient_Fabric.networkMod.isConnected = true;
-        ParadiseClient_Fabric.networkMod.serverIP = ((ClientPlayNetworkHandler) (Object) this).getConnection().getAddress().toString().split("/")[0];
-        if (ParadiseClient_Fabric.miscMod.isClientOutdated)
-            Helper.printChatMessage("&4Client is outdated! Latest version: &2" + ParadiseClient_Fabric.miscMod.latestVersion);
+        ParadiseClient_Fabric.NETWORK_MOD.isConnected = true;
+        ParadiseClient_Fabric.NETWORK_MOD.serverIP = ((ClientPlayNetworkHandler) (Object) this).getConnection().getAddress().toString().split("/")[0];
+        if (ParadiseClient_Fabric.MISC_MOD.isClientOutdated)
+            Helper.printChatMessage("&4Client is outdated! Latest version: &2" + ParadiseClient_Fabric.MISC_MOD.latestVersion);
     }
 
     /**
@@ -68,7 +68,7 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
     private void onSendChatMessageH(String content, CallbackInfo ci) {
         ChatPreEvent event = new ChatPreEvent(content);
         try {
-            ParadiseClient_Fabric.eventManager.fireEvent(event);
+            ParadiseClient_Fabric.EVENT_MANAGER.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Failed to fire ChatPreEvent", e);
         }
@@ -85,7 +85,7 @@ public abstract class ClientPlayNetworkHandlerMixin implements ClientPlayNetwork
     private void onSendChatMessageT(String content, CallbackInfo ci) {
         ChatPostEvent event = new ChatPostEvent(content);
         try {
-            ParadiseClient_Fabric.eventManager.fireEvent(event);
+            ParadiseClient_Fabric.EVENT_MANAGER.fireEvent(event);
         } catch (Exception e) {
             Constants.LOGGER.error("Failed to fire ChatPreEvent", e);
         }

@@ -8,6 +8,7 @@ import io.github.spigotrce.paradiseclientfabric.listener.ChannelListener;
 import io.github.spigotrce.paradiseclientfabric.listener.PacketListener;
 import io.github.spigotrce.paradiseclientfabric.mod.*;
 import io.github.spigotrce.paradiseclientfabric.packet.*;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -31,7 +32,7 @@ import java.util.Objects;
  * @author SpigotRCE
  * @since 1.0
  */
-public class ParadiseClient_Fabric implements ModInitializer {
+public class ParadiseClient_Fabric implements ModInitializer, ClientModInitializer {
     /**
      * The Minecraft client instance.
      */
@@ -145,5 +146,10 @@ public class ParadiseClient_Fabric implements ModInitializer {
             while (paradiseCommandOpener.wasPressed())
                 MinecraftClient.getInstance().setScreen(new ChatScreen(ParadiseClient_Fabric.COMMAND_MANAGER.prefix));
         });
+    }
+
+    @Override
+    public void onInitializeClient() {
+        onClientInitialize();
     }
 }

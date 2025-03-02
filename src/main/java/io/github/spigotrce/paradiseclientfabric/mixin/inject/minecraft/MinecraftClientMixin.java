@@ -53,7 +53,8 @@ public class MinecraftClientMixin {
      */
     @Inject(method = "close", at = @At(value = "HEAD"))
     private void closeHead(CallbackInfo ci) {
-        ParadiseClient_Fabric.CHAT_ROOM_MOD.client.shutdown();
+        // Disabled as we are currently not using chatroom
+//        ParadiseClient_Fabric.CHAT_ROOM_MOD.client.shutdown();
     }
 
     /**

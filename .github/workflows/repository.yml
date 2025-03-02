@@ -54,7 +54,4 @@ jobs:
         run: |
           curl -u ${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }} \
                --upload-file ${{ env.JAR_FILE }} \
-               https://repo.nexus-craft.org/ParadiseClient/${{ env.JAR_NAME }}
-        env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+               https://repo.paradise-client.xyz/public/${{ env.JAR_NAME }}

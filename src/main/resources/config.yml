@@ -1,0 +1,11 @@
+# Do not edit
+"file-version": 1
+
+# Token of your discord bot
+"discord_token": "token to discord bot"
+
+# Discord server id
+"discord_server_id": 0000000
+
+# Should auto verify new users
+"auto_verify": false

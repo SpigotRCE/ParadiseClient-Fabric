@@ -12,6 +12,8 @@ base {
 }
 
 repositories {
+    mavenCentral()
+
     maven {
         url 'https://jitpack.io'
 
@@ -61,6 +63,7 @@ dependencies {
 //    implementation 'com.github.JnCrMx:discord-game-sdk4j:v0.5.5'
     shadow(implementation 'io.github.spigotrce.eventbus:EventBus:1.0-SNAPSHOT')
     shadow(implementation 'net.md_5.bungee:BungeeCord')
+    shadow(implementation("net.dv8tion:JDA:${jda_version}"))
 
 //    include("org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT") {
 //        exclude group: "io.netty"

@@ -22,6 +22,5 @@ public class Config extends ConfigProvider {
 
     @Override
     public void onReload() {
-        System.out.println("[Error] It is not supposed to reload the config on it's own! ");
     }
 }

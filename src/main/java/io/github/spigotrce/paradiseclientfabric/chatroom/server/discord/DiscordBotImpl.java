@@ -1,5 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server.discord;
 
+import io.github.spigotrce.paradiseclientfabric.chatroom.Logging;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
 import io.github.spigotrce.paradiseclientfabric.chatroom.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Main;
@@ -24,18 +25,18 @@ import static net.dv8tion.jda.api.interactions.commands.OptionType.*;
 
 public class DiscordBotImpl extends ListenerAdapter {
     public static void startDiscordBot() {
-        System.out.println("[INFO] Starting Discord Bot...");
+        Logging.info("Starting Discord Bot...");
 
         JDA jda = JDABuilder.createLight(Main.CONFIG.getDiscordToken(), EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
                 .addEventListeners(new DiscordBotImpl())
                 .build();
 
-        System.out.println("[INFO] Discord Bot started");
-        System.out.println("[INFO] Logged in as: " + jda.getSelfUser().getId() + ":" + jda.getSelfUser().getName());
+        Logging.info("Discord Bot started");
+        Logging.info("Logged in as: " + jda.getSelfUser().getId() + ":" + jda.getSelfUser().getName());
 
         CommandListUpdateAction commands = jda.updateCommands();
 
-        System.out.println("[INFO] Registering commands...");
+        Logging.info("Registering commands...");
 
         commands.addCommands(
                 Commands.slash("paradise", "Ban a user from this server. Requires permission to ban users.")
@@ -64,7 +65,7 @@ public class DiscordBotImpl extends ListenerAdapter {
                 String userName = event.getOption("user_name").getAsString();
                 String email = event.getOption("email").getAsString();
 
-                System.out.println("[INFO] User:" + member.getUser().getName() + ":" + member.getUser().getName() + " executed discord command /paradise " + userName + " " + email);
+                Logging.info("User:" + member.getUser().getName() + ":" + member.getUser().getName() + " executed discord command /paradise " + userName + " " + email);
 
                 try {
                     validateUsername(userName);
@@ -88,13 +89,7 @@ public class DiscordBotImpl extends ListenerAdapter {
                 try {
                     verified = !Main.registerNewUser(userModel);
                 } catch (SQLException exception) {
-                    System.out.println("[ERROR] Unable to register user: " + userModel.username());
-                    new ArrayList<>(
-                            Arrays.asList(exception.getStackTrace())
-                    ).forEach(
-                            traceLine -> System.out.println("[ERROR] " + traceLine)
-                    );
-
+                    Logging.error("Unable to register user: " + userModel.username(), exception);
                     event.reply("Failed to register user. Please try again later.").setEphemeral(true).queue();
                     return;
                 } catch (UserAlreadyRegisteredException e) {

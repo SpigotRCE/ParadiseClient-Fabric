@@ -1,5 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server;
 
+import io.github.spigotrce.paradiseclientfabric.chatroom.Logging;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
 import io.github.spigotrce.paradiseclientfabric.chatroom.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.config.Config;
@@ -8,8 +9,6 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.server.discord.DiscordB
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Main {
     public static Config CONFIG = new Config(new File(System.getProperty("user.dir")).toPath());
@@ -18,12 +17,7 @@ public class Main {
         try {
             CONFIG.load();
         } catch (IOException exception) {
-            System.out.println("[ERROR] Unable to load configuration: " + exception.getMessage());
-            new ArrayList<>(
-                    Arrays.asList(exception.getStackTrace())
-            ).forEach(
-                    traceLine -> System.out.println("[ERROR] " + traceLine)
-            );
+            Logging.error("Unable to load configuration", exception);
         }
         DiscordBotImpl.startDiscordBot();
     }

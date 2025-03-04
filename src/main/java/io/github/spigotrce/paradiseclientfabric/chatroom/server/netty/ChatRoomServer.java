@@ -14,8 +14,6 @@ import io.netty.handler.ssl.SslContextBuilder;
 public class ChatRoomServer {
     public static void startServer(ServerModel serverModel) throws Exception {
         Logging.info("Starting chatroom server on port: " + serverModel.port() + ", use_haproxy: " + serverModel.useHAProxy());
-        SslContext sslCtx = SslContextBuilder.forServer(serverModel.ssc().certificate(), serverModel.ssc().privateKey())
-                .build();
 
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -24,7 +22,7 @@ public class ChatRoomServer {
             serverBootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new ChatRoomServerInitializer(sslCtx));
+                    .childHandler(new ChatRoomServerInitializer());
 
             serverBootstrap.bind(serverModel.port()).sync().channel().closeFuture().sync();
         } finally {

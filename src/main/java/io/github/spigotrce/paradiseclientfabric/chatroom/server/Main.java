@@ -1,6 +1,8 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.config.Config;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.discord.DiscordBotImpl;
@@ -21,6 +23,7 @@ public class Main {
             Logging.error("Unable to load configuration", exception);
         }
         DiscordBotImpl.startDiscordBot();
+        PacketRegistry.registerPackets();
         try {
             ChatRoomServer.startServer(CONFIG.getServer());
         } catch (Exception exception) {

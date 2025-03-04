@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import java.nio.charset.Charset;
 
 public class HandshakePacket extends Packet {
-    private String token;
+    private String token = "";
 
     public HandshakePacket() {
     }
@@ -17,13 +17,15 @@ public class HandshakePacket extends Packet {
     }
 
     @Override
-    public void encode(ByteBuf buffer) {
+    public Packet encode(ByteBuf buffer) {
         buffer.writeCharSequence(token, Charset.defaultCharset());
+        return this;
     }
 
     @Override
-    public void decode(ByteBuf buffer) {
+    public Packet decode(ByteBuf buffer) {
         token = buffer.readCharSequence(buffer.readableBytes(), Charset.defaultCharset()).toString();
+        return this;
     }
 
     @Override
@@ -35,7 +37,8 @@ public class HandshakePacket extends Packet {
         return token;
     }
 
-    public void setToken(String token) {
+    public Packet setToken(String token) {
         this.token = token;
+        return this;
     }
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+// TODO: Make packet map convertible so that a packet lambda is linked to an int for id
 public class PacketRegistry {
     private static final Map<Integer, Packet> packetMap = new HashMap<>();
 

@@ -16,7 +16,7 @@ public class Config extends ConfigProvider {
     public DiscordModel getDiscord() {
         return new DiscordModel(
                 getFileConfig().getString("discord_token"),
-                getFileConfig().getInt("discord_server_id"),
+                getFileConfig().getLong("discord_server_id"),
                 getFileConfig().getBoolean("auto_verify")
         );
     }

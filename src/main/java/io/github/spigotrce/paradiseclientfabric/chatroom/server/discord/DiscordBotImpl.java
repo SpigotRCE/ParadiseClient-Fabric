@@ -55,7 +55,7 @@ public class DiscordBotImpl extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (event.getGuild() == null) return;
-        if (Integer.parseInt(event.getGuild().getId()) != Main.CONFIG.getDiscord().serverID())
+        if (event.getGuild().getIdLong() != Main.CONFIG.getDiscord().serverID())
             return;
         switch (event.getName()) {
             case "paradise":

@@ -19,3 +19,10 @@
 # Use HAProxy
 # Do not touch until you know what you are doing
 "use_haproxy": false
+
+# Database
+database_hostname: "localhost:3306"
+database_username: "paradise_user"
+database_password: ""
+database_name: "paradise_chatserver"
+database-connection-parameters: "?autoReconnect=true&initialTimeout=1&useSSL=false"

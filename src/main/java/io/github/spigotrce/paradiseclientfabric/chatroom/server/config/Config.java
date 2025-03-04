@@ -20,6 +20,18 @@ public class Config extends ConfigProvider {
         return getFileConfig().getBoolean("auto_verify");
     }
 
+    public String getServerIP() {
+        return getFileConfig().getString("server_ip");
+    }
+
+    public int getServerPort() {
+        return getFileConfig().getInt("server_port");
+    }
+
+    public String isHAProxy() {
+        return getFileConfig().getString("use_haproxy");
+    }
+
     @Override
     public void onReload() {
     }

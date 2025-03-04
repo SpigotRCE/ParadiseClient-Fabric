@@ -9,3 +9,13 @@
 
 # Should auto verify new users
 "auto_verify": false
+
+# Server IP
+"server_ip": "0.0.0.0"
+
+# Server port
+"server_port": 45000
+
+# Use HAProxy
+# Do not touch until you know what you are doing
+"use_haproxy": false

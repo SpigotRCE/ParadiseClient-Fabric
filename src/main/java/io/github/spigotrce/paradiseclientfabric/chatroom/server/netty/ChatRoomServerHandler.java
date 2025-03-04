@@ -9,6 +9,7 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.Hand
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeResponsePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Logging;
+import io.github.spigotrce.paradiseclientfabric.chatroom.server.Main;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -37,14 +38,28 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
                 if (isAuthenticated)
                     throw new IllegalStateException("User already authenticated");
 
-                UUID uuid = UUID.fromString(Arrays.asList(handshakePacket.getToken().split("\\.")).get(0));
-                String auth = Arrays.asList(handshakePacket.getToken().split("\\.")).get(1);
-                // TODO: do authentication
+                UUID uuid = UUID.fromString(Arrays.asList(handshakePacket.getToken().split("\\.")).getFirst());
 
-                isAuthenticated = true;
+                isAuthenticated = Main.authenticate(handshakePacket.getToken());
+                if (!isAuthenticated) {
+                    PacketRegistry.sendPacket(
+                            new HandshakeResponsePacket()
+                                    .setSuccess(false)
+                                    .setUsername("Unauthenticated")
+                            , ctx.channel()
+                    );
+                    ctx.close();
+                    return;
+                }
 
-                PacketRegistry.sendPacket(new HandshakeResponsePacket(), ctx.channel());
-                userModel = new UserModel(0, UUID.randomUUID(), Date.valueOf(LocalDate.now()), "username", "email", handshakePacket.getToken(), false);
+
+                userModel = Main.DATABASE.getUser(uuid);
+                PacketRegistry.sendPacket(
+                        new HandshakeResponsePacket()
+                                .setSuccess(true)
+                                .setUsername(userModel.username())
+                        , ctx.channel()
+                );
                 Logging.info("Connection: " + userModel.username() + ctx.channel().remoteAddress());
 
                 channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket().setMessage(userModel.username() + " joined the chat"), channel));

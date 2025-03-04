@@ -25,14 +25,14 @@ public class HandshakeResponsePacket extends Packet {
     }
 
     @Override
-    public Packet encode(ByteBuf buffer) {
+    public HandshakeResponsePacket encode(ByteBuf buffer) {
         buffer.writeByte(success? 1 : 0);
         buffer.writeCharSequence(username, Charset.defaultCharset());
         return this;
     }
 
     @Override
-    public Packet decode(ByteBuf buffer) {
+    public HandshakeResponsePacket decode(ByteBuf buffer) {
         success = buffer.readByte() == 1;
         username = buffer.readCharSequence(buffer.readableBytes(), Charset.defaultCharset()).toString();
         return this;
@@ -47,7 +47,7 @@ public class HandshakeResponsePacket extends Packet {
         return username;
     }
 
-    public Packet setUsername(String username) {
+    public HandshakeResponsePacket setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -56,7 +56,7 @@ public class HandshakeResponsePacket extends Packet {
         return success;
     }
 
-    public Packet setSuccess(boolean success) {
+    public HandshakeResponsePacket setSuccess(boolean success) {
         this.success = success;
         return this;
     }

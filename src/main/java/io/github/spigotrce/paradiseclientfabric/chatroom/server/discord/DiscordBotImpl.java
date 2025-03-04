@@ -27,7 +27,7 @@ public class DiscordBotImpl extends ListenerAdapter {
     public static void startDiscordBot() {
         Logging.info("Starting Discord Bot...");
 
-        JDA jda = JDABuilder.createLight(Main.CONFIG.getDiscordToken(), EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
+        JDA jda = JDABuilder.createLight(Main.CONFIG.getDiscord().token(), EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
                 .addEventListeners(new DiscordBotImpl())
                 .build();
 
@@ -55,7 +55,7 @@ public class DiscordBotImpl extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (event.getGuild() == null) return;
-        if (Integer.parseInt(event.getGuild().getId()) != Main.CONFIG.getDiscordServer())
+        if (Integer.parseInt(event.getGuild().getId()) != Main.CONFIG.getDiscord().serverID())
             return;
         switch (event.getName()) {
             case "paradise":

@@ -13,7 +13,7 @@ public class MessagePacket extends Packet {
 
     @Override
     public int getID() {
-        return 2;
+        return 3;
     }
 
     @Override

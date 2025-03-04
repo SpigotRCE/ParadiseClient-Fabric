@@ -7,16 +7,22 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.server.database.MySQLDa
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.config.Config;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.discord.DiscordBotImpl;
+import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyVerifiedException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.netty.ChatRoomServer;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class Main {
     public static Config CONFIG = new Config(new File(System.getProperty("user.dir")).toPath());
     public static MySQLDatabase DATABASE;
+    public static String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     public static void main(String[] args) {
         try {
@@ -45,9 +51,35 @@ public class Main {
     }
 
     public static boolean registerNewUser(UserModel user) throws SQLException, UserAlreadyRegisteredException {
-        // TODO: register a new user in a database
+        DATABASE.insertUser(user);
+        return CONFIG.getDiscord().autoVerify();
+    }
 
-        // true if the user needs verification, false otherwise
-        return true;
+    public static void verifyUser(UUID uuid) throws SQLException, UserAlreadyVerifiedException {
+        UserModel model = DATABASE.getUser(uuid);
+        if (model.verified()) throw new UserAlreadyVerifiedException(uuid);
+        DATABASE.updateUser(DATABASE.getUser(uuid).withVerified(true));
+    }
+
+    public static boolean authenticate(String token) throws SQLException {
+        List<String> split = Arrays.asList(token.split("\\."));
+        UUID uuid = UUID.fromString(split.get(0));
+        String key = split.get(1);
+        UserModel model = DATABASE.getUser(uuid);
+        return model.token().equals(token);
+    }
+
+    public static UserModel generateToken(UserModel model) throws SQLException {
+        UserModel newModel = model.withToken(model.uuid() + "." + generateNextString(32));
+        DATABASE.updateUser(newModel);
+        return newModel;
+    }
+
+    private static String generateNextString(int length) {
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++)
+            sb.append(CHARS.charAt(random.nextInt(CHARS.length())));
+        return sb.toString();
     }
 }

@@ -43,7 +43,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
                 isAuthenticated = true;
 
                 PacketRegistry.sendPacket(new HandshakeSuccessPacket(), ctx.channel());
-                userModel = new UserModel(0, UUID.randomUUID(), Date.valueOf(LocalDate.now()), "username", "email", handshakePacket.getToken());
+                userModel = new UserModel(0, UUID.randomUUID(), Date.valueOf(LocalDate.now()), "username", "email", handshakePacket.getToken(), false);
                 Logging.info("Connection: " + userModel.username() + ctx.channel().remoteAddress());
 
                 channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket().setMessage(userModel.username() + " joined the chat"), channel));

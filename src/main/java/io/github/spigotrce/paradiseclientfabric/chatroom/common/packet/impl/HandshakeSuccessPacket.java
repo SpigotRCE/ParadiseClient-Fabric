@@ -3,8 +3,6 @@ package io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
 import io.netty.buffer.ByteBuf;
 
-import java.nio.charset.Charset;
-
 public class HandshakeSuccessPacket extends Packet {
     public HandshakeSuccessPacket() {
     }
@@ -15,11 +13,13 @@ public class HandshakeSuccessPacket extends Packet {
     }
 
     @Override
-    public void encode(ByteBuf buffer) {
+    public Packet encode(ByteBuf buffer) {
+        return this;
     }
 
     @Override
-    public void decode(ByteBuf buffer) {
+    public Packet decode(ByteBuf buffer) {
+        return this;
     }
 
     @Override

@@ -4,8 +4,8 @@ import io.netty.buffer.ByteBuf;
 
 public abstract class Packet {
     public abstract int getID();
-    public abstract void encode(ByteBuf buffer);
-    public abstract void decode(ByteBuf buffer);
+    public abstract Packet encode(ByteBuf buffer);
+    public abstract Packet decode(ByteBuf buffer);
 
     public abstract Packet create();
 }

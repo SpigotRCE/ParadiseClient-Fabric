@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import java.nio.charset.Charset;
 
 public class MessagePacket extends Packet {
-    private String message;
+    private String message = "";
 
     public MessagePacket() {
     }
@@ -17,13 +17,15 @@ public class MessagePacket extends Packet {
     }
 
     @Override
-    public void encode(ByteBuf buffer) {
+    public Packet encode(ByteBuf buffer) {
         buffer.writeCharSequence(message, Charset.defaultCharset());
+        return this;
     }
 
     @Override
-    public void decode(ByteBuf buffer) {
+    public Packet decode(ByteBuf buffer) {
         message = buffer.readCharSequence(buffer.readableBytes(), Charset.defaultCharset()).toString();
+        return this;
     }
 
     @Override
@@ -35,7 +37,8 @@ public class MessagePacket extends Packet {
         return message;
     }
 
-    public void setMessage(String message) {
+    public Packet setMessage(String message) {
         this.message = message;
+        return this;
     }
 }

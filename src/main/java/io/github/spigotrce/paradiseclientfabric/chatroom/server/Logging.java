@@ -34,4 +34,13 @@ public class Logging {
                 traceLine -> System.out.println("\u001B[31m[ERROR/ChatServer] Stack trace ->" + traceLine + "\u001B[0m")
         );
     }
+
+    public static void error(String message, Throwable throwable) {
+        System.out.println("\u001B[31m[ERROR/ChatServer] " + message + ": " + throwable.getMessage());
+        new ArrayList<>(
+                Arrays.asList(throwable.getStackTrace())
+        ).forEach(
+                traceLine -> System.out.println("\u001B[31m[ERROR/ChatServer] Stack trace ->" + traceLine + "\u001B[0m")
+        );
+    }
 }

@@ -22,7 +22,6 @@ public class MySQLDatabase {
         );
         Logging.info("Connected to MySQL database!");
         createTable();
-
     }
 
     private void createTable() throws SQLException {
@@ -32,7 +31,8 @@ public class MySQLDatabase {
                 "dateOfRegistration DATE NOT NULL, " +
                 "username VARCHAR(100) NOT NULL, " +
                 "email VARCHAR(100) NOT NULL, " +
-                "token VARCHAR(255) NOT NULL)";
+                "token VARCHAR(255) NOT NULL, " +
+                "verified BOOLEAN NOT NULL)";
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
             Logging.info("Table 'users' created.");
@@ -40,17 +40,58 @@ public class MySQLDatabase {
     }
 
     public void insertUser(UserModel user) throws SQLException {
-        String query = "INSERT INTO users (discordID, uuid, dateOfRegistration, username, email, token) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users (discordID, uuid, dateOfRegistration, username, email, token, verified) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setLong(1, user.discordID());
             pstmt.setString(2, user.uuid().toString());
-            pstmt.setDate(3, Date.valueOf(user.dateOfRegistration().toLocalDate()));
+            pstmt.setDate(3, new java.sql.Date(user.dateOfRegistration().getTime()));
             pstmt.setString(4, user.username());
             pstmt.setString(5, user.email());
             pstmt.setString(6, user.token());
+            pstmt.setBoolean(7, user.verified());
             pstmt.executeUpdate();
             Logging.info("Inserted user: " + user.username());
         }
+    }
+
+    public UserModel getUser(long discordID) throws SQLException {
+        String query = "SELECT * FROM users WHERE discordID = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setLong(1, discordID);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next())
+                    return new UserModel(
+                            rs.getLong("discordID"),
+                            UUID.fromString(rs.getString("uuid")),
+                            rs.getDate("dateOfRegistration"),
+                            rs.getString("username"),
+                            rs.getString("email"),
+                            rs.getString("token"),
+                            rs.getBoolean("verified")
+                    );
+            }
+        }
+        return null;
+    }
+
+    public UserModel getUser(UUID uuid) throws SQLException {
+        String query = "SELECT * FROM users WHERE uuid = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, uuid.toString());
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next())
+                    return new UserModel(
+                            rs.getLong("discordID"),
+                            UUID.fromString(rs.getString("uuid")),
+                            rs.getDate("dateOfRegistration"),
+                            rs.getString("username"),
+                            rs.getString("email"),
+                            rs.getString("token"),
+                            rs.getBoolean("verified")
+                    );
+            }
+        }
+        return null;
     }
 
     public List<UserModel> getAllUsers() throws SQLException {
@@ -65,7 +106,8 @@ public class MySQLDatabase {
                         rs.getDate("dateOfRegistration"),
                         rs.getString("username"),
                         rs.getString("email"),
-                        rs.getString("token")
+                        rs.getString("token"),
+                        rs.getBoolean("verified")
                 ));
             }
         }
@@ -73,14 +115,15 @@ public class MySQLDatabase {
     }
 
     public void updateUser(UserModel user) throws SQLException {
-        String query = "UPDATE users SET uuid = ?, dateOfRegistration = ?, username = ?, email = ?, token = ? WHERE discordID = ?";
+        String query = "UPDATE users SET uuid = ?, dateOfRegistration = ?, username = ?, email = ?, token = ?, verified = ? WHERE discordID = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, user.uuid().toString());
-            pstmt.setDate(2, Date.valueOf(user.dateOfRegistration().toLocalDate()));
+            pstmt.setDate(2, new java.sql.Date(user.dateOfRegistration().getTime()));
             pstmt.setString(3, user.username());
             pstmt.setString(4, user.email());
             pstmt.setString(5, user.token());
-            pstmt.setLong(6, user.discordID());
+            pstmt.setBoolean(6, user.verified());
+            pstmt.setLong(7, user.discordID());
             pstmt.executeUpdate();
             Logging.info("Updated user: " + user.username());
         }

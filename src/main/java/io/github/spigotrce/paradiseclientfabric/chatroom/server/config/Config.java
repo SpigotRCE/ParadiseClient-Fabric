@@ -17,7 +17,9 @@ public class Config extends ConfigProvider {
         return new DiscordModel(
                 getFileConfig().getString("discord_token"),
                 getFileConfig().getLong("discord_server_id"),
-                getFileConfig().getBoolean("auto_verify")
+                getFileConfig().getBoolean("auto_verify"),
+                getFileConfig().getLong("verification_channel_id"),
+                getFileConfig().getString("webhook_account_logging")
         );
     }
 

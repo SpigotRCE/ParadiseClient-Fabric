@@ -13,7 +13,7 @@ public class DisconnectPacket extends Packet {
 
     @Override
     public int getID() {
-        return 1;
+        return 2;
     }
 
     @Override

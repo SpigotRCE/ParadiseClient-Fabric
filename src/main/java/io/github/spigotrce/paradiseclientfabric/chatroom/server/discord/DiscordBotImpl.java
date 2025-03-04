@@ -1,6 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server.discord;
 
-import io.github.spigotrce.paradiseclientfabric.chatroom.Logging;
+import io.github.spigotrce.paradiseclientfabric.chatroom.server.Logging;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
 import io.github.spigotrce.paradiseclientfabric.chatroom.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Main;
@@ -16,10 +16,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.logging.Logger;
 
 import static net.dv8tion.jda.api.interactions.commands.OptionType.*;
 

@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.chatroom.client;
+package io.github.spigotrce.paradiseclientfabric.chatroom.common.model;
 
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 

@@ -15,8 +15,11 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.EnumSet;
+import java.util.UUID;
 
 import static net.dv8tion.jda.api.interactions.commands.OptionType.*;
 
@@ -80,7 +83,7 @@ public class DiscordBotImpl extends ListenerAdapter {
                     return;
                 }
 
-                UserModel userModel = new UserModel(userName, email, "");
+                UserModel userModel = new UserModel(member.getUser().getIdLong(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), userName, email, "");
 
                 boolean verified;
                 try {

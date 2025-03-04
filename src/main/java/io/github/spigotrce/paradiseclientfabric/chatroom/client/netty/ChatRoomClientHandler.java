@@ -14,16 +14,34 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.util.UUID;
 
 public class ChatRoomClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
+    private boolean isAuthenticated = false;
     @Override
     public void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         int id = msg.readInt();
         Packet packet = PacketRegistry.createAndDecode(id, msg);
 
         switch (packet) {
-            case MessagePacket messagePacket -> System.out.println(messagePacket.getMessage());
-            case DisconnectPacket disconnectPacket -> System.out.println("Disconnected with reason: " + disconnectPacket.getMessage());
-            case HandshakeResponsePacket ignored -> {
+            case HandshakeResponsePacket handshakeResponsePacket -> {
+                if (isAuthenticated)
+                    throw new IllegalStateException("Already authenticated");
+                isAuthenticated = handshakeResponsePacket.isSuccess();
+                if (isAuthenticated) {
+                    System.out.println("Connected to chat server");
+                } else {
+                    // we are using getUsername for disconnection message, not a great idea but still why not
+                    System.out.println("Failed to connect to chat server: " + handshakeResponsePacket.getUsername());
+                    ctx.close();
+                    return;
+                }
+
+                System.out.println("Welcome back: " + handshakeResponsePacket.getUsername());
             }
+            case MessagePacket messagePacket -> {
+                if (!isAuthenticated)
+                    throw new IllegalStateException("Not authenticated");
+                System.out.println(messagePacket.getMessage());
+            }
+            case DisconnectPacket disconnectPacket -> System.out.println("Disconnected with reason: " + disconnectPacket.getMessage());
             case null, default -> throw new BadPacketException(id);
         }
     }

@@ -42,4 +42,22 @@ public class HandshakeResponsePacket extends Packet {
     public Packet create() {
         return new HandshakeResponsePacket();
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Packet setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public Packet setSuccess(boolean success) {
+        this.success = success;
+        return this;
+    }
 }

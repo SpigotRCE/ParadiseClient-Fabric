@@ -25,6 +25,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     public UserModel userModel;
     public boolean isAuthenticated = false;
+    public long lastMessage = 0;
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
@@ -36,7 +37,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
                 if (isAuthenticated)
                     throw new IllegalStateException("User already authenticated");
 
-                String uuid = Arrays.asList(handshakePacket.getToken().split("\\.")).get(0);
+                UUID uuid = UUID.fromString(Arrays.asList(handshakePacket.getToken().split("\\.")).get(0));
                 String auth = Arrays.asList(handshakePacket.getToken().split("\\.")).get(1);
                 // TODO: do authentication
 
@@ -52,7 +53,24 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
                 if (!isAuthenticated)
                     throw new IllegalStateException("User not authenticated");
 
-                channels.forEach(channel -> PacketRegistry.sendPacket(messagePacket, channel));
+                if (lastMessage + 5000 > System.currentTimeMillis()) {
+                    PacketRegistry.sendPacket(
+                            new MessagePacket().setMessage("Do not spam messages!"),
+                            ctx.channel()
+                    );
+                    return;
+                }
+                lastMessage = System.currentTimeMillis();
+                channels.forEach(channel ->
+                        PacketRegistry.sendPacket(
+                                messagePacket.setMessage(
+                                        userModel.username() +
+                                                ">>" +
+                                                messagePacket.getMessage()
+                                ),
+                                channel
+                        )
+                );
             }
             case DisconnectPacket ignored -> ctx.close();
             case null, default -> throw new BadPacketException(id);

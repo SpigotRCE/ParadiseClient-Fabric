@@ -22,7 +22,7 @@ public class Logging {
         new ArrayList<>(
                 Arrays.asList(exception.getStackTrace())
         ).forEach(
-                traceLine -> System.out.println("[WARNING/ChatServer] " + traceLine)
+                traceLine -> System.out.println("[WARNING/ChatServer] Stack trace ->" + traceLine)
         );
     }
 
@@ -31,7 +31,7 @@ public class Logging {
         new ArrayList<>(
                 Arrays.asList(exception.getStackTrace())
         ).forEach(
-                traceLine -> System.out.println("[ERROR/ChatServer] " + traceLine)
+                traceLine -> System.out.println("[ERROR/ChatServer] Stack trace ->" + traceLine)
         );
     }
 }

@@ -1,8 +1,8 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server.config;
 
-import io.github.spigotrce.paradiseclientfabric.chatroom.client.DatabaseModel;
-import io.github.spigotrce.paradiseclientfabric.chatroom.client.DiscordModel;
-import io.github.spigotrce.paradiseclientfabric.chatroom.client.ServerModel;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.DatabaseModel;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.DiscordModel;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.ServerModel;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
 import java.nio.file.Path;

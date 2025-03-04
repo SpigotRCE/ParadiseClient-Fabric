@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.chatroom;
+package io.github.spigotrce.paradiseclientfabric.chatroom.server;
 
 import java.util.ArrayList;
 import java.util.Arrays;

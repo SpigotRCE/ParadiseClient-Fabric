@@ -1,4 +1,4 @@
-package io.github.spigotrce.paradiseclientfabric.chatroom.exception;
+package io.github.spigotrce.paradiseclientfabric.chatroom.server.exception;
 
 public class UserAlreadyRegisteredException extends Exception {
     public UserAlreadyRegisteredException(String username) {

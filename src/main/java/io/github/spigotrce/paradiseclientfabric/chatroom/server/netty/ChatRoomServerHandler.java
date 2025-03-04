@@ -16,7 +16,10 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.UUID;
 
 public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
@@ -40,7 +43,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
                 isAuthenticated = true;
 
                 PacketRegistry.sendPacket(new HandshakeSuccessPacket(), ctx.channel());
-                userModel = new UserModel("username", "email", handshakePacket.getToken());
+                userModel = new UserModel(0, UUID.randomUUID(), Date.valueOf(LocalDate.now()), "username", "email", handshakePacket.getToken());
                 Logging.info("Connection: " + userModel.username() + ctx.channel().remoteAddress());
 
                 channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket().setMessage(userModel.username() + " joined the chat"), channel));

@@ -6,7 +6,7 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.DisconnectPacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakePacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeSuccessPacket;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeResponsePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Logging;
 import io.netty.buffer.ByteBuf;
@@ -42,7 +42,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
 
                 isAuthenticated = true;
 
-                PacketRegistry.sendPacket(new HandshakeSuccessPacket(), ctx.channel());
+                PacketRegistry.sendPacket(new HandshakeResponsePacket(), ctx.channel());
                 userModel = new UserModel(0, UUID.randomUUID(), Date.valueOf(LocalDate.now()), "username", "email", handshakePacket.getToken(), false);
                 Logging.info("Connection: " + userModel.username() + ctx.channel().remoteAddress());
 

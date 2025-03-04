@@ -71,6 +71,8 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
                                 channel
                         )
                 );
+
+                Logging.info("[Chat] " + messagePacket.getMessage());
             }
             case DisconnectPacket ignored -> ctx.close();
             case null, default -> throw new BadPacketException(id);

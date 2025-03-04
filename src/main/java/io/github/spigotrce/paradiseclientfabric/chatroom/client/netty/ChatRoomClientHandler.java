@@ -5,11 +5,9 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.DisconnectPacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakePacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeSuccessPacket;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeResponsePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -24,7 +22,7 @@ public class ChatRoomClientHandler extends SimpleChannelInboundHandler<ByteBuf> 
         switch (packet) {
             case MessagePacket messagePacket -> System.out.println(messagePacket.getMessage());
             case DisconnectPacket disconnectPacket -> System.out.println("Disconnected with reason: " + disconnectPacket.getMessage());
-            case HandshakeSuccessPacket ignored -> {
+            case HandshakeResponsePacket ignored -> {
             }
             case null, default -> throw new BadPacketException(id);
         }

@@ -2,7 +2,7 @@ package io.github.spigotrce.paradiseclientfabric.chatroom.common.packet;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.DisconnectPacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakePacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeSuccessPacket;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeResponsePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -17,7 +17,7 @@ public class PacketRegistry {
 
     public static void registerPackets() {
         registerPacket(new HandshakePacket());
-        registerPacket(new HandshakeSuccessPacket());
+        registerPacket(new HandshakeResponsePacket());
         registerPacket(new DisconnectPacket());
         registerPacket(new MessagePacket());
     }

@@ -65,6 +65,7 @@ dependencies {
     shadow(implementation 'net.md_5.bungee:BungeeCord')
     shadow(implementation("net.dv8tion:JDA:${jda_version}"))
     shadow(implementation("dev.dejvokep:boosted-yaml:${boosted_yaml_version}"))
+    shadow(implementation("io.netty:netty-codec-haproxy:4.1.109.Final"))
 
 //    include("org.cloudburstmc.netty:netty-transport-raknet:1.0.0.CR3-SNAPSHOT") {
 //        exclude group: "io.netty"

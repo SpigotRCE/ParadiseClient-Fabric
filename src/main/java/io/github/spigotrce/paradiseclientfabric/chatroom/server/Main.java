@@ -1,7 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
-import io.github.spigotrce.paradiseclientfabric.chatroom.exception.UserAlreadyRegisteredException;
+import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.config.Config;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.discord.DiscordBotImpl;
 

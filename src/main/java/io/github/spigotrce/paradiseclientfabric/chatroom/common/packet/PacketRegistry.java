@@ -8,13 +8,13 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class PacketRegistry {
-    private final Map<Integer, Packet> packetMap = new HashMap<>();
+    private static final Map<Integer, Packet> packetMap = new HashMap<>();
 
-    public void registerPacket(int id, Supplier<Packet> supplier) {
+    public static void registerPacket(int id, Supplier<Packet> supplier) {
         packetMap.put(id, supplier.get());
     }
 
-    public void handlePacket(int id, Consumer<Packet> consumer) throws BadPacketException {
+    public static void handlePacket(int id, Consumer<Packet> consumer) throws BadPacketException {
         Packet packet = packetMap.get(id);
         if (packet != null)
             consumer.accept(packet);
@@ -22,7 +22,7 @@ public class PacketRegistry {
             throw new BadPacketException(id);
     }
 
-    public Packet createPacket(int id) {
+    public static Packet createPacket(int id) {
         Packet packet = packetMap.get(id);
         if (packet != null)
             return packet.create();

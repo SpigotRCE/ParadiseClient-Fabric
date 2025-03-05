@@ -49,7 +49,7 @@ public class Main {
     }
 
     public static boolean registerNewUser(UserModel user) throws SQLException, UserAlreadyRegisteredException {
-        DATABASE.insertUser(user);
+        DATABASE.insertUser(user.withVerified(CONFIG.getDiscord().autoVerify()));
         return CONFIG.getDiscord().autoVerify();
     }
 
@@ -59,16 +59,16 @@ public class Main {
         DATABASE.updateUser(DATABASE.getUser(uuid).withVerified(true));
     }
 
-    public static boolean authenticate(String token) throws SQLException {
-        List<String> split = Arrays.asList(token.split("\\."));
+    public static boolean authenticate(String key) throws SQLException {
+        List<String> split = Arrays.asList(key.split("\\."));
         UUID uuid = UUID.fromString(split.get(0));
-        String key = split.get(1);
+        String token = split.get(1);
         UserModel model = DATABASE.getUser(uuid);
         return model.token().equals(token);
     }
 
     public static UserModel generateToken(UserModel model) throws SQLException {
-        UserModel newModel = model.withToken(model.uuid() + "." + generateNextString(64));
+        UserModel newModel = model.withToken(generateNextString(64));
         DATABASE.updateUser(newModel);
         return newModel;
     }

@@ -2,6 +2,8 @@ package io.github.spigotrce.paradiseclientfabric.chatroom.server.netty;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.ServerModel;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Logging;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
@@ -36,5 +38,10 @@ public class ChatRoomServer {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
+    }
+
+    public static void broadcastMessage(String message) {
+        MessagePacket packet = new MessagePacket(message);
+        channels.forEach(channel -> PacketRegistry.sendPacket(packet, channel));
     }
 }

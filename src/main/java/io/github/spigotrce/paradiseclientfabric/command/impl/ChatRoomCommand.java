@@ -50,6 +50,10 @@ public class ChatRoomCommand extends Command {
                 )
                 .then(literal("connect")
                         .executes(context -> {
+                            if (ParadiseClient_Fabric.CHAT_ROOM_MOD.isConnected) {
+                                Helper.printChatMessage("You are already connected to chatroom");
+                                return SINGLE_SUCCESS;
+                            }
                             try {
                                 TokenStore.readToken();
                             } catch (IOException e) {

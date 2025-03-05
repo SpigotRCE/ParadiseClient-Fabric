@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server.netty;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.ServerModel;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Logging;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
@@ -12,8 +13,11 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
+import java.util.ArrayList;
+
 public class ChatRoomServer {
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    public static final ArrayList<UserModel> onlineUsers = new ArrayList<>();
 
     public static void startServer(ServerModel serverModel) throws Exception {
         Logging.info("Starting chatroom server on port: " + serverModel.port() + ", use_haproxy: " + serverModel.useHAProxy());

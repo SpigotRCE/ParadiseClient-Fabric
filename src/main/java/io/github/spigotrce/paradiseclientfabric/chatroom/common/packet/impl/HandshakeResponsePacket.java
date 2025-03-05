@@ -33,7 +33,7 @@ public class HandshakeResponsePacket extends Packet {
     }
 
     @Override
-    public void handle(AbstractPacketHandler handler) {
+    public void handle(AbstractPacketHandler handler) throws Exception {
         handler.handle(this);
     }
 

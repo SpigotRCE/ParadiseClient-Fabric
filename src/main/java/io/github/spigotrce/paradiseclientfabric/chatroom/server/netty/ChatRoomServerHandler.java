@@ -17,7 +17,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
     public void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         Packet packet = PacketRegistry.createAndDecode(msg.readInt(), msg);
         if (packet == null) throw new BadPacketException("Unknown packet");
-        packet.handle(null);
+        packet.handle(packetHandler);
     }
 
     @Override

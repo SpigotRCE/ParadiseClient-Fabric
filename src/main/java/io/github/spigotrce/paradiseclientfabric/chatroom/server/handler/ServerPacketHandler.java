@@ -59,7 +59,7 @@ public class ServerPacketHandler extends AbstractPacketHandler {
         Logging.info("Connection: " + userModel.username() + channel.remoteAddress());
         ChatRoomServer.onlineUsers.add(userModel);
 
-        ChatRoomServer.channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket(userModel.username() + " joined the chat"), channel));
+        ChatRoomServer.broadcastMessage(userModel.username() + " joined the chat");
 
     }
 

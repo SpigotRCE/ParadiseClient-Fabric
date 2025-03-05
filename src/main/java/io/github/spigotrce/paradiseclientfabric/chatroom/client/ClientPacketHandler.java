@@ -32,6 +32,7 @@ public class ClientPacketHandler {
     }
 
     public static void handleDisconnectPacket(DisconnectPacket packet, ChannelHandlerContext ctx) {
-
+        System.out.println("Disconnected for: " + packet.getMessage());
+        ctx.close();
     }
 }

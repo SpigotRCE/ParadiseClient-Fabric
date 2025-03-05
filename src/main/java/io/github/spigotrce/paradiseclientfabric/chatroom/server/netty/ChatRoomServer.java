@@ -41,6 +41,7 @@ public class ChatRoomServer {
     }
 
     public static void broadcastMessage(String message) {
+        Logging.info("[CHAT] " + message);
         MessagePacket packet = new MessagePacket(message);
         channels.forEach(channel -> PacketRegistry.sendPacket(packet, channel));
     }

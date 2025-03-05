@@ -17,6 +17,7 @@ public class PacketRegistry {
     private static final Map<Integer, Supplier<Packet>> packetMap = new HashMap<>();
 
     public static void registerPackets() {
+        packetMap.clear();
         registerPacket(0x00, HandshakePacket::new);
         registerPacket(0x01, HandshakeResponsePacket::new);
         registerPacket(0x02, DisconnectPacket::new);

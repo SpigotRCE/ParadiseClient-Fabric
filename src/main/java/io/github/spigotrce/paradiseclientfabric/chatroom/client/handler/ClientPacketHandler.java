@@ -1,10 +1,13 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.client.handler;
 
+import io.github.spigotrce.paradiseclientfabric.Helper;
+import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.handler.AbstractPacketHandler;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.DisconnectPacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeResponsePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
+import io.github.spigotrce.paradiseclientfabric.mod.ChatRoomMod;
 import io.netty.channel.Channel;
 
 public class ClientPacketHandler extends AbstractPacketHandler {
@@ -21,19 +24,20 @@ public class ClientPacketHandler extends AbstractPacketHandler {
         isAuthenticated = packet.isSuccess();
         userModel = packet.getUserModel();
         if (isAuthenticated)
-            System.out.println("Connected as " + userModel.username());
+            Helper.printChatMessage("[ChatRoom] Connected as " + userModel.username());
         else
-            System.out.println("Disconnected before login");
+            Helper.printChatMessage("[ChatRoom] Disconnected before login");
+        ParadiseClient_Fabric.CHAT_ROOM_MOD.user = userModel;
     }
 
     @Override
     public void handle(DisconnectPacket packet) {
-        System.out.println("Disconnected from server: " + packet.getMessage());
+        Helper.printChatMessage("[ChatRoom] Disconnected from server: " + packet.getMessage());
         channel.close();
     }
 
     @Override
     public void handle(MessagePacket packet) {
-        System.out.println(packet.getMessage());
+        Helper.printChatMessage("[ChatRoom] " + packet.getMessage());
     }
 }

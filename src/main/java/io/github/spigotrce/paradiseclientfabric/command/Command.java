@@ -16,6 +16,7 @@ public abstract class Command {
 
     private final String name;
     private final String description;
+    private final boolean async;
 
     /**
      * Constructor for the Command class.
@@ -25,9 +26,22 @@ public abstract class Command {
      * @param minecraftClient The Minecraft client instance.
      */
     public Command(String name, String description, MinecraftClient minecraftClient) {
+        this(name, description, minecraftClient, false);
+    }
+
+    /**
+     * Constructor for the Command class.
+     *
+     * @param name            The name of the command.
+     * @param description     The description of the command.
+     * @param minecraftClient The Minecraft client instance.
+     * @param async           Whether the command should be run inside a background thread
+     */
+    public Command(String name, String description, MinecraftClient minecraftClient, boolean async) {
         this.name = name;
         this.description = description;
         this.minecraftClient = minecraftClient;
+        this.async = async;
     }
 
     /**
@@ -84,4 +98,14 @@ public abstract class Command {
     public MinecraftClient getMinecraftClient() {
         return minecraftClient;
     }
+
+    /**
+     * Getter for whether command is async.
+     *
+     * @return Whether command is async.
+     */
+    public boolean isAsync() {
+        return async;
+    }
+
 }

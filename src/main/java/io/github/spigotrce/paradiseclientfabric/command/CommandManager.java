@@ -9,6 +9,7 @@ import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.command.impl.*;
 import io.github.spigotrce.paradiseclientfabric.event.chat.ChatPreEvent;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.command.CommandSource;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class CommandManager implements Listener {
         register(new ECBCommand(minecraftClient));
         register(new SignedVelocityCommand(minecraftClient));
         register(new DumpCommand(minecraftClient));
+        register(new ChatRoomCommand(minecraftClient));
 
 
         // Register this command at the very end so it registers all commands in it
@@ -103,8 +105,21 @@ public class CommandManager implements Listener {
      *
      * @param message The input message.
      */
-    public void dispatch(String message) throws CommandSyntaxException {
-        DISPATCHER.execute(message, minecraftClient.getNetworkHandler().getCommandSource());
+    public void dispatch(String message) {
+        if (getCommand(message) != null)
+            if (getCommand(message).isAsync()) {
+                Helper.runAsync(() -> dispatchCommand(message));
+                return;
+            }
+        Helper.runAsync(() -> dispatchCommand(message));
+    }
+
+    private void dispatchCommand(String message) {
+        try {
+            DISPATCHER.execute(message, minecraftClient.getNetworkHandler().getCommandSource());
+        } catch (CommandSyntaxException e) {
+            Helper.printChatMessage("§c" + e.getMessage());
+        }
     }
 
     /**
@@ -117,12 +132,7 @@ public class CommandManager implements Listener {
     public void onClientCommand(ChatPreEvent event) {
         if (!event.getMessage().startsWith(prefix)) return;
         event.setCancel(true);
-        try {
-            dispatch(event.getMessage().substring(1));
-        } catch (CommandSyntaxException e) {
-            Helper.printChatMessage("§c" + e.getMessage());
-        }
-
+        dispatch(event.getMessage().substring(1));
         minecraftClient.inGameHud.getChatHud().addToMessageHistory(event.getMessage());
     }
 }

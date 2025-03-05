@@ -81,18 +81,10 @@ public class ServerPacketHandler extends AbstractPacketHandler {
             return;
         }
         lastMessage = System.currentTimeMillis();
-        packet.setMessage(
+        ChatRoomServer.broadcastMessage(
                 userModel.username() +
                         ">>" +
                         packet.getMessage()
         );
-        ChatRoomServer.channels.forEach(channel ->
-                PacketRegistry.sendPacket(
-                        packet,
-                        channel
-                )
-        );
-
-        Logging.info("[Chat] " + packet.getMessage());
     }
 }

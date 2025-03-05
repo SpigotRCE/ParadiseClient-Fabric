@@ -187,7 +187,7 @@ public class DiscordBotImpl extends ListenerAdapter {
                     return;
                 }
 
-                event.reply("Access token: `" + user.token() + "`").setEphemeral(true).queue();
+                event.reply("Access token: `" + user.uuid() + "." + user.token() + "`").setEphemeral(true).queue();
                 sendWebhook(user, "Access Token Created");
                 break;
             case "verify":

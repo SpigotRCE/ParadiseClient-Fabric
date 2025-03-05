@@ -1,10 +1,10 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server.discord;
 
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.DiscordWebhookSender;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Logging;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
-import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Main;
+import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyVerifiedException;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -25,7 +25,7 @@ import java.util.EnumSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static net.dv8tion.jda.api.interactions.commands.OptionType.*;
+import static net.dv8tion.jda.api.interactions.commands.OptionType.STRING;
 
 public class DiscordBotImpl extends ListenerAdapter {
     public static void startDiscordBot() {

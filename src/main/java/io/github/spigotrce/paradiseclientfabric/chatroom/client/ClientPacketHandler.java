@@ -9,6 +9,7 @@ import io.netty.channel.ChannelHandlerContext;
 // TODO: make it better ffs
 public class ClientPacketHandler {
     public static boolean isAuthenticated = false;
+
     public static void handleHandshakeResponse(HandshakeResponsePacket packet, ChannelHandlerContext ctx) {
         if (isAuthenticated)
             throw new IllegalStateException("Already authenticated");

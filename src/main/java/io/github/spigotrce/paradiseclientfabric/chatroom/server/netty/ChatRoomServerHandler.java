@@ -17,8 +17,6 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -43,9 +41,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
                 isAuthenticated = Main.authenticate(handshakePacket.getToken());
                 if (!isAuthenticated) {
                     PacketRegistry.sendPacket(
-                            new HandshakeResponsePacket()
-                                    .setSuccess(false)
-                                    .setUsername("Unauthenticated")
+                            new HandshakeResponsePacket("Unauthenticated", false)
                             , ctx.channel()
                     );
                     ctx.close();
@@ -55,14 +51,12 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
 
                 userModel = Main.DATABASE.getUser(uuid);
                 PacketRegistry.sendPacket(
-                        new HandshakeResponsePacket()
-                                .setSuccess(true)
-                                .setUsername(userModel.username())
+                        new HandshakeResponsePacket(userModel.username(), true)
                         , ctx.channel()
                 );
                 Logging.info("Connection: " + userModel.username() + ctx.channel().remoteAddress());
 
-                channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket().setMessage(userModel.username() + " joined the chat"), channel));
+                channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket(userModel.username() + " joined the chat"), channel));
             }
             case MessagePacket messagePacket -> {
                 if (!isAuthenticated)
@@ -70,19 +64,20 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
 
                 if (lastMessage + 5000 > System.currentTimeMillis()) {
                     PacketRegistry.sendPacket(
-                            new MessagePacket().setMessage("Do not spam messages!"),
+                            new MessagePacket("Do not spam messages!"),
                             ctx.channel()
                     );
                     return;
                 }
                 lastMessage = System.currentTimeMillis();
+                messagePacket.setMessage(
+                        userModel.username() +
+                                ">>" +
+                                messagePacket.getMessage()
+                );
                 channels.forEach(channel ->
                         PacketRegistry.sendPacket(
-                                messagePacket.setMessage(
-                                        userModel.username() +
-                                                ">>" +
-                                                messagePacket.getMessage()
-                                ),
+                                messagePacket,
                                 channel
                         )
                 );
@@ -90,7 +85,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
                 Logging.info("[Chat] " + messagePacket.getMessage());
             }
             case DisconnectPacket ignored -> ctx.close();
-            case null, default -> throw new BadPacketException(id);
+            case null, default -> throw new BadPacketException("Unknown packet id: " + id);
         }
     }
 
@@ -104,14 +99,14 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
         channels.remove(ctx.channel());
         if (userModel != null) {
             Logging.info("Disconnection: " + userModel.username() + "/" + ctx.channel().remoteAddress());
-            channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket().setMessage(userModel.username() + " left the chat"), channel));
+            channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket(userModel.username() + " left the chat"), channel));
         }
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         Logging.error("Exception caught on netty thread", cause);
-        PacketRegistry.sendPacket(new DisconnectPacket().setMessage("Error in netty thread, check server console."), ctx.channel());
+        PacketRegistry.sendPacket(new DisconnectPacket("Error in netty thread, check server console."), ctx.channel());
         ctx.close();
     }
 }

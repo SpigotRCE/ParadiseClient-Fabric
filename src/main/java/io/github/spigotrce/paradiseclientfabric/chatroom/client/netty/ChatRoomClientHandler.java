@@ -21,16 +21,17 @@ public class ChatRoomClientHandler extends SimpleChannelInboundHandler<ByteBuf> 
         Packet packet = PacketRegistry.createAndDecode(id, msg);
 
         switch (packet) {
-            case HandshakeResponsePacket handshakeResponsePacket -> ClientPacketHandler.handleHandshakeResponse(handshakeResponsePacket, ctx);
+            case HandshakeResponsePacket handshakeResponsePacket ->
+                    ClientPacketHandler.handleHandshakeResponse(handshakeResponsePacket, ctx);
             case MessagePacket messagePacket -> ClientPacketHandler.handleMessagePacket(messagePacket, ctx);
             case DisconnectPacket disconnectPacket -> ClientPacketHandler.handleDisconnectPacket(disconnectPacket, ctx);
-            case null, default -> throw new BadPacketException(id);
+            case null, default -> throw new BadPacketException("Unknown packet: " + id);
         }
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        PacketRegistry.sendPacket(new HandshakePacket().setToken(UUID.randomUUID() + ".token_auth"), ctx.channel());
+        PacketRegistry.sendPacket(new HandshakePacket(UUID.randomUUID() + ".token_auth"), ctx.channel());
     }
 
     @Override

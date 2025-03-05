@@ -18,6 +18,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -113,7 +114,7 @@ public class DiscordBotImpl extends ListenerAdapter {
                     return;
                 }
 
-                UserModel userModel = new UserModel(member.getUser().getIdLong(), UUID.randomUUID(), Date.valueOf(LocalDate.now()), userName, email, "", Main.CONFIG.getDiscord().autoVerify());
+                UserModel userModel = new UserModel(member.getUser().getIdLong(), UUID.nameUUIDFromBytes(member.getId().getBytes(Charset.defaultCharset())), Date.valueOf(LocalDate.now()), userName, email, "", Main.CONFIG.getDiscord().autoVerify());
 
                 try {
                     if (Main.DATABASE.getUser(userModel.discordID()) != null) {
@@ -155,6 +156,7 @@ public class DiscordBotImpl extends ListenerAdapter {
                         event.reply("User not found.").setEphemeral(true).queue();
                         return;
                     }
+                    Main.DATABASE.deleteUser(member.getIdLong());
                     event.reply("User deleted successfully!").setEphemeral(true).queue();
                 } catch (SQLException e) {
                     Logging.error("SQL error for user with /delete", e);

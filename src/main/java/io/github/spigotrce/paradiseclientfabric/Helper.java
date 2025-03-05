@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 /**
  * Utility class providing various helper methods for Minecraft client operations.
@@ -254,6 +256,10 @@ public class Helper {
             }
         }
         throw new Exception("Failed to fetch UUID");
+    }
+
+    public static void runAsync(Runnable runnable) {
+        new Thread(runnable).start();
     }
 
     @SuppressWarnings("unused")

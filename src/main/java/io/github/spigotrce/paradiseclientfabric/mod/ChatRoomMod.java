@@ -1,8 +1,11 @@
 package io.github.spigotrce.paradiseclientfabric.mod;
 
-import io.github.spigotrce.paradiseclientfabric.chatroom.ClientImpl;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
+import io.netty.channel.Channel;
 
 public class ChatRoomMod {
     public boolean isConnected = false;
-    public ClientImpl client;
+    public Channel channel;
+    public String token;
+    public UserModel user;
 }

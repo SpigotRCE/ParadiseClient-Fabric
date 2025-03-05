@@ -1,35 +1,51 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl;
 
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.handler.AbstractPacketHandler;
 import io.netty.buffer.ByteBuf;
 
-import java.nio.charset.Charset;
+import java.util.UUID;
+import java.util.Date;
 
 public class HandshakeResponsePacket extends Packet {
-    private String username;
+    private UserModel userModel;
     private boolean success;
 
-    public HandshakeResponsePacket(String username, boolean success) {
-        this.username = username;
+    public HandshakeResponsePacket(UserModel userModel, boolean success) {
+        this.userModel = userModel;
         this.success = success;
     }
 
     public HandshakeResponsePacket() {
-        this.username = null;
+        this.userModel = null;
         this.success = false;
     }
 
     @Override
     public void encode(ByteBuf buffer) {
-        buffer.writeByte(success ? 1 : 0);
-        buffer.writeCharSequence(username, Charset.defaultCharset());
+        writeBoolean(buffer, success);
+        writeLong(buffer, userModel.discordID());
+        writeUUID(buffer, userModel.uuid());
+        writeLong(buffer, userModel.dateOfRegistration().getTime());
+        writeString(buffer, userModel.username());
+        writeString(buffer, userModel.email());
+        writeString(buffer, userModel.token());
+        writeBoolean(buffer, userModel.verified());
     }
 
     @Override
     public void decode(ByteBuf buffer) {
-        success = buffer.readByte() == 1;
-        username = buffer.readCharSequence(buffer.readableBytes(), Charset.defaultCharset()).toString();
+        success = readBoolean(buffer);
+        long discordID = readLong(buffer);
+        UUID uuid = readUUID(buffer);
+        Date dateOfRegistration = new Date(readLong(buffer));
+        String username = readString(buffer);
+        String email = readString(buffer);
+        String token = readString(buffer);
+        boolean verified = readBoolean(buffer);
+
+        userModel = new UserModel(discordID, uuid, dateOfRegistration, username, email, token, verified);
     }
 
     @Override
@@ -37,12 +53,12 @@ public class HandshakeResponsePacket extends Packet {
         handler.handle(this);
     }
 
-    public String getUsername() {
-        return username;
+    public UserModel getUserModel() {
+        return userModel;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
     }
 
     public boolean isSuccess() {

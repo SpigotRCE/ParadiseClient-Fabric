@@ -34,7 +34,7 @@ public class ServerPacketHandler extends AbstractPacketHandler {
         isAuthenticated = Main.authenticate(packet.getToken());
         if (!isAuthenticated) {
             PacketRegistry.sendPacket(
-                    new HandshakeResponsePacket("Unauthenticated", false)
+                    new HandshakeResponsePacket(new UserModel(), false)
                     , channel
             );
             channel.close();
@@ -44,7 +44,7 @@ public class ServerPacketHandler extends AbstractPacketHandler {
 
         userModel = Main.DATABASE.getUser(uuid);
         PacketRegistry.sendPacket(
-                new HandshakeResponsePacket(userModel.username(), true)
+                new HandshakeResponsePacket(userModel, true)
                 , channel
         );
         Logging.info("Connection: " + userModel.username() + channel.remoteAddress());

@@ -6,6 +6,10 @@ import java.util.UUID;
 public record UserModel(long discordID, UUID uuid, Date dateOfRegistration, String username, String email, String token,
                         boolean verified) {
 
+    public UserModel() {
+        this(0, UUID.randomUUID(), new Date(), "", "", "", false);
+    }
+
     public UserModel withDiscordID(long discordID) {
         return new UserModel(discordID, uuid, dateOfRegistration, username, email, token, verified);
     }

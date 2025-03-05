@@ -1,4 +1,3 @@
-
 package io.github.spigotrce.paradiseclientfabric.chatroom.server.exception;
 
 import java.util.UUID;

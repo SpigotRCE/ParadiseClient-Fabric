@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.handler.AbstractPacketHandler;
 import io.netty.buffer.ByteBuf;
 
 import java.nio.charset.Charset;
@@ -20,44 +21,35 @@ public class HandshakeResponsePacket extends Packet {
     }
 
     @Override
-    public int getID() {
-        return 1;
-    }
-
-    @Override
-    public HandshakeResponsePacket encode(ByteBuf buffer) {
-        buffer.writeByte(success? 1 : 0);
+    public void encode(ByteBuf buffer) {
+        buffer.writeByte(success ? 1 : 0);
         buffer.writeCharSequence(username, Charset.defaultCharset());
-        return this;
     }
 
     @Override
-    public HandshakeResponsePacket decode(ByteBuf buffer) {
+    public void decode(ByteBuf buffer) {
         success = buffer.readByte() == 1;
         username = buffer.readCharSequence(buffer.readableBytes(), Charset.defaultCharset()).toString();
-        return this;
     }
 
     @Override
-    public Packet create() {
-        return new HandshakeResponsePacket();
+    public void handle(AbstractPacketHandler handler) {
+        handler.handle(this);
     }
 
     public String getUsername() {
         return username;
     }
 
-    public HandshakeResponsePacket setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
-        return this;
     }
 
     public boolean isSuccess() {
         return success;
     }
 
-    public HandshakeResponsePacket setSuccess(boolean success) {
+    public void setSuccess(boolean success) {
         this.success = success;
-        return this;
     }
 }

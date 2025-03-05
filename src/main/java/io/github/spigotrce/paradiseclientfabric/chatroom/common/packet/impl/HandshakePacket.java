@@ -1,6 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.handler.AbstractPacketHandler;
 import io.netty.buffer.ByteBuf;
 
 import java.nio.charset.Charset;
@@ -11,34 +12,30 @@ public class HandshakePacket extends Packet {
     public HandshakePacket() {
     }
 
-    @Override
-    public int getID() {
-        return 0;
+    public HandshakePacket(String token) {
+        this.token = token;
     }
 
     @Override
-    public Packet encode(ByteBuf buffer) {
+    public void encode(ByteBuf buffer) {
         buffer.writeCharSequence(token, Charset.defaultCharset());
-        return this;
     }
 
     @Override
-    public Packet decode(ByteBuf buffer) {
+    public void decode(ByteBuf buffer) {
         token = buffer.readCharSequence(buffer.readableBytes(), Charset.defaultCharset()).toString();
-        return this;
     }
 
     @Override
-    public Packet create() {
-        return new HandshakePacket();
+    public void handle(AbstractPacketHandler handler) {
+        handler.handle(this);
     }
 
     public String getToken() {
         return token;
     }
 
-    public Packet setToken(String token) {
+    public void setToken(String token) {
         this.token = token;
-        return this;
     }
 }

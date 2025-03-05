@@ -1,19 +1,17 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
-import io.github.spigotrce.paradiseclientfabric.chatroom.server.database.MySQLDatabase;
-import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.config.Config;
+import io.github.spigotrce.paradiseclientfabric.chatroom.server.database.MySQLDatabase;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.discord.DiscordBotImpl;
+import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyRegisteredException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.exception.UserAlreadyVerifiedException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.netty.ChatRoomServer;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
-import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;

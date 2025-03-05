@@ -5,8 +5,15 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.Disc
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeResponsePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
+import io.netty.channel.Channel;
 
 public abstract class AbstractPacketHandler {
+    private final Channel channel;
+
+    public AbstractPacketHandler(Channel channel) {
+        this.channel = channel;
+    }
+
     public void handle(Packet packet) {
     }
 

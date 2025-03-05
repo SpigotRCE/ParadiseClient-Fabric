@@ -16,6 +16,12 @@
 # Webhook to account logging
 "webhook_account_logging": "https://discord.com/api/webhooks/0000000/xxxxxxx"
 
+# Discord role id for Linked members
+"linked_members_role_id": 0000000
+
+# Discord id for admins
+"admin_role_id": 0000000
+
 # Server port
 "server_port": 45000
 

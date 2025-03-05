@@ -27,7 +27,7 @@ public class DisconnectPacket extends Packet {
     }
 
     @Override
-    public void handle(AbstractPacketHandler handler) throws Exception{
+    public void handle(AbstractPacketHandler handler) throws Exception {
         handler.handle(this);
     }
 

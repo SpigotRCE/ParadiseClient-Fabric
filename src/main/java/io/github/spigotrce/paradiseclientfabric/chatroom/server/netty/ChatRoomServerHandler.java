@@ -13,6 +13,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
     private ServerPacketHandler packetHandler;
+
     @Override
     public void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         Packet packet = PacketRegistry.createAndDecode(msg.readInt(), msg);

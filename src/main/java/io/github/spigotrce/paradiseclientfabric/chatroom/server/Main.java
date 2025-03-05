@@ -68,7 +68,7 @@ public class Main {
     }
 
     public static UserModel generateToken(UserModel model) throws SQLException {
-        UserModel newModel = model.withToken(model.uuid() + "." + generateNextString(32));
+        UserModel newModel = model.withToken(model.uuid() + "." + generateNextString(64));
         DATABASE.updateUser(newModel);
         return newModel;
     }

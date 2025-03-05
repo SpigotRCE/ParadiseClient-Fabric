@@ -8,7 +8,7 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.Mess
 import io.netty.channel.Channel;
 
 public abstract class AbstractPacketHandler {
-    private final Channel channel;
+    public final Channel channel;
 
     public AbstractPacketHandler(Channel channel) {
         this.channel = channel;

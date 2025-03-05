@@ -5,8 +5,8 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.handler.AbstractPacketHandler;
 import io.netty.buffer.ByteBuf;
 
-import java.util.UUID;
 import java.util.Date;
+import java.util.UUID;
 
 public class HandshakeResponsePacket extends Packet {
     private UserModel userModel;

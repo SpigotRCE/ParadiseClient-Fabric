@@ -15,6 +15,7 @@ import java.util.UUID;
 
 public class ChatRoomClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     private ClientPacketHandler packetHandler;
+
     @Override
     public void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         Packet packet = PacketRegistry.createAndDecode(msg.readInt(), msg);

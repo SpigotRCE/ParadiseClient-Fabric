@@ -31,6 +31,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         ChatRoomServer.channels.remove(ctx.channel());
         if (packetHandler.userModel != null) {
+            ChatRoomServer.onlineUsers.remove(packetHandler.userModel);
             Logging.info("Disconnection: " + packetHandler.userModel.username() + "/" + ctx.channel().remoteAddress());
             ChatRoomServer.channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket(packetHandler.userModel.username() + " left the chat"), channel));
         }

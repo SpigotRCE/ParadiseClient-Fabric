@@ -34,8 +34,8 @@ public class ServerPacketHandler extends AbstractPacketHandler {
         isAuthenticated = Main.authenticate(packet.getToken());
         if (!isAuthenticated) {
             PacketRegistry.sendPacket(
-                    new HandshakeResponsePacket(new UserModel(), false)
-                    , channel
+                    new HandshakeResponsePacket(new UserModel(), false),
+                    channel
             );
             channel.close();
             return;
@@ -43,11 +43,21 @@ public class ServerPacketHandler extends AbstractPacketHandler {
 
 
         userModel = Main.DATABASE.getUser(uuid);
+        if (ChatRoomServer.onlineUsers.contains(userModel)) {
+            PacketRegistry.sendPacket(
+                    new HandshakeResponsePacket(new UserModel().withUsername("You are already connected the server."), false),
+                    channel
+            );
+            userModel = null;
+            channel.close();
+            return;
+        }
         PacketRegistry.sendPacket(
-                new HandshakeResponsePacket(userModel, true)
-                , channel
+                new HandshakeResponsePacket(userModel, true),
+                channel
         );
         Logging.info("Connection: " + userModel.username() + channel.remoteAddress());
+        ChatRoomServer.onlineUsers.add(userModel);
 
         ChatRoomServer.channels.forEach(channel -> PacketRegistry.sendPacket(new MessagePacket(userModel.username() + " joined the chat"), channel));
 

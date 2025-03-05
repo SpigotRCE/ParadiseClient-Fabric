@@ -26,7 +26,7 @@ public class ClientPacketHandler extends AbstractPacketHandler {
         if (isAuthenticated)
             Helper.printChatMessage("[ChatRoom] Connected as " + userModel.username());
         else
-            Helper.printChatMessage("[ChatRoom] Disconnected before login");
+            Helper.printChatMessage("[ChatRoom] Failed to authenticate: " + userModel.username());
         ParadiseClient_Fabric.CHAT_ROOM_MOD.user = userModel;
     }
 

@@ -17,15 +17,15 @@ public abstract class AbstractPacketHandler {
     public void handle(Packet packet) {
     }
 
-    public void handle(HandshakePacket packet) {
+    public void handle(HandshakePacket packet) throws Exception {
     }
 
-    public void handle(HandshakeResponsePacket packet) {
+    public void handle(HandshakeResponsePacket packet) throws Exception {
     }
 
-    public void handle(DisconnectPacket packet) {
+    public void handle(DisconnectPacket packet) throws Exception {
     }
 
-    public void handle(MessagePacket packet) {
+    public void handle(MessagePacket packet) throws Exception {
     }
 }

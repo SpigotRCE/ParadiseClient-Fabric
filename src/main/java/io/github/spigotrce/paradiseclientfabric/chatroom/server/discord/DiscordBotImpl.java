@@ -143,10 +143,9 @@ public class DiscordBotImpl extends ListenerAdapter {
 
                 if (verified)
                     event.reply("User registered successfully! You can now use latest version of ParadiseClient-Fabric to connect to the chat server.").setEphemeral(true).queue();
-                else {
+                else
                     event.reply("You are currently queued for verification. You'll receive a message when you get verified!").setEphemeral(true).queue();
-                }
-
+                member.getGuild().addRoleToMember(member, member.getJDA().getRoleById(Main.CONFIG.getDiscord().linkedMembersRoleID())).queue();
                 break;
             case "delete":
                 UserModel userModel0;
@@ -157,6 +156,7 @@ public class DiscordBotImpl extends ListenerAdapter {
                         return;
                     }
                     Main.DATABASE.deleteUser(member.getIdLong());
+                    member.getGuild().removeRoleFromMember(member, member.getJDA().getRoleById(Main.CONFIG.getDiscord().linkedMembersRoleID())).queue();
                     event.reply("User deleted successfully!").setEphemeral(true).queue();
                 } catch (SQLException e) {
                     Logging.error("SQL error for user with /delete", e);
@@ -193,6 +193,10 @@ public class DiscordBotImpl extends ListenerAdapter {
                 sendWebhook(user, "Access Token Created");
                 break;
             case "verify":
+                if (!member.getRoles().contains(member.getJDA().getRoleById(Main.CONFIG.getDiscord().adminRoleID()))) {
+                    event.reply("You don't have permission to this command!").setEphemeral(true).queue();
+                    break;
+                }
                 UUID uuid = UUID.fromString(event.getOption("uuid").getAsString());
                 UserModel model;
                 try {

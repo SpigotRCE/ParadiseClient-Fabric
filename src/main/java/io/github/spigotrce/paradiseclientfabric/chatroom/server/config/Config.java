@@ -19,7 +19,9 @@ public class Config extends ConfigProvider {
                 getFileConfig().getLong("discord_server_id"),
                 getFileConfig().getBoolean("auto_verify"),
                 getFileConfig().getLong("verification_channel_id"),
-                getFileConfig().getString("webhook_account_logging")
+                getFileConfig().getString("webhook_account_logging"),
+                getFileConfig().getLong("linked_members_role_id"),
+                getFileConfig().getLong("admin_role_id")
         );
     }
 

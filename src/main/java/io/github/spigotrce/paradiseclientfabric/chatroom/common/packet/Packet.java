@@ -8,5 +8,5 @@ public abstract class Packet {
 
     public abstract void decode(ByteBuf buffer);
 
-    public abstract void handle(AbstractPacketHandler handler);
+    public abstract void handle(AbstractPacketHandler handler) throws Exception;
 }

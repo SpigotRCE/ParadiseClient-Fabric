@@ -1,6 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.common.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 public record UserModel(long discordID, UUID uuid, Date dateOfRegistration, String username, String email, String token,

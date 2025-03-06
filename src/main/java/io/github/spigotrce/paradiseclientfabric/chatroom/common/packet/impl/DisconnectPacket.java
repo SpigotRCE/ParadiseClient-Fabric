@@ -18,12 +18,12 @@ public class DisconnectPacket extends Packet {
 
     @Override
     public void encode(ByteBuf buffer) {
-        buffer.writeCharSequence(message, Charset.defaultCharset());
+        writeString(buffer, message);
     }
 
     @Override
     public void decode(ByteBuf buffer) {
-        message = buffer.readCharSequence(buffer.readableBytes(), Charset.defaultCharset()).toString();
+        message = readString(buffer);
     }
 
     @Override

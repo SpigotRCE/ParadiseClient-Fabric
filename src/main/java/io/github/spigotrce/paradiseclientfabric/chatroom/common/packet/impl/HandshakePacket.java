@@ -18,12 +18,12 @@ public class HandshakePacket extends Packet {
 
     @Override
     public void encode(ByteBuf buffer) {
-        buffer.writeCharSequence(token, Charset.defaultCharset());
+        writeString(buffer, token);
     }
 
     @Override
     public void decode(ByteBuf buffer) {
-        token = buffer.readCharSequence(buffer.readableBytes(), Charset.defaultCharset()).toString();
+        token = readString(buffer);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class MySQLDatabase {
     public MySQLDatabase() throws SQLException {
         DatabaseModel model = Main.CONFIG.getDatabase();
         this.connection = DriverManager.getConnection(
-                "jdbc:mysql://" + model.host() + "/" + model.name(),
+                "jdbc:mysql://" + model.host() + "/" + model.name() + model.parameters(),
                 model.username(),
                 model.password()
         );

@@ -82,6 +82,13 @@ public class ServerPacketHandler extends AbstractPacketHandler {
             return;
         }
         lastMessage = System.currentTimeMillis();
+        if (packet.getMessage().length() > 128) {
+            PacketRegistry.sendPacket(
+                    new MessagePacket("Message is too long!"),
+                    channel
+            );
+            return;
+        }
         ChatRoomServer.broadcastMessage(
                 userModel.username() +
                         ">>" +

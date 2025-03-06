@@ -11,6 +11,7 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.server.Logging;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Main;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.netty.ChatRoomServer;
 import io.netty.channel.Channel;
+import io.netty.util.AttributeKey;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -56,7 +57,7 @@ public class ServerPacketHandler extends AbstractPacketHandler {
                 new HandshakeResponsePacket(userModel, true),
                 channel
         );
-        Logging.info("Connection: " + userModel.username() + channel.remoteAddress());
+        Logging.info("Connection: " + userModel.username() + channel.attr(AttributeKey.valueOf("proxiedAddress")).get());
         ChatRoomServer.onlineUsers.add(userModel);
 
         ChatRoomServer.broadcastMessage(userModel.username() + " joined the chat");

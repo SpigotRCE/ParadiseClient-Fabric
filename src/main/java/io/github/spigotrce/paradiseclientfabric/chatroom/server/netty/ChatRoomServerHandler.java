@@ -32,7 +32,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
         ChatRoomServer.channels.remove(ctx.channel());
         if (packetHandler.userModel != null) {
             ChatRoomServer.onlineUsers.remove(packetHandler.userModel);
-            Logging.info("Disconnection: " + packetHandler.userModel.username() + "/" + ctx.channel().remoteAddress());
+            Logging.info("Disconnection: " + packetHandler.userModel.username() +  ctx.channel().remoteAddress());
             ChatRoomServer.broadcastMessage(packetHandler.userModel.username() + " left the chat");
         }
         packetHandler = null;

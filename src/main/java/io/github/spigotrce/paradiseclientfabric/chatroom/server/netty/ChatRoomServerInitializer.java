@@ -1,5 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server.netty;
 
+import io.github.spigotrce.paradiseclientfabric.chatroom.client.netty.proxy.HaProxyMessageHandler;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.netty.CommonChannelInitializer;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Main;
 import io.netty.channel.ChannelInitializer;
@@ -14,9 +15,10 @@ public class ChatRoomServerInitializer extends ChannelInitializer<SocketChannel>
 
         CommonChannelInitializer.init(pipeline);
 
-        pipeline.addLast(new ChatRoomServerHandler());
-
-        if (Main.CONFIG.getServer().useHAProxy())
+        if (Main.CONFIG.getServer().useHAProxy()) {
             pipeline.addFirst(new HAProxyMessageDecoder());
+            pipeline.addLast(new HaProxyMessageHandler());
+        }
+        pipeline.addLast(new ChatRoomServerHandler());
     }
 }

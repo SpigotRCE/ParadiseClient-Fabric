@@ -4,12 +4,12 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.common.exception.BadPac
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.DisconnectPacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Logging;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.handler.ServerPacketHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.util.AttributeKey;
 
 public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
     private ServerPacketHandler packetHandler;
@@ -32,7 +32,7 @@ public class ChatRoomServerHandler extends SimpleChannelInboundHandler<ByteBuf> 
         ChatRoomServer.channels.remove(ctx.channel());
         if (packetHandler.userModel != null) {
             ChatRoomServer.onlineUsers.remove(packetHandler.userModel);
-            Logging.info("Disconnection: " + packetHandler.userModel.username() +  ctx.channel().remoteAddress());
+            Logging.info("Disconnection: " + packetHandler.userModel.username() +  ctx.channel().attr(AttributeKey.valueOf("proxiedAddress")).get());
             ChatRoomServer.broadcastMessage(packetHandler.userModel.username() + " left the chat");
         }
         packetHandler = null;

@@ -48,6 +48,24 @@ public class ChatRoomCommand extends Command {
                                 })
                         )
                 )
+                .then(literal("token")
+                        .executes(context -> {
+                            Helper.printChatMessage("Incomplete command!");
+                            return SINGLE_SUCCESS;
+                        })
+                        .then(argument("token", StringArgumentType.greedyString())
+                                .executes(context -> {
+                                    try {
+                                        TokenStore.writeToken(context.getArgument("token", String.class));
+                                    } catch (IOException e) {
+                                        Helper.printChatMessage("§4§lError: Failed to write token");
+                                        Constants.LOGGER.error("Failed to write token", e);
+                                        return SINGLE_SUCCESS;
+                                    }
+                                    return SINGLE_SUCCESS;
+                                })
+                        )
+                )
                 .then(literal("connect")
                         .executes(context -> {
                             if (ParadiseClient_Fabric.CHAT_ROOM_MOD.isConnected) {
@@ -69,17 +87,16 @@ public class ChatRoomCommand extends Command {
                             }
                             return SINGLE_SUCCESS;
                         })
-                        .then(argument("token", StringArgumentType.greedyString())
-                                .executes(context -> {
-                                    try {
-                                        TokenStore.writeToken(context.getArgument("token", String.class));
-                                    } catch (IOException e) {
-                                        Helper.printChatMessage("§4§lError: Failed to write token");
-                                        Constants.LOGGER.error("Failed to write token", e);
-                                        return SINGLE_SUCCESS;
-                                    }
-                                    return SINGLE_SUCCESS;
-                                })
-                ));
+                )
+                .then(literal("disconnect")
+                        .executes(context -> {
+                            if (!ParadiseClient_Fabric.CHAT_ROOM_MOD.isConnected) {
+                                Helper.printChatMessage("§4§lError: Not connected to chatroom");
+                                return SINGLE_SUCCESS;
+                            }
+                            Client.stop();
+                            return SINGLE_SUCCESS;
+                        })
+                );
     }
 }

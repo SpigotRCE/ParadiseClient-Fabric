@@ -176,6 +176,11 @@ public class DiscordBotImpl extends ListenerAdapter {
                     return;
                 }
 
+                if (user == null) {
+                    event.reply("User not found.").setEphemeral(true).queue();
+                    return;
+                }
+
                 if (!user.verified()) {
                     event.reply("Your account needs staff review before you can create an access token.").setEphemeral(true).queue();
                     return;

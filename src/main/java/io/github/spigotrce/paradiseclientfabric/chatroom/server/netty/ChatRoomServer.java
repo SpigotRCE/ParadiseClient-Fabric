@@ -30,7 +30,6 @@ public class ChatRoomServer {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new ChatRoomServerInitializer());
 
             serverBootstrap.bind(serverModel.port()).sync().channel().closeFuture().sync();

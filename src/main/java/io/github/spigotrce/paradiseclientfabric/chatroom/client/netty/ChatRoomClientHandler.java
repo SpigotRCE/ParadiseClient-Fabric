@@ -5,6 +5,7 @@ import io.github.spigotrce.paradiseclientfabric.Helper;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
 import io.github.spigotrce.paradiseclientfabric.chatroom.client.TokenStore;
 import io.github.spigotrce.paradiseclientfabric.chatroom.client.handler.ClientPacketHandler;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.Version;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.exception.BadPacketException;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
@@ -30,7 +31,7 @@ public class ChatRoomClientHandler extends SimpleChannelInboundHandler<ByteBuf> 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         packetHandler = new ClientPacketHandler(ctx.channel());
-        PacketRegistry.sendPacket(new HandshakePacket(TokenStore.readToken()), ctx.channel());
+        PacketRegistry.sendPacket(new HandshakePacket(Version.PROTOCOL_VERSION, TokenStore.readToken()), ctx.channel());
         ParadiseClient_Fabric.CHAT_ROOM_MOD.isConnected = true;
         ParadiseClient_Fabric.CHAT_ROOM_MOD.channel = ctx.channel();
     }

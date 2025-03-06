@@ -74,7 +74,7 @@ public class ServerPacketHandler extends AbstractPacketHandler {
         if (!isAuthenticated)
             throw new IllegalStateException("User not authenticated");
 
-        if (lastMessage + 5000 > System.currentTimeMillis()) {
+        if (lastMessage + Main.CONFIG.getServer().messageCooldown() > System.currentTimeMillis()) {
             PacketRegistry.sendPacket(
                     new MessagePacket("Do not spam messages!"),
                     channel
@@ -82,13 +82,14 @@ public class ServerPacketHandler extends AbstractPacketHandler {
             return;
         }
         lastMessage = System.currentTimeMillis();
-        if (packet.getMessage().length() > 128) {
+        if (packet.getMessage().length() > Main.CONFIG.getServer().maxMessageCharacters()) {
             PacketRegistry.sendPacket(
                     new MessagePacket("Message is too long!"),
                     channel
             );
             return;
         }
+
         ChatRoomServer.broadcastMessage(
                 userModel.username() +
                         ">>" +

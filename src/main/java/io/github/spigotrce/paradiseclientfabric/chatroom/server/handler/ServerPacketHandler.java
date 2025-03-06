@@ -1,5 +1,6 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.server.handler;
 
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.Version;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.handler.AbstractPacketHandler;
@@ -30,6 +31,15 @@ public class ServerPacketHandler extends AbstractPacketHandler {
     public void handle(HandshakePacket packet) throws Exception {
         if (isAuthenticated)
             throw new IllegalStateException("User already authenticated");
+        if (packet.getPvn() != Version.PROTOCOL_VERSION) {
+            PacketRegistry.sendPacket(
+                    new HandshakeResponsePacket(new UserModel().withUsername("Invalid client version!"), false),
+                    channel
+            );
+            channel.close();
+            return;
+        }
+
         String hostname = ((InetSocketAddress) channel.attr(AttributeKey.valueOf("proxiedAddress")).get()).getHostName();
         if (ChatRoomServer.lastConnectionTime.containsKey(hostname)) {
             if (ChatRoomServer.lastConnectionTime.get(hostname) + Main.CONFIG.getServer().connectionThrottle() > System.currentTimeMillis()) {

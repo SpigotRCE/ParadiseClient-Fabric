@@ -35,6 +35,9 @@
 # Maximum characters in a message
 "max_message_characters": 128
 
+# Time between an ip opening another connection in milliseconds
+"connection_throttle": 5000
+
 # Database
 database_hostname: "localhost:3306"
 database_username: "paradise_user"

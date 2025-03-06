@@ -16,10 +16,12 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ChatRoomServer {
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     public static final ArrayList<UserModel> onlineUsers = new ArrayList<>();
+    public static final HashMap<String, Long> lastConnectionTime = new HashMap<>();
 
     public static void startServer(ServerModel serverModel) throws Exception {
         Logging.info("Starting chatroom server on port: " + serverModel.port() + ", use_haproxy: " + serverModel.useHAProxy());

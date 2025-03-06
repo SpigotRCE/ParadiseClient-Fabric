@@ -13,6 +13,7 @@ import io.github.spigotrce.paradiseclientfabric.chatroom.server.netty.ChatRoomSe
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 
+import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -29,6 +30,22 @@ public class ServerPacketHandler extends AbstractPacketHandler {
     public void handle(HandshakePacket packet) throws Exception {
         if (isAuthenticated)
             throw new IllegalStateException("User already authenticated");
+        String hostname = ((InetSocketAddress) channel.attr(AttributeKey.valueOf("proxiedAddress")).get()).getHostName();
+        if (ChatRoomServer.lastConnectionTime.containsKey(hostname)) {
+            if (ChatRoomServer.lastConnectionTime.get(hostname) + Main.CONFIG.getServer().connectionThrottle() > System.currentTimeMillis()) {
+                PacketRegistry.sendPacket(
+                        new HandshakeResponsePacket(
+                                new UserModel().withUsername("Connection throttled!"),
+                                false
+                        ),
+                        channel
+                );
+                channel.close();
+                return;
+            }
+        }
+
+        ChatRoomServer.lastConnectionTime.put(hostname, System.currentTimeMillis());
 
         UUID uuid = UUID.fromString(Arrays.asList(packet.getToken().split("\\.")).getFirst());
 

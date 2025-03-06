@@ -13,8 +13,25 @@ public class Config extends ConfigProvider {
         super("config.yml", "file-version", dataDirectory.toFile());
     }
 
+    private DiscordModel discordModel;
+    private ServerModel serverModel;
+    private DatabaseModel databaseModel;
+
     public DiscordModel getDiscord() {
-        return new DiscordModel(
+        return discordModel;
+    }
+
+    public ServerModel getServer() {
+        return serverModel;
+    }
+
+    public DatabaseModel getDatabase() {
+        return databaseModel;
+    }
+
+    @Override
+    public void onReload() {
+        discordModel = new DiscordModel(
                 getFileConfig().getString("discord_token"),
                 getFileConfig().getLong("discord_server_id"),
                 getFileConfig().getBoolean("auto_verify"),
@@ -23,26 +40,17 @@ public class Config extends ConfigProvider {
                 getFileConfig().getLong("linked_members_role_id"),
                 getFileConfig().getLong("admin_role_id")
         );
-    }
 
-    public ServerModel getServer() throws CertificateException {
-        return new ServerModel(
+        serverModel = new ServerModel(
                 getFileConfig().getInt("server_port"),
-                getFileConfig().getBoolean("use_haproxy"),
-                new SelfSignedCertificate()
+                getFileConfig().getBoolean("use_haproxy")
         );
-    }
 
-    public DatabaseModel getDatabase() {
-        return new DatabaseModel(getFileConfig().getString("database_hostname"),
+        databaseModel = new DatabaseModel(getFileConfig().getString("database_hostname"),
                 getFileConfig().getString("database_username"),
                 getFileConfig().getString("database_password"),
                 getFileConfig().getString("database_name"),
                 getFileConfig().getString("database-connection-parameters")
         );
-    }
-
-    @Override
-    public void onReload() {
     }
 }

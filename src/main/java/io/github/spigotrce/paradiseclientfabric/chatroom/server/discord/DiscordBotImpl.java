@@ -222,7 +222,7 @@ public class DiscordBotImpl extends ListenerAdapter {
                     return;
                 }
                 event.getChannel().sendMessage("<@" + model.discordID() + "> verified successfully! You can now join the chat room! To create an access token, do `/token`").queue();
-                sendWebhook(model, "User Verified");
+                sendWebhook(model.withVerified(true), "User Verified");
                 break;
             default:
                 event.reply("I can't handle that command right now :(").setEphemeral(true).queue();

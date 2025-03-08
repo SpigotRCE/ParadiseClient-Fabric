@@ -22,7 +22,7 @@ public class MySQLDatabase {
     }
 
     private void connect() throws SQLException {
-        if (!connection.isClosed()) return;
+        if (connection != null && !connection.isClosed()) return;
         this.connection = DriverManager.getConnection(
                 "jdbc:mysql://" + model.host() + "/" + model.name() + model.parameters(),
                 model.username(),

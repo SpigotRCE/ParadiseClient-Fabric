@@ -11,17 +11,23 @@ import java.util.List;
 import java.util.UUID;
 
 public class MySQLDatabase {
-    private final Connection connection;
+    private Connection connection;
+    private final DatabaseModel model;
 
     public MySQLDatabase() throws SQLException {
-        DatabaseModel model = Main.CONFIG.getDatabase();
+        model = Main.CONFIG.getDatabase();
+        connect();
+        Logging.info("Connected to MySQL database!");
+        createTable();
+    }
+
+    private void connect() throws SQLException {
+        if (!connection.isClosed()) return;
         this.connection = DriverManager.getConnection(
                 "jdbc:mysql://" + model.host() + "/" + model.name() + model.parameters(),
                 model.username(),
                 model.password()
         );
-        Logging.info("Connected to MySQL database!");
-        createTable();
     }
 
     private void createTable() throws SQLException {
@@ -40,6 +46,7 @@ public class MySQLDatabase {
     }
 
     public void insertUser(UserModel user) throws SQLException {
+        connect();
         String query = "INSERT INTO users (discordID, uuid, dateOfRegistration, username, email, token, verified) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setLong(1, user.discordID());
@@ -55,6 +62,7 @@ public class MySQLDatabase {
     }
 
     public UserModel getUser(long discordID) throws SQLException {
+        connect();
         String query = "SELECT * FROM users WHERE discordID = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setLong(1, discordID);
@@ -75,6 +83,7 @@ public class MySQLDatabase {
     }
 
     public UserModel getUser(UUID uuid) throws SQLException {
+        connect();
         String query = "SELECT * FROM users WHERE uuid = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, uuid.toString());
@@ -95,6 +104,7 @@ public class MySQLDatabase {
     }
 
     public List<UserModel> getAllUsers() throws SQLException {
+        connect();
         String query = "SELECT * FROM users";
         List<UserModel> users = new ArrayList<>();
         try (Statement stmt = connection.createStatement();
@@ -115,6 +125,7 @@ public class MySQLDatabase {
     }
 
     public void updateUser(UserModel user) throws SQLException {
+        connect();
         String query = "UPDATE users SET uuid = ?, dateOfRegistration = ?, username = ?, email = ?, token = ?, verified = ? WHERE discordID = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, user.uuid().toString());
@@ -130,6 +141,7 @@ public class MySQLDatabase {
     }
 
     public void deleteUser(long discordID) throws SQLException {
+        connect();
         String query = "DELETE FROM users WHERE discordID = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setLong(1, discordID);

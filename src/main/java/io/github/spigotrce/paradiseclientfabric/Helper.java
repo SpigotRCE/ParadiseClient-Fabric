@@ -2,6 +2,7 @@ package io.github.spigotrce.paradiseclientfabric;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.MinecraftClient;
@@ -211,10 +212,11 @@ public class Helper {
 
     public static String getLatestReleaseTag() throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(
-                "https://api.github.com/repos/SpigotRCE/ParadiseClient-Fabric/releases/latest"
+                "http://paradise-client.xyz/api/versions"
         ).openConnection();
-        connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+        connection.setRequestProperty("Accept", "application/json");
         connection.setRequestMethod("GET");
+
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
@@ -223,7 +225,8 @@ public class Helper {
                 response.append(line);
             reader.close();
 
-            return JsonParser.parseString(response.toString()).getAsJsonObject().get("tag_name").getAsString();
+            JsonObject responseObject = JsonParser.parseString(response.toString()).getAsJsonObject();
+            return responseObject.getAsJsonObject("latest_version").get("version").getAsString();
         } else {
             return null;
         }

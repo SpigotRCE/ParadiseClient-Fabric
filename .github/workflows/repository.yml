@@ -26,6 +26,17 @@ jobs:
       - name: Build project
         run: ./gradlew build
 
+      - name: Get mod version from gradle.properties
+        id: get-version
+        run: |
+          # Extract mod version from gradle.properties
+          MOD_VERSION=$(grep -oP '(?<=^mod_version=).+' gradle.properties)
+          if [ -z "$MOD_VERSION" ]; then
+            echo "Error: mod_version not found in gradle.properties"
+            exit 1
+          fi
+          echo "MOD_VERSION=$MOD_VERSION" >> $GITHUB_ENV
+
       - name: Find JAR file
         id: find-jar
         run: |
@@ -54,4 +65,12 @@ jobs:
         run: |
           curl -u ${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }} \
                --upload-file ${{ env.JAR_FILE }} \
-               https://repo.paradise-client.xyz/public/${{ env.JAR_NAME }}
+               https://repo.paradise-client.xyz/public/ParadiseClient-Fabric-${{ env.MOD_VERSION }}.jar
+
+      - name: Upload artifact to Webserver
+        run: |
+          curl -X PUT "https://paradise-client.xyz/api/versions" \
+               -u ${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }} \
+               -F "file=@${{ env.JAR_FILE }}" \
+               -F "version=${{ env.MOD_VERSION }}" \
+               -F "release_date=$(date +'%Y-%m-%d')"

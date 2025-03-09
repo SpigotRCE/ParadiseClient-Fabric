@@ -2,6 +2,9 @@ package io.github.spigotrce.paradiseclientfabric.mixin.inject.minecraft;
 
 import io.github.spigotrce.paradiseclientfabric.Constants;
 import io.github.spigotrce.paradiseclientfabric.ParadiseClient_Fabric;
+import io.github.spigotrce.paradiseclientfabric.chatroom.client.Client;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.DisconnectPacket;
 import io.github.spigotrce.paradiseclientfabric.discord.RPC;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -53,8 +56,7 @@ public class MinecraftClientMixin {
      */
     @Inject(method = "close", at = @At(value = "HEAD"))
     private void closeHead(CallbackInfo ci) {
-        // Disabled as we are currently not using chatroom
-//        ParadiseClient_Fabric.CHAT_ROOM_MOD.client.shutdown();
+        Client.stop();
     }
 
     /**

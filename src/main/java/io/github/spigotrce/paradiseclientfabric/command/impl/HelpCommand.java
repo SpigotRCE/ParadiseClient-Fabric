@@ -36,17 +36,29 @@ public class HelpCommand extends Command {
         // Adds sub-commands for each registered command
         ParadiseClient_Fabric.COMMAND_MANAGER.getCommands().forEach(command -> node.then(literal(command.getName()).executes((context) -> {
             Command c = ParadiseClient_Fabric.COMMAND_MANAGER.getCommand(command.getName());
-            Helper.printChatMessage("§4§l" + c.getName() + "§r §6" + c.getDescription());
+            printDash();
+            Helper.printChatMessage("§a" + c.getName() + " §b" + c.getDescription());
+            printDash();
             return SINGLE_SUCCESS;
         })));
 
         // Adds a command to display all registered commands
         node.executes((context -> {
+            printDash();
             for (Command command : ParadiseClient_Fabric.COMMAND_MANAGER.getCommands())
-                Helper.printChatMessage("§4§l" + command.getName() + "§r §6" + command.getDescription());
+                Helper.printChatMessage("§a" + command.getName() + " §b" + command.getDescription());
+            printDash();
+            Helper.printChatMessage("§aThere are currently §b" + ParadiseClient_Fabric.COMMAND_MANAGER.getCommands().size() + "§a registered commands.");
+            printDash();
+
             return SINGLE_SUCCESS;
         }));
 
         return node;
+    }
+
+    private void printDash() {
+        double count = MinecraftClient.getInstance().options.getChatWidth().getValue() * 360 / (MinecraftClient.getInstance().textRenderer.getWidth("-") + 1);
+        Helper.printChatMessage("§a" + "-".repeat(((int) count)), false);
     }
 }

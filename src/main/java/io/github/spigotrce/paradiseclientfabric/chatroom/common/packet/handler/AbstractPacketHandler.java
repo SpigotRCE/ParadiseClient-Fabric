@@ -1,10 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.handler;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.DisconnectPacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakePacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeResponsePacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.*;
 import io.netty.channel.Channel;
 
 public abstract class AbstractPacketHandler {
@@ -21,6 +18,9 @@ public abstract class AbstractPacketHandler {
     }
 
     public void handle(HandshakeResponsePacket packet) throws Exception {
+    }
+
+    public void handle(KeepAlivePacket packet) throws Exception {
     }
 
     public void handle(DisconnectPacket packet) throws Exception {

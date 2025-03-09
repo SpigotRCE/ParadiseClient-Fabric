@@ -1,10 +1,7 @@
 package io.github.spigotrce.paradiseclientfabric.chatroom.common.packet;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.exception.BadPacketException;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.DisconnectPacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakePacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeResponsePacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.*;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -20,8 +17,9 @@ public class PacketRegistry {
         packetMap.clear();
         registerPacket(0x00, HandshakePacket::new);
         registerPacket(0x01, HandshakeResponsePacket::new);
-        registerPacket(0x02, DisconnectPacket::new);
-        registerPacket(0x03, MessagePacket::new);
+        registerPacket(0x02, KeepAlivePacket::new);
+        registerPacket(0x03, DisconnectPacket::new);
+        registerPacket(0x04, MessagePacket::new);
     }
 
     private static void registerPacket(int id, Supplier<Packet> supplier) {

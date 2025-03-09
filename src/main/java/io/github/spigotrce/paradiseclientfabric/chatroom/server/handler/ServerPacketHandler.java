@@ -2,12 +2,10 @@ package io.github.spigotrce.paradiseclientfabric.chatroom.server.handler;
 
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.Version;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.model.UserModel;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.Packet;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.PacketRegistry;
 import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.handler.AbstractPacketHandler;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.DisconnectPacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakePacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.HandshakeResponsePacket;
-import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.MessagePacket;
+import io.github.spigotrce.paradiseclientfabric.chatroom.common.packet.impl.*;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Logging;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.Main;
 import io.github.spigotrce.paradiseclientfabric.chatroom.server.netty.ChatRoomServer;
@@ -22,6 +20,8 @@ public class ServerPacketHandler extends AbstractPacketHandler {
     public UserModel userModel;
     public boolean isAuthenticated = false;
     public long lastMessage = 0;
+    public long timeSinceKeepAlive = 0;
+    public int keepAliveViolation = 0;
 
     public ServerPacketHandler(Channel channel) {
         super(channel);
@@ -89,6 +89,34 @@ public class ServerPacketHandler extends AbstractPacketHandler {
 
         ChatRoomServer.broadcastMessage(userModel.username() + " joined the chat");
 
+        new Thread(() -> {
+            while (channel.isOpen()) {
+                try {
+                    Thread.sleep(5000);
+                    if (timeSinceKeepAlive + 5000 < System.currentTimeMillis()) {
+                        keepAliveViolation++;
+                        if (keepAliveViolation > 3) {
+                            Logging.info(userModel.username() + " Timed out!");
+                            channel.close();
+                            break;
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    Logging.error("Error occurred while waiting.", e);
+                    channel.close();
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public void handle(KeepAlivePacket packet) throws Exception {
+        if (!isAuthenticated)
+            throw new IllegalStateException("User not authenticated");
+        // relay
+        PacketRegistry.sendPacket(packet, channel);
+
+        timeSinceKeepAlive = System.currentTimeMillis();
     }
 
     @Override

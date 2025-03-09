@@ -60,7 +60,6 @@ public class ClientPacketHandler extends AbstractPacketHandler {
                 try {
                     Thread.sleep(5000);
                     PacketRegistry.sendPacket(new KeepAlivePacket(1), channel);
-                    Helper.printChatMessage("Sending packet!");
                 } catch (InterruptedException e) {
                     Constants.LOGGER.error("Error occurred while waiting.", e);
                     channel.close();

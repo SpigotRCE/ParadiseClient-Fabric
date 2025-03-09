@@ -73,4 +73,4 @@ jobs:
                -u ${{ secrets.NEXUS_USERNAME }}:${{ secrets.NEXUS_PASSWORD }} \
                -F "file=@${{ env.JAR_FILE }}" \
                -F "version=${{ env.MOD_VERSION }}" \
-               -F "release_date=$(date +'%Y-%m-%d')"
+               -F "release_date=$(date +'%Y-%m-%d %H:%M:%S')"

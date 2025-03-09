@@ -34,6 +34,6 @@ public class ClientPayloadPacketDecoder extends MessageToMessageDecoder<ByteBuf>
             Constants.LOGGER.error("Unable to fire PluginMessageEvent", e);
         }
 
-        return !event.isCancel();
+        return event.isCancel();
     }
 }

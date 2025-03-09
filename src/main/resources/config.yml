@@ -1,0 +1,46 @@
+# Do not edit
+"file-version": 1
+
+# Token of your discord bot
+"discord_token": "token to discord bot"
+
+# Discord server id
+"discord_server_id": 0000000
+
+# Should auto verify new users
+"auto_verify": false
+
+# Verification channel id
+"verification_channel_id": 0000000
+
+# Webhook to account logging
+"webhook_account_logging": "https://discord.com/api/webhooks/0000000/xxxxxxx"
+
+# Discord role id for Linked members
+"linked_members_role_id": 0000000
+
+# Discord id for admins
+"admin_role_id": 0000000
+
+# Server port
+"server_port": 45000
+
+# Use HAProxy
+# Do not touch until you know what you are doing
+"use_haproxy": false
+
+# Cooldown between messages in milliseconds
+"message_cooldown": 3000
+
+# Maximum characters in a message
+"max_message_characters": 128
+
+# Time between an ip opening another connection in milliseconds
+"connection_throttle": 5000
+
+# Database
+database_hostname: "localhost:3306"
+database_username: "paradise_user"
+database_password: ""
+database_name: "paradise_chatserver"
+database-connection-parameters: "?autoReconnect=true&initialTimeout=1&useSSL=false"

@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 public class Logging {
     public static void debug(String message) {
-        // TODO: Add config option to enable/disable debugging
         System.out.println("\u001B[32m[DEBUG/ChatServer] " + message + "\u001B[0m");
     }
 

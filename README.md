@@ -16,6 +16,15 @@ This project is open source under the following terms:
   By contributing to this project, you agree to the [Contributor License Agreement](CONTRIBUTOR_LICENSE_AGREEMENT.md). The CLA ensures contributions are properly licensed and can be maintained under the terms of the project.
 
 ---
+# Project Sunset and Transition
+
+As of now, ParadiseClient-Fabric will be sunsetting and transitioning to a new repository under the name ParadiseClient-X. All future development, updates, and support will be handled through the new repository, which can be found here:
+[ParadiseClient-X](https://github.com/Hydrogen-Developments/ParadiseClient-X)
+
+SpigotRCE is no longer maintaining ParadiseClient-Fabric.
+ParadiseClient-Fabric is now going to be maintained by HydrogenDevelopments. 
+Please make sure to transition to the new project for ongoing updates and features. Thank you for your support!
+---
 
 ## **Installation Instructions**
 
